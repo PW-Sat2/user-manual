@@ -1,7 +1,28 @@
 \documentclass[]{article}
 \usepackage{pythontex}
+\usepackage{cprotect}
+\usepackage[english]{babel}
+\usepackage{blindtext}
 
 \setpythontexoutputdir{.} 
+
+\begin{pythontexcustomcode}[begin]{py}
+import sys
+sys.path.append('../obc/integration_tests')
+sys.path.append('..')
+
+pytex.add_dependencies('../helpers.py') 
+from helpers import dump_tc
+
+import telecommand
+\end{pythontexcustomcode}
+
+\newcommand{\binaryForm}[1]{
+	\begin{description}
+		\item[Call] \hfill \\ \pyv{#1}
+		\item[Binary form] \hfill \\ \texttt{\pyc{dump_tc(telecommand.#1)}}
+	\end{description}
+}
 
 %opening
 \title{PW-Sat2\\User manual}
@@ -9,16 +30,16 @@
 
 \begin{document}
 
+
 \maketitle
-
-\begin{abstract}
-
-\end{abstract}
 
 \section{Sample python code}
 
 \begin{pycode}
 print("Embedded python")
 \end{pycode}
+
+\section{Telecommands}
+\input{telecommands/ping.tex}
 
 \end{document}

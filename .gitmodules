@@ -1,0 +1,3 @@
+[submodule "obc"]
+	path = obc
+	url = https://github.com/PW-Sat2/PWSat2OBC.git
