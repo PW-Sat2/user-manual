@@ -3,6 +3,9 @@
 \usepackage{cprotect}
 \usepackage[english]{babel}
 \usepackage{blindtext}
+\usepackage[parfill]{parskip}
+\usepackage{enumitem}
+\setlist[description]{leftmargin=1cm,labelindent=0cm}
 
 \setpythontexoutputdir{.} 
 
@@ -12,7 +15,7 @@ sys.path.append('../obc/integration_tests')
 sys.path.append('..')
 
 pytex.add_dependencies('../helpers.py') 
-from helpers import dump_tc
+from helpers import *
 
 import telecommand
 \end{pythontexcustomcode}
@@ -21,6 +24,12 @@ import telecommand
 	\begin{description}
 		\item[Call] \hfill \\ \pyv{#1}
 		\item[Binary form] \hfill \\ \texttt{\pyc{dump_tc(telecommand.#1)}}
+	\end{description}
+}
+
+\newcommand{\ctor}[1]{
+	\begin{description}
+		\item[Constructor] \hfill \\ \texttt{\pyc{dump_ctor(telecommand.#1)}}
 	\end{description}
 }
 
@@ -41,5 +50,6 @@ print("Embedded python")
 
 \section{Telecommands}
 \input{telecommands/ping.tex}
+\input{telecommands/set-bitrate.tex}
 
 \end{document}

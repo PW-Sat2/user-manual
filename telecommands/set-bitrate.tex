@@ -1,0 +1,37 @@
+\subsection{SetBitrate}
+\texttt{SetBitrate} telecommand allows changing bitrate of transmitted frames (downlink). After receiving telecommand OBC will send command directly for COMM module. It is unclear if response will be sent using previous or changed bitrate. 
+
+\subsubsection{Success response}
+Success response is sent when COMM accepted command. It might or might not be sent with updated bitrate.
+
+\subsubsection{Error response}
+Error responswe can sent in following situations:
+\begin{itemize}
+	\item Malformed (too short) telecommand - error code -1
+	\item Failed to deliver command to COMM module - error code -2
+\end{itemize}
+
+\subsubsection{Definition}
+\ctor{SetBitrate}
+
+Arguments: 
+\begin{description}[labelindent=1cm]
+	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
+	\item[\texttt{bitrate}] - Desired bitrate (8-bit number) 
+\end{description}
+
+Bitrate values:
+\begin{itemize}
+	\item 1200 bps - 1
+	\item 2400 bps - 2
+	\item 4800 bps - 4
+	\item 9600 bps - 8
+\end{itemize}
+
+
+
+\subsubsection{Example usage}
+Set bitrate to 9600bps, correlation ID = 11
+\binaryForm{SetBitrate(11, 8)}
+
+
