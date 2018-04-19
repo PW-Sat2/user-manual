@@ -1,0 +1,31 @@
+\subsection{EnterIdleState}
+\texttt{EnterIdleState} telecommand allows switching COMM to Idle State mode for given time.
+
+In this mode when Transmitter is idle it will continuously transmit Idle Sequence (0x7E) to help the ground receiver to lock.
+
+\subsubsection{Success response}
+Success response is of type \texttt{CommSuccessFrame} and is sent when COMM accepted command. 
+
+\subsubsection{Error response}
+Error response is of type \texttt{CommErrorFrame} and can be sent in following situations:
+\begin{itemize}
+	\item Malformed (too short) telecommand - error code -1
+	\item Failed to read current time for setting timeout - error code -1
+	\item Failed to enter Idle State by COMM - error code -1
+\end{itemize}
+Please note that in all cases the error code is the same.
+
+\subsubsection{Definition}
+\ctor{EnterIdleState}
+
+Arguments: 
+\begin{description}[labelindent=1cm]
+	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
+	\item[\texttt{duration}] - Time in seconds how long COMM should be kept in Idle State (8-bit number) 
+\end{description}
+
+\subsubsection{Example usage}
+Enter Idle State for 15 seconds, correlation ID = 11
+\binaryForm{EnterIdleState(11, 15)}
+
+

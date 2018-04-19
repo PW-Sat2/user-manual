@@ -1,0 +1,23 @@
+\subsection{AbortExperiment}
+\texttt{AbortExperiment} telecommand aborts currently running experiment.
+If no experiment is running, the command is ignored.
+
+\subsubsection{Success response}
+Success response is of type \texttt{ExperimentSuccessFrame} and is sent always if telecommand is correctly formed. 
+
+\subsubsection{Error response}
+Error response is of type \texttt{ExperimentErrorFrame} can be sent only when telecommand is malformed (too short) - error code -1
+
+\subsubsection{Definition}
+\ctor{AbortExperiment}
+
+Arguments: 
+\begin{description}[labelindent=1cm]
+	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
+\end{description}
+
+\subsubsection{Example usage}
+Abort experiment, correlation ID = 11
+\binaryForm{AbortExperiment(11)}
+
+
