@@ -1,0 +1,23 @@
+\subsection{Persistent State}
+\label{sec:ref-PersistentState}
+
+Persistent state is stored on 3 FRAM \texttt{fm25w} chips using TMR. 
+It can be retrieved using \hyperref[sec:tc-GetPersistentState]{\texttt{GetPersistentState}} telecommand.
+
+\subsubsection{Stored variables}
+
+\begin{tabular}{l | l | l}
+Group                       & Variable                      & size [bits] \\
+\hline
+AntennaConfiguration        & isDeploymentDisabled          & 8 \\
+TimeState                   & lastMissionTime               & 64 \\
+                            & lastExternalTime              & 32 \\
+TimeCorrectionConfiguration & missionTimeFactor             & 16 LE \\
+                            & externalTimeFactor            & 16 LE \\
+SailState                   & currentState                  & 8 \\
+ErrorCountersConfigState    & 14 error counters             & 14 * 32 LE \\
+AdcsState                   & internalDetumblingDisabled    & 8 \\
+MessageState                & interval                      & 8 \\
+                            & repeatCount                   & 8 \\
+                            & message                       & 200 \\
+\end{tabular}

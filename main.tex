@@ -1,6 +1,14 @@
 % !TeX spellcheck = en_US
 \documentclass{book}
 \input{settings.tex}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks   = true,    % Colours links instead of ugly boxes
+  urlcolor     = blue,    % Colour for external hyperlinks
+  linkcolor    = blue,    % Colour of internal links
+  citecolor    = red      % Colour of citations
+}
+
 
 \input{macros.tex}
 \input{todo.tex}
@@ -8,7 +16,10 @@
 \begin{document}
 \maketitle
 
-\tableofcontents
+{
+	\hypersetup{linkcolor=black}
+	\tableofcontents
+}
 
 \chapter{Telecommands}
 \input{telecommands/categories.tex}
@@ -19,6 +30,7 @@
 \input{telecommands/power-cycle.tex}
 \input{telecommands/compile-info.tex}
 \input{telecommands/enter-idle-state.tex}
+\input{telecommands/get-persistent-state.tex}
 \input{telecommands/abort-experiment.tex}
 \input{telecommands/set-periodic-message.tex}
 \input{telecommands/set-antenna-deployment-mask.tex}
@@ -30,6 +42,9 @@
 
 \chapter{OBC procedures}
 \input{obc-procedures/power-cycle.tex}
+
+\section{Reference}
+\input{obc-reference/persistent-state.tex}
 \input{obc-procedures/experiment-loop.tex}
 \input{obc-procedures/periodic-message.tex}
 \input{obc-procedures/antenna-deployment.tex}

@@ -1,0 +1,20 @@
+\subsection{GetPersistentState}
+\label{sec:tc-GetPersistentState}
+\texttt{GetPersistentState} retrieves current content of satellite's persistent state. 
+
+\subsubsection{Success response}
+Response frame is of type \texttt{PersistentStateFrame} (APID = 0x06) will contain entire persistent state, divided into frames. Each consecutive frame will have a sequence number, starting at 0 and incremented for each frame. There's no correlation id for this telecommand.
+
+Frames will contain all variables stored in \hyperref[sec:ref-PersistentState]{Persistent State}.
+
+\subsubsection{Error response}
+This telecommand doesn't send any error responses.
+
+\subsubsection{Definition}
+\ctor{GetPersistentState}
+
+\subsubsection{Example usage}
+Retrieve persistent state:
+\binaryForm{GetPersistentState()}
+
+
