@@ -3,8 +3,7 @@
 
 Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power cycle was successful processing will be stopped after issuing \texttt{PowerCycle()}.
 
-\begin{figure}[h]
-	\label{fig:tc:powercycle}
+\begin{figure}[h]	
 	\centering
 	
 	 \begin{sequencediagram}
@@ -22,6 +21,7 @@ Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power c
 	\end{sequencediagram}
 		
 	\caption{Power cycle ordered by telecommand}
+	\label{fig:tc:powercycle}
 \end{figure}
 
 \subsubsection{Success response}
@@ -43,3 +43,6 @@ Arguments:
 \end{description}
 
 \subsubsection{Example usage}
+Perform power cycle, correlation ID = 11
+\binaryForm{PowerCycleTelecommand(11)}
+

@@ -9,6 +9,8 @@
 \usepackage[parfill]{parskip}
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
+\usepackage{titlepic}
+\usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{pgf-umlsd}
 \usepgflibrary{arrows}
@@ -45,6 +47,8 @@ import telecommand
 \title{PW-Sat2\\User manual}
 \author{}
 
+\titlepic{\includegraphics[width=0.7\textwidth]{image.png}}
+
 \input{todo.tex}
 
 \begin{document}
@@ -55,7 +59,7 @@ import telecommand
 
 \tableofcontents
 \newpage
-
+ 
 \section{Telecommands}
 \input{telecommands/ping.tex}
 \input{telecommands/set-bitrate.tex}
