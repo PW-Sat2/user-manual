@@ -1,8 +1,17 @@
-
-
 \subsection{PingTelecommand}
-\blindtext
+\texttt{Ping} can be used to test communication with satellite without causing any side-effects. If understood correctly it always responds with \texttt{PONG}.
 
-\subsubsection{Usage}
+\subsubsection{Success response}
+This telecommand always responds with success frame \texttt{PongFrame}
+
+\subsubsection{Error response}
+None.
+
+\subsubsection{Definition}
+\ctor{SetBitrate}
+
+
+\subsubsection{Example usage}
+Create ping telecommand.
+
 \binaryForm{PingTelecommand()}
-\blindtext
