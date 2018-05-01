@@ -1,3 +1,4 @@
+% !TeX spellcheck = en_US
 \documentclass{article}
 
 \usepackage[a4paper,margin=1in,lmargin=0.5in,rmargin=0.5in]{geometry}
@@ -7,6 +8,13 @@
 \usepackage{blindtext}
 \usepackage[parfill]{parskip}
 \usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlepic}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepgflibrary{arrows}
+
 \setlist[description]{leftmargin=1cm,labelindent=0cm}
 
 \setpythontexoutputdir{.} 
@@ -39,6 +47,10 @@ import telecommand
 \title{PW-Sat2\\User manual}
 \author{}
 
+\titlepic{\includegraphics[width=0.7\textwidth]{image.png}}
+
+\input{todo.tex}
+
 \begin{document}
 
 \maketitle
@@ -47,15 +59,16 @@ import telecommand
 
 \tableofcontents
 \newpage
-
-\section{Sample python code}
-
-\begin{pycode}
-print("Embedded python")
-\end{pycode}
-
+ 
 \section{Telecommands}
 \input{telecommands/ping.tex}
 \input{telecommands/set-bitrate.tex}
+\input{telecommands/power-cycle.tex}
+
+\section{OBC procedures}
+\input{obc-procedures/power-cycle.tex}
+
+\newpage
+\todolist
 
 \end{document}

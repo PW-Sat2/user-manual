@@ -1,0 +1,14 @@
+\usepackage{manfnt}   % dangerous sign 
+\usepackage{color}
+\definecolor{brickred}      {cmyk}{0   , 0.89, 0.94, 0.28}
+
+\makeatletter \newcommand \todolist{\section*{To-do} \@starttoc{td}}
+  \newcommand\l@todoss[2]
+    {\par\noindent \textbf{#2:} %\\parbox{10cm}
+{#1}\par} \makeatother
+
+
+\newcommand{\todo}[1]{%
+{\marginpar{\textdbend}{\color{brickred}{[#1]}}}%
+\addcontentsline{td}{todos}{\protect{#1}}%
+}

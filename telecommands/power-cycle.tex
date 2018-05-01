@@ -1,0 +1,48 @@
+\subsection{Power cycle}
+\texttt{PowerCycle} performs full satellite power cycle using EPS. Power cycle attempts will performed according to \nameref{obcproc:powercycle} procedure. Just before performing power cycle success frame is sent to acknowledge receipt of telecommand. It \textbf{does not} indicate that power cycle was successful.
+
+Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power cycle was successful processing will be stopped after issuing \texttt{PowerCycle()}.
+
+\begin{figure}[h]	
+	\centering
+	
+	 \begin{sequencediagram}
+		\newinst{gs}{Operator}{}
+		\newinst[5]{obc}{OBC}{}    
+		
+		\begin{call}{gs}{PowerCycle}{obc}{PowerFailureFrame}
+			\mess{obc}{PowerSuccessFrame}{gs}{}
+			
+			\begin{callself}{obc}{PowerCycle()}{Failure}
+			\end{callself}
+			
+		\end{call}
+		
+	\end{sequencediagram}
+		
+	\caption{Power cycle ordered by telecommand}
+	\label{fig:tc:powercycle}
+\end{figure}
+
+\subsubsection{Success response}
+Success response frame is of type \texttt{PowerSuccessFrame} and contains no additional payload.
+
+\subsubsection{Error response}
+Error frame is of type \texttt{PowerErrorFrame} and contains error code:
+\begin{itemize}
+	\item Malformed (too short) telecommand - error code 1
+	\item Failed to power cycle - error code 2
+\end{itemize}
+
+\subsubsection{Definition}
+\ctor{PowerCycleTelecommand}
+
+Arguments: 
+\begin{description}[labelindent=1cm]
+	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
+\end{description}
+
+\subsubsection{Example usage}
+Perform power cycle, correlation ID = 11
+\binaryForm{PowerCycleTelecommand(11)}
+
