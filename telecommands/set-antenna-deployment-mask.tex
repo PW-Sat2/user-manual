@@ -1,0 +1,36 @@
+\subsection{SetAntennaDeploymentMask}
+\texttt{SetAntennaDeploymentMask} telecommand is capable of enabling/disabling \hyperref[obcproc:antenna-deployment]{antenna deployment process}.
+
+\subsubsection{Success response}
+Success response frame is of type \texttt{StopAntennaDeploymentSuccessFrame} (APID = 0x23) and contains single byte with value 0.
+
+\subsubsection{Error response}
+
+Error response frame type type is \texttt{StopAntennaDeploymentErrorFrame} (APID = 0x23) and contains error code:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    -1 & Malformed request (i.e. missing parameters) \\
+    -2 & Unable to disable antenna deployment - cannot set persistent state \\
+    
+\end{tabular}
+
+\subsubsection{Definition}
+\tcapid{SetAntennaDeployment(11, False)}
+\ctor{SetAntennaDeployment}
+
+Arguments: 
+
+\begin{tabular}{r | p{10cm} | l}
+    Argument                    & Description               & Size [bits] \\
+    \hline
+    \texttt{correlation\_id}        & Correlation id            & 8 \\
+    \texttt{deployment disabled}    & Flag indicating the antenna deployment process should be disabled (zero - enabled, non-zero disabled) & 8 \\
+
+\end{tabular}
+
+\subsubsection{Example usage}
+Perform power cycle, correlation ID = 11
+\binaryForm{SetAntennaDeployment(11, False)}
+
