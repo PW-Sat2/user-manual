@@ -9,6 +9,12 @@
   citecolor    = red      % Colour of citations
 }
 
+\newcommand{\tcapid}[1]{
+	\begin{description}
+		\item[APID] \hfill \\ \texttt{0x\pyc{dump_apid(telecommand.#1)}}
+	\end{description}
+}
+
 
 \input{macros.tex}
 \input{todo.tex}
@@ -44,6 +50,7 @@
 \input{obc-procedures/power-cycle.tex}
 
 \section{Reference}
+\input{obc-reference/error-counters.tex}
 \input{obc-reference/persistent-state.tex}
 \input{obc-procedures/experiment-loop.tex}
 \input{obc-procedures/periodic-message.tex}
