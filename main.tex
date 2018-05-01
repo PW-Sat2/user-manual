@@ -13,6 +13,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{pgf-umlsd}
+\usepackage{underscore}
 \usepgflibrary{arrows}
 
 \setlist[description]{leftmargin=1cm,labelindent=0cm}
@@ -28,19 +29,12 @@ pytex.add_dependencies('../helpers.py')
 from helpers import *
 
 import telecommand
+import response_frames
 \end{pythontexcustomcode}
 
-\newcommand{\binaryForm}[1]{
-	\begin{description}
-		\item[Call] \hfill \\ \pyv{#1}
-		\item[Binary form] \hfill \\ \texttt{\pyc{dump_tc(telecommand.#1)}}
-	\end{description}
-}
-
-\newcommand{\ctor}[1]{
-	\begin{description}
-		\item[Constructor] \hfill \\ \texttt{\pyc{dump_ctor(telecommand.#1)}}
-	\end{description}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue
 }
 
 %opening
@@ -49,21 +43,25 @@ import telecommand
 
 \titlepic{\includegraphics[width=0.7\textwidth]{image.png}}
 
+\input{macros.tex}
 \input{todo.tex}
 
 \begin{document}
-
 \maketitle
 
 \newpage
 
 \tableofcontents
 \newpage
- 
+
 \section{Telecommands}
 \input{telecommands/ping.tex}
 \input{telecommands/set-bitrate.tex}
 \input{telecommands/power-cycle.tex}
+\input{telecommands/compile-info.tex}
+
+\section{Response Frames}
+\input{response-frames/compile-info.tex}
 
 \section{OBC procedures}
 \input{obc-procedures/power-cycle.tex}

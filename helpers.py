@@ -8,3 +8,11 @@ def dump_ctor(tc):
     names = map(lambda x: '<{}>'.format(x), names)
     joined = ', '.join(names)
     print '{}({})'.format(tc.__name__, joined).replace('_', '\_')
+
+def get_uplink_apid(tc):
+    x = tc.__new__(tc)
+    print('0x%02x' % x.apid())
+
+def get_downlink_apid(tc):
+    x = tc.__new__(tc)
+    print('0x%02x' % x.ReceivedAPID)

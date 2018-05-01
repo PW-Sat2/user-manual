@@ -1,0 +1,43 @@
+\newcommand{\binaryForm}[1]{
+	\begin{description}
+		\item[Call] \hfill \\ \pyv{#1}
+		\item[Binary form] \hfill \\ \texttt{\pyc{dump_tc(telecommand.#1)}}
+	\end{description}
+}
+
+\newcommand{\ctor}[1]{
+	\begin{description}
+		\item[Constructor] \hfill \\ \texttt{\pyc{dump_ctor(telecommand.#1)}}
+	\end{description}
+}
+
+\newcommand{\TelecommandApid}[1]{
+	\begin{description}
+		\item[Telecommand Apid]: \texttt{\pyc{get_uplink_apid(telecommand.#1)}}
+	\end{description}
+}
+
+\newcommand{\ResponseApid}[1]{
+	\begin{description}
+		\item[Frame Apid]: \texttt{\pyc{get_downlink_apid(response_frames.#1)}}
+	\end{description}
+}
+
+\newcommand{\refsection}[1]{
+	\subsection{#1}
+	\label{#1}
+}
+
+\newcommand{\telecommand}[1]{
+	\refsection{#1}
+}
+
+\newcommand{\responseFrame}[1]{
+	\refsection{#1}
+}
+
+\newcommand{\None}{None. }
+
+\newcommand{\pwsat}{Pw-Sat2 }
+
+\newcommand{\OBC}{OBC }
