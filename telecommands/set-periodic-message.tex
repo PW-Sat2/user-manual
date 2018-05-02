@@ -1,0 +1,30 @@
+\subsection{SetPeriodicMessage}
+\texttt{SetPeriodicMessageTelecommand} sets periodic message. Periodic message settings are stored in Persistent State. To retrieve current settings, use \texttt{GetPersistentState} telecommand. 
+
+\subsubsection{Success response}
+Success response frame is of type \texttt{PeriodicSetSuccessFrame} (APID = 0x1B) and contains single byte of value 0.
+
+\subsubsection{Error response}
+Error frame is of type \texttt{PeriodicSetErrorFrame} (APID = 0x1B) and contains 1 byte of value 1. It can be caused malformed (too short) telecommand or empty periodic message - error code 1.
+
+\subsubsection{Definition}
+\ctor{SetPeriodicMessageTelecommand}
+
+Arguments: 
+\begin{description}[labelindent=1cm]
+	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
+\end{description}
+
+\begin{tabular}{r | p{10cm} | l}
+    Argument                    & Description               & Size [bits] \\
+    \hline
+    \texttt{correlation\_id}    & Correlation id            & 8 \\
+    \texttt{interval\_minutes}   & Interval between sending messages, in minutes & 8 \\
+    \texttt{repeat\_count}       & Number of messages to send at once & 8 \\
+    \texttt{message}            & Message payload & 200 * 8 (String) \\
+\end{tabular}
+
+\subsubsection{Example usage}
+Set periodic message "We are The Borg", sent twice every 5 minutes. Correlation ID = 11:
+\binaryForm{SetPeriodicMessageTelecommand(11, 5, 2, "We are The Borg")}
+
