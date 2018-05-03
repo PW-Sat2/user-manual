@@ -1,30 +1,47 @@
-\subsection{SetPeriodicMessage}
+\telecommand{SetPeriodicMessage}
+
+\tccategory{PD}
+
+\subsection{General description}
 \texttt{SetPeriodicMessageTelecommand} sets periodic message. Periodic message settings are stored in Persistent State. To retrieve current settings, use \texttt{GetPersistentState} telecommand. 
 
-\subsubsection{Success response}
-Success response frame is of type \texttt{PeriodicSetSuccessFrame} (APID = 0x1B) and contains single byte of value 0.
+\paragraph{Known issues} \mbox{} \\
+It's not possible to change interval of periodic message without changing its content.
 
-\subsubsection{Error response}
-Error frame is of type \texttt{PeriodicSetErrorFrame} (APID = 0x1B) and contains 1 byte of value 1. It can be caused malformed (too short) telecommand or empty periodic message - error code 1.
+\paragraph{Side effects}
+\begin{itemize}
+	\item Periodic message is enabled
+	\item Increased power usage
+\end{itemize}
 
-\subsubsection{Definition}
+\paragraph{Usage limitations} \mbox{} \\
+Periodic message can cause increased power usage. Before enabling make sure that enough power can be provided.
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+Before enabling periodic message make sure that enough power can be provided.
+
+\subsection{Definition}
+\TelecommandApid{SetPeriodicMessageTelecommand}
 \ctor{SetPeriodicMessageTelecommand}
 
-Arguments: 
-\begin{description}[labelindent=1cm]
-	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
-\end{description}
+Parameters:
 
-\begin{tabular}{r | p{10cm} | l}
-    Argument                    & Description               & Size [bits] \\
-    \hline
-    \texttt{correlation\_id}    & Correlation id            & 8 \\
-    \texttt{interval\_minutes}   & Interval between sending messages, in minutes & 8 \\
-    \texttt{repeat\_count}       & Number of messages to send at once & 8 \\
-    \texttt{message}            & Message payload & 200 * 8 (String) \\
-\end{tabular}
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{interval\_minutes}{8}{Interval between sending messages, in minutes}
+	\tcarg{repeat\_count}{8}{Number of messages to send at once}
+	\tcarg{message}{max 200 * 8 (String)}{Message payload}
+\end{tcarglist}
+
+\subsection{Responses}
+\responseFrame{PeriodicSetSuccessFrame}
+\ResponseApid{PeriodicSetSuccessFrame}
+Correlated success response frame is of type \texttt{PeriodicSetSuccessFrame} and contains single byte of value 0.
+
+\responseFrame{PeriodicSetErrorFrame}
+\ResponseApid{PeriodicSetErrorFrame}
+Error frame is of type \texttt{PeriodicSetErrorFrame} and contains 1 byte of value 1. It can be caused by malformed (too short) telecommand or by empty periodic message - error code 1.
 
 \subsubsection{Example usage}
 Set periodic message "We are The Borg", sent twice every 5 minutes. Correlation ID = 11:
 \binaryForm{SetPeriodicMessageTelecommand(11, 5, 2, "We are The Borg")}
-

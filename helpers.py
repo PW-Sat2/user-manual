@@ -11,8 +11,8 @@ def dump_ctor(telecommandType):
 
 def get_uplink_apid(telecommandType):
     x = telecommandType.__new__(telecommandType)
-    print('0x%02x' % x.apid())
+    print('0x%02X' % x.apid())
 
 def get_downlink_apid(responseFrameType):
     x = responseFrameType.__new__(responseFrameType)
-    print('0x%02x' % x.ReceivedAPID)
+    print('0x%02X' % x.ReceivedAPID)
