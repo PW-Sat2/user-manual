@@ -18,7 +18,7 @@
 \usepackage{pifont,mdframed}
 \usepackage{fontawesome}
 \usepackage{xstring}
-
+\usepackage{titlesec}
 
 \setlist[description]{leftmargin=1cm,labelindent=0cm}
 
@@ -40,6 +40,12 @@ import response_frames
 	colorlinks=true,
 	linkcolor=blue
 }
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}   % The style of the section title
+{}                             % a prefix
+{0pt}                          % How much space exists between the prefix and the title
+{}  
 
 %opening
 \title{PW-Sat2\\User manual}
