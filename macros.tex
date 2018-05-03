@@ -19,7 +19,7 @@
 
 \newcommand{\ResponseApid}[1]{
 	\begin{description}
-		\item[Frame Apid]: \texttt{\pyc{get_downlink_apid(response_frames.#1)}}
+		\item[Frame APID]: \texttt{\pyc{get_downlink_apid(response_frames.#1)}}
 	\end{description}
 }
 
@@ -41,3 +41,43 @@
 \newcommand{\pwsat}{Pw-Sat2 }
 
 \newcommand{\OBC}{OBC }
+
+\definecolor{dangerousbackground}{RGB}{224, 105, 116}
+\definecolor{potentiallydangerousbackground}{RGB}{249, 210, 92}
+\definecolor{safebackground}{RGB}{97, 226, 127}
+
+
+\newenvironment{warning}
+{\par\begin{mdframed}[linecolor=black, backgroundcolor=warningbackground]
+		\begin{list}{}{\leftmargin=1cm
+				\labelwidth=\leftmargin}\item[\faWarning]}
+{\end{list}\end{mdframed}\par}
+
+\newenvironment{coloriconbox}[2]{
+\par\begin{mdframed}[linecolor=black, backgroundcolor=#2]
+	\begin{list}{}{\leftmargin=1cm
+			\labelwidth=\leftmargin}\item[#1]
+}{\end{list}\end{mdframed}\par}
+
+\newcommand{\tccategory}[1]{
+	\IfEqCase{#1}{%
+		{D}{
+			\begin{coloriconbox}{\faHandStopO}{dangerousbackground}
+				\textbf{Dangerous telecommand}\\
+				This telecommand has huge impact on satellite. Do not use it recklessly!
+			\end{coloriconbox}
+		}%
+		{PD}{
+			\begin{coloriconbox}{\faWarning}{potentiallydangerousbackground}
+				\textbf{Potentially dangerous telecommand}\\
+				This telecommand has impact on satellite. Rethink twice before using it!
+			\end{coloriconbox}
+		}%
+		{S}{
+			\begin{coloriconbox}{\faCheck}{safebackground}
+				\textbf{Safe telecommand}\\
+				This telecommand is safe and can be used in most cases.
+			\end{coloriconbox}
+		}
+	}[\PackageError{tree}{Undefined telecommand category: #1}{}]%
+}
