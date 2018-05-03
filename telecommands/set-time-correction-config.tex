@@ -4,14 +4,61 @@
 \newcommand{\wRtc}{w_{RTC}}
 \newcommand{\correctionValue}{\Delta t}
 
-\subsection{SetTimeCorrectionConfig}
-\texttt{SetTimeCorrectionConfig} Configures time correction mechanism.
+\telecommand{SetTimeCorrectionConfig}
 
-\subsubsection{Success response}
-Success response frame is of type \texttt{TimeCorrectionSuccessFrame} and contains no additional payload.
+\tccategory{PD}
+
+\subsection{General description}
+Telecommand \texttt{SetTimeCorrectionConfig} configures time correction mechanism. See \nameref{obc:proc:time-correction} for more details.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} 
+\begin{itemize}
+	\item Mission time calculation is changed
+	\item Mission time can go faster or slower
+\end{itemize}
+
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Do not use unless problem with one of the clocks is confirmed
+	\item Set $\wMcu = 0$ n order to disable internal MCU clock
+	\item Set $\wRtc = 0$ in order to disable external RTC clock	
+	\item Never set $\wMcu = 0$ and $\wRtc = 0$  - it will freeze time
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{SetTimeCorrectionConfig}
+\TelecommandDeclaration{SetTimeCorrectionConfig}
+
+Parameters:
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{missionTimeWeight}{16 LE}{Value for \hyperref[sec:time-wMcu]{$\wMcu$}}
+    \tcarg{externalTimeWeight}{16 LE}{Value for \hyperref[sec:time-wRtc]{$\wRtc$}}
+\end{tcarglist}
+
+Notice:
+\begin{itemize}
+    \item Setting \texttt{externalTimeWeight} to 0 means disabling external RTC's influence on mission time. Mission time will be measured by internal MCU clock alone.
+    \item Setting \texttt{missionTimeWeight} to 0 means disabling internal MCU clock's influence on mission time. Mission time will still be measured by internal MCU clock (ticks), but each time the correction procedure is run, the time will be reset to value indicated by external RTC.
+    \item Both \texttt{missionTimeWeight} and \texttt{externalTimeWeight} cannot be 0.
+\end{itemize}
+
+\subsection{Responses}
+\responseFrame{TimeCorrectionSuccessFrame}
+\ResponseApid{TimeCorrectionSuccessFrame}
+Correlated success response frame is of type \texttt{TimeCorrectionSuccessFrame} and contains no additional payload.
 
 \subsubsection{Error response}
-Error frame is of type \texttt{TimeCorrectionErrorFrame} and contains error code:
+\ResponseApid{TimeCorrectionErrorFrame}
+Correlated error frame is of type \texttt{TimeCorrectionErrorFrame} and contains error code:
 
 \begin{tabular}{r | l}
     Error code & Value \\
@@ -21,48 +68,9 @@ Error frame is of type \texttt{TimeCorrectionErrorFrame} and contains error code
     
 \end{tabular}
 
-\subsubsection{Definition}
-\ctor{SetTimeCorrectionConfig}
+\subsection{Example usage}
+\paragraph{Disable external RTC clock} $\wRtc = 0$ $\wMcu = 1$ Correlation ID = 22
+\exampleCall{SetTimeCorrectionConfig(22, 1, 0)}
 
-Arguments: 
-
-\begin{tabular}{r | l | l}
-    Argument                    & Description               & Size [bits] \\
-    \hline
-    \texttt{correlation\_id}    & Correlation id            & 8 \\
-    \texttt{missionTimeWeight}  & Value for \hyperref[sec:time-wMcu]{$\wMcu$} & 16 LE \\
-    \texttt{externalTimeWeight} & Value for \hyperref[sec:time-wRtc]{$\wRtc$} & 16 LE \\
-
-\end{tabular}
-
-Notice:
-\begin{itemize}
-    \item Setting \texttt{externalTimeWeight} to 0 means disabling external RTC's influence on mission time. Mission time will be measured by internal MCU clock alone.
-    \item Setting \texttt{missionTimeWeight} to 0 means disabling internal MCU clock's influence on mission time. Mission time will still be measured by internal MCU clock (ticks), but each time the correction procedure is run, the time will be reset to value indicated by external RTC.
-    \item Both \texttt{missionTimeWeight} and \texttt{externalTimeWeight} cannot be 0.
-\end{itemize}
-
-\subsection{Time Correction procedure}
-
-The final time correction is calculated using weighted sum from two deltas (based on measuring time from two sources):
-
-$\correctionValue = \frac{\wMcu \deltaMcu + \wRtc \deltaRtc}{\wMcu + \wRtc}$
-
-where:
-
-\begin{tabular}{r | l}
-    Symbol & Meaning \\
-    \hline
-    $\deltaMcu$ & time change according to microcontroller clock \\ 
-    $\deltaRtc$ & time change according to external real time clock \\
-    \label{sec:time-wMcu} $\wMcu$ & weight for $\deltaMcu$ \\
-    \label{sec:time-wRtc} $\wRtc$ & weight for $\deltaRtc$ \\
-\end{tabular}
-
-The maximum allowed value for $\correctionValue$ is 2 hours. If the $\correctionValue > 2 hours$ then the correction is abandoned and current time is assumed to be time indicated by microcontroller clock.
-
-
-\subsubsection{Example usage}
-Perform power cycle, correlation ID = 11
-\binaryForm{SetTimeCorrectionConfig(11, 8, 8)}
-
+\paragraph{Increase \textit{speed} of both clocks} $\wRtc = 2$ (RTC ticks twice as fast) $\wMcu = 0.5$ (MCU clock ticks three times faster) Correlation ID = 22
+\exampleCall{SetTimeCorrectionConfig(22, 3, 2)}
