@@ -1,5 +1,5 @@
 % !TeX spellcheck = en_US
-\documentclass{article}
+\documentclass{book}
 
 \usepackage[a4paper,margin=1in,lmargin=0.5in,rmargin=0.5in]{geometry}
 \usepackage{pythontex}
@@ -53,12 +53,10 @@ import response_frames
 \begin{document}
 \maketitle
 
-\newpage
 
 \tableofcontents
-\newpage
 
-\section{Telecommands}
+\chapter{Telecommands}
 \input{telecommands/telecommand-essentials.tex}
 \input{telecommands/concepts.tex}
 \input{telecommands/ping.tex}
@@ -66,10 +64,10 @@ import response_frames
 \input{telecommands/power-cycle.tex}
 \input{telecommands/compile-info.tex}
 
-\section{Response Frames}
+\chapter{Response Frames}
 \input{response-frames/compile-info.tex}
 
-\section{OBC procedures}
+\chapter{OBC procedures}
 \input{obc-procedures/power-cycle.tex}
 
 \newpage

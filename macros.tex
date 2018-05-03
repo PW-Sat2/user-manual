@@ -13,7 +13,7 @@
 
 \newcommand{\TelecommandApid}[1]{
 	\begin{description}
-		\item[Telecommand Apid]: \texttt{\pyc{get_uplink_apid(telecommand.#1)}}
+		\item[Telecommand APID]: \texttt{\pyc{get_uplink_apid(telecommand.#1)}}
 	\end{description}
 }
 
@@ -29,11 +29,13 @@
 }
 
 \newcommand{\telecommand}[1]{
-	\refsection{#1}
+	\section{#1}
+	\label{#1}
 }
 
 \newcommand{\responseFrame}[1]{
-	\refsection{#1}
+	\section{#1}
+	\label{#1}
 }
 
 \newcommand{\None}{None. }

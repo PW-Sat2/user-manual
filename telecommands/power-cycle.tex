@@ -1,8 +1,8 @@
-\subsection{Power cycle}
+\section{Power cycle}
 
 \tccategory{PD}
 
-\subsubsection{General description}
+\subsection{General description}
 \texttt{PowerCycle} performs full satellite power cycle using EPS. Power cycle attempts will performed according to \nameref{obcproc:powercycle} procedure. Just before performing power cycle success frame is sent to acknowledge receipt of telecommand. It \textbf{does not} indicate that power cycle was successful.
 
 Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power cycle was successful processing will be stopped after issuing \texttt{PowerCycle()}.
@@ -49,7 +49,7 @@ Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power c
 	\item Perform power cycles during long sessions to be able to verify that satellite is back in operational state
 \end{itemize}
 
-\subsubsection{Responses}
+\subsection{Responses}
 
 \paragraph{PowerSuccessFrame}
 \ResponseApid{PowerSuccessFrame}
@@ -63,7 +63,8 @@ Correlated response frame \texttt{PowerErrorFrame} represents error. Error code 
 	\item[\texttt{0x02}] Power cycle error (\OBC execution was not terminated after issuing power cycle command)
 \end{description}
 
-\subsubsection{Definition}
+\subsection{Definition}
+\TelecommandApid{PowerCycleTelecommand}
 \ctor{PowerCycleTelecommand}
 
 Arguments: 
@@ -71,7 +72,7 @@ Arguments:
 	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
 \end{description}
 
-\subsubsection{Example usage}
+\subsection{Example usage}
 Perform power cycle, correlation ID = 11
 \binaryForm{PowerCycleTelecommand(11)}
 
