@@ -13,9 +13,6 @@ def get_uplink_apid(telecommandType):
     x = telecommandType.__new__(telecommandType)
     print('0x%02X' % x.apid())
 
-def dump_apid(tc):
-    print format(tc.apid(), '02X')
-
 
 def get_downlink_apid(responseFrameType):
     x = responseFrameType.__new__(responseFrameType)
