@@ -1,3 +1,6 @@
-output
-aux-files
+output/
+aux-files/
+.vscode/
 *.pyc
+*.pdf
+
