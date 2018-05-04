@@ -77,7 +77,7 @@
 		{PD}{
 			\begin{coloriconbox}{\faWarning}{potentiallydangerousbackground}
 				\textbf{Potentially dangerous telecommand}\\
-				This telecommand has impact on satellite. Rethink twice before using it!
+				This telecommand has impact on satellite. Think twice before using it!
 			\end{coloriconbox}
 		}%
 		{S}{
@@ -88,3 +88,12 @@
 		}
 	}[\PackageError{tree}{Undefined telecommand category: #1}{}]%
 }
+
+\newenvironment{tcarglist}
+	{
+		\begin{tabular}{l | r | l}
+			Argument                    & Size [bits] & Description \\
+			\hline
+	}{\end{tabular}}
+
+\newcommand{\tcarg}[3]{\texttt{#1} & #2 & #3 \\}
