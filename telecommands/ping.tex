@@ -1,17 +1,30 @@
 \telecommand{PingTelecommand}
+
+\tccategory{S}
+
+\subsection{General description}
 \texttt{Ping} can be used to test communication with satellite without causing any side-effects. If understood correctly it always responds with \texttt{PONG}.
 
-\subsection{Success response}
-This telecommand always responds with success frame \texttt{PongFrame}
+\paragraph{Known issues} \mbox{} \\
+\None
 
-\subsection{Error response}
-None.
+\paragraph{Side effects} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+This telecommand can be used to check that satellite is receiving and decoding telecommands correctly. Useful as a first stage of establishing a communication session.
 
 \subsection{Definition}
+\TelecommandApid{PingTelecommand}
 \ctor{PingTelecommand}
 
+No parameters are required for this telecommand. Any additional payload added at the byte level (after the APID) is silently ignored by \OBC.
 
-\subsection{Example usage}
-Create ping telecommand.
+\subsection{Responses}
 
-\binaryForm{PingTelecommand()}
+\paragraph{PongFrame}
+\ResponseApid{PongFrame}
+This telecommand always responds with \texttt{PongFrame} carrying text \texttt{PONG} as payload.
