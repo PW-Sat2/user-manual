@@ -1,16 +1,18 @@
-\telecommand{SetBitrate}
+\telecommand{Set bitrate}
 
 \tccategory{PD}
 
 \subsection{General description}
 \texttt{SetBitrate} telecommand allows changing bitrate of transmitted frames (downlink). After receiving telecommand OBC will send command directly for COMM module. 
 
+\warn{Higher bitrate results in weaker signal.}
+
 \paragraph{Known issues}
 \begin{itemize}
 	\item It is not determinable if response will be sent using changed bitrate
 	\item Bitrate change can affect frames already in COMM buffer. Responses scheduled (put in COMM queue) before changing bitrate can be sent using new speed.
 	\item After COMM restart (e.g.\ watchdog or power cycle) bitrate is set to default value (1200 bps)
-	\item Bitrate value is NOT verified
+	\item Bitrate value is \textbf{NOT} verified - it must be one of valid values
 \end{itemize}
 
 \paragraph{Side effects} 
@@ -48,6 +50,8 @@ Bitrate values:
 	\texttt{0x04} & 4800 bps \\
 	\texttt{0x08} & 9600 bps
 \end{tabular}
+
+\warn{Using value different than listed above is \textbf{undefined behavior}}
 
 \subsection{Responses}
 

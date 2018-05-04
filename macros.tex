@@ -23,19 +23,14 @@
 	\end{description}
 }
 
-\newcommand{\refsection}[1]{
-	\subsection{#1}
-	\label{#1}
-}
-
 \newcommand{\telecommand}[1]{
 	\section{#1}
 	\label{tc:#1}
 }
 
 \newcommand{\responseFrame}[1]{
-	\section{#1}
-	\label{#1}
+	\paragraph{#1}
+	\label{tc:response:#1}
 }
 
 \newcommand{\obcproc}[1]{
@@ -45,7 +40,7 @@
 
 \newcommand{\None}{None. }
 
-\newcommand{\pwsat}{Pw-Sat2 }
+\newcommand{\pwsat}{PW-Sat2 }
 
 \newcommand{\OBC}{OBC }
 
@@ -97,3 +92,5 @@
 	}{\end{tabular}}
 
 \newcommand{\tcarg}[3]{\texttt{#1} & #2 & #3 \\}
+
+\newcommand{\warn}[1]{\faWarning\mbox{} #1}
