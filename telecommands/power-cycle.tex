@@ -1,5 +1,9 @@
-\subsection{Power cycle}
-\texttt{PowerCycle} performs full satellite power cycle using EPS. Power cycle attempts will performed according to \nameref{obcproc:powercycle} procedure. Just before performing power cycle success frame is sent to acknowledge receipt of telecommand. It \textbf{does not} indicate that power cycle was successful.
+\telecommand{Power cycle}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{PowerCycle} performs full satellite power cycle using EPS. Power cycle attempts will performed according to \nameref{obc:proc:Power cycle} procedure. Just before performing power cycle success frame is sent to acknowledge receipt of telecommand. It \textbf{does not} indicate that power cycle was successful.
 
 Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power cycle was successful processing will be stopped after issuing \texttt{PowerCycle()}.
 
@@ -24,25 +28,60 @@ Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power c
 	\label{fig:tc:powercycle}
 \end{figure}
 
-\subsubsection{Success response}
-Success response frame is of type \texttt{PowerSuccessFrame} and contains no additional payload.
-
-\subsubsection{Error response}
-Error frame is of type \texttt{PowerErrorFrame} and contains error code:
+\paragraph{Known issues}
 \begin{itemize}
-	\item Malformed (too short) telecommand - error code 1
-	\item Failed to power cycle - error code 2
+	\item Confirmation response frame might not be sent if power cycle will be faster than COMM module
+	\item It is not possible to force usage of specific EPS controller to perform power cycle. If control over used EPS controller is required, RawI2CTelecommand should be used.\todo{Describe RawI2CTelecommand}
 \end{itemize}
 
-\subsubsection{Definition}
+\paragraph{Side effects}
+\begin{itemize}
+	\item Satellite is power cycled. 
+	\item No communication in the next few minutes.
+\end{itemize}
+
+\paragraph{Usage limitations}\mbox{}\\ 
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Plan regular power cycles
+	\item Perform power cycles during long sessions to be able to verify that satellite is back in operational state
+\end{itemize}
+
+
+\subsection{Definition}
+\TelecommandApid{PowerCycleTelecommand}
 \ctor{PowerCycleTelecommand}
 
-Arguments: 
-\begin{description}[labelindent=1cm]
-	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
-\end{description}
+Parameters: 
 
-\subsubsection{Example usage}
+\begin{tabular}{r | l | l}
+	Argument                    & Size [bits] & Description \\
+	\hline
+	\texttt{correlation\_id}    & 8 		  &	Correlation ID \\
+\end{tabular}
+
+
+\subsection{Responses}
+
+\paragraph{PowerSuccessFrame}
+\ResponseApid{PowerSuccessFrame}
+Correlated response frame \texttt{PowerSuccessFrame} confirms that telecommand was received and Power Cycle will be performed. It DOES NOT mean that power cycle was successful. No extra payload is carried in this response frame.
+
+\paragraph{PowerErrorFrame}
+\ResponseApid{PowerErrorFrame}
+Correlated response frame \texttt{PowerErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{0x01} & Malformed (too short) telecommand \\
+	\texttt{0x02} & Power cycle error (\OBC execution was not terminated after issuing power cycle command) \\
+	
+\end{tabular}
+
+\subsection{Example usage}
 Perform power cycle, correlation ID = 11
 \binaryForm{PowerCycleTelecommand(11)}
 

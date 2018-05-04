@@ -1,5 +1,5 @@
 % !TeX spellcheck = en_US
-\documentclass{article}
+\documentclass{book}
 
 \usepackage[a4paper,margin=1in,lmargin=0.5in,rmargin=0.5in]{geometry}
 \usepackage{pythontex}
@@ -15,6 +15,10 @@
 \usepackage{pgf-umlsd}
 \usepackage{underscore}
 \usepgflibrary{arrows}
+\usepackage{pifont,mdframed}
+\usepackage{fontawesome}
+\usepackage{xstring}
+\usepackage{titlesec}
 
 \setlist[description]{leftmargin=1cm,labelindent=0cm}
 
@@ -37,6 +41,12 @@ import response_frames
 	linkcolor=blue
 }
 
+\titleformat{\subsection}
+{\normalfont\large\bfseries}   % The style of the section title
+{}                             % a prefix
+{0pt}                          % How much space exists between the prefix and the title
+{}  
+
 %opening
 \title{PW-Sat2\\User manual}
 \author{}
@@ -49,22 +59,21 @@ import response_frames
 \begin{document}
 \maketitle
 
-\newpage
 
 \tableofcontents
-\newpage
 
-\section{Telecommands}
+\chapter{Telecommands}
 \input{telecommands/telecommand-essentials.tex}
+\input{telecommands/concepts.tex}
 \input{telecommands/ping.tex}
 \input{telecommands/set-bitrate.tex}
 \input{telecommands/power-cycle.tex}
 \input{telecommands/compile-info.tex}
 
-\section{Response Frames}
+\chapter{Response Frames}
 \input{response-frames/compile-info.tex}
 
-\section{OBC procedures}
+\chapter{OBC procedures}
 \input{obc-procedures/power-cycle.tex}
 
 \newpage
