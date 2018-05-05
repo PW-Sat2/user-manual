@@ -18,7 +18,7 @@ It's not possible to change interval of periodic message without changing its co
 Periodic message can cause increased power usage. Before enabling make sure that enough power can be provided.
 
 \paragraph{Recommendations for operation team} \mbox{} \\
-Before enabling periodic message make sure that enough power can be provided.
+Before enabling periodic message make sure that enough power can be provided. \todo{Describe how periodic message affects power usage}.
 
 \subsection{Definition}
 \TelecommandApid{SetPeriodicMessageTelecommand}
@@ -36,11 +36,16 @@ Parameters:
 \subsection{Responses}
 \responseFrame{PeriodicSetSuccessFrame}
 \ResponseApid{PeriodicSetSuccessFrame}
-Correlated success response frame is of type \texttt{PeriodicSetSuccessFrame} and contains single byte of value 0.
+Correlated success response frame is of type \texttt{PeriodicSetSuccessFrame} is sent after periodic message settings have been saved correctly.
 
 \responseFrame{PeriodicSetErrorFrame}
 \ResponseApid{PeriodicSetErrorFrame}
-Error frame is of type \texttt{PeriodicSetErrorFrame} and contains 1 byte of value 1. It can be caused by malformed (too short) telecommand or by empty periodic message - error code 1.
+Error frame is of type \texttt{PeriodicSetErrorFrame} and contains error code. 
+
+\begin{tabular}{r | l}
+	Error code & Description \\ \hline
+	\texttt{0x01} & Malformed (too short) telecommand or empty periodic message
+\end{tabular}
 
 \subsubsection{Example usage}
 Set periodic message "We are The Borg", sent twice every 5 minutes. Correlation ID = 11:
