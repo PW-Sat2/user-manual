@@ -1,36 +1,79 @@
-\telecommand{SetBitrate}
-\texttt{SetBitrate} telecommand allows changing bitrate of transmitted frames (downlink). After receiving telecommand OBC will send command directly for COMM module. It is unclear if response will be sent using previous or changed bitrate. 
+\telecommand{Set bitrate}
 
-\subsection{Success response}
-Success response is sent when COMM accepted command. It might or might not be sent with updated bitrate.
+\tccategory{PD}
 
-\subsection{Error response}
-Error responswe can sent in following situations:
+\subsection{General description}
+\texttt{SetBitrate} telecommand allows changing bitrate of transmitted frames (downlink). After receiving telecommand OBC will send command directly for COMM module. 
+
+\warn{Higher bitrate results in weaker signal.}
+
+\paragraph{Known issues}
 \begin{itemize}
-	\item Malformed (too short) telecommand - error code -1
-	\item Failed to deliver command to COMM module - error code -2
+	\item It is not determinable if response will be sent using changed bitrate
+	\item Bitrate change can affect frames already in COMM buffer. Responses scheduled (put in COMM queue) before changing bitrate can be sent using new speed.
+	\item After COMM restart (e.g.\ watchdog or power cycle) bitrate is set to default value (1200 bps)
+	\item Bitrate value is \textbf{NOT} verified - it must be one of valid values
+\end{itemize}
+
+\paragraph{Side effects} 
+\begin{itemize}
+	\item Downlink frames will be sent with changed bitrate.
+\end{itemize}
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Use higher bitrate for faster data transmission
+	\item Use higher bitrate for reduced power usage
+	\item Use lower bitrate for more reliable transmission
 \end{itemize}
 
 \subsection{Definition}
+\TelecommandApid{SetBitrate}
 \ctor{SetBitrate}
 
-Arguments: 
-\begin{description}[labelindent=1cm]
-	\item[\texttt{correlation\_id}] - Correlation ID (8-bit number)
-	\item[\texttt{bitrate}] - Desired bitrate (8-bit number) 
-\end{description}
+Parameters: 
+
+\begin{tcarglist}	
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{bitrate}{8}{Desired bitrate (see list below for exact values)}
+\end{tcarglist}
 
 Bitrate values:
-\begin{itemize}
-	\item 1200 bps - 1
-	\item 2400 bps - 2
-	\item 4800 bps - 4
-	\item 9600 bps - 8
-\end{itemize}
 
+\begin{tabular}{r | l}
+	Hex value & bitrate \\ \hline
+	\texttt{0x01} & 1200 bps \\
+	\texttt{0x02} & 2400 bps \\
+	\texttt{0x04} & 4800 bps \\
+	\texttt{0x08} & 9600 bps
+\end{tabular}
+
+\warn{Using value different than listed above is \textbf{undefined behavior}}
+
+\subsection{Responses}
+
+\paragraph{CommSuccessFrame}
+\ResponseApid{CommSuccessFrame}
+
+Correlated frame of type \texttt{CommSuccessFrame} indicates that command was successfully delivered to COMM module. It is not determinable if this frame will be sent with updated bitrate.
+
+\paragraph{CommErrorFrame}
+\ResponseApid{CommSuccessFrame}
+
+Correlated frame of type \texttt{CommErrorFrame} indicates error during telecommand processing. Error code value carries failure reason
+
+\begin{tabular}{r | l}
+	Error code & Description \\ \hline
+	-1 		& Malformed (too short) telecommand \\
+	-2 		& Failed to deliver command to COMM module
+\end{tabular}
 
 \subsection{Example usage}
-Set bitrate to 9600bps, correlation ID = 11
-\binaryForm{SetBitrate(11, 8)}
+Set bitrate to 9600 bps (\texttt{bitrate=0x08}) and use correlation ID \texttt{11} (\texttt{correlation\_id=11}).
 
+\binaryForm{SetBitrate(11, 0x8)}
 
+If \texttt{CommSuccessFrame} is received, further communication should be performed using 9600 bps speed.
