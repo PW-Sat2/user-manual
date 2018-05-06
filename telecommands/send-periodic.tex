@@ -1,0 +1,54 @@
+\telecommand{Send Periodic Message}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{SendPeriodicMessageTelecommand} sends in response requested number of Periodic Message frames.
+
+By default sending Periodic Message is disabled for power management reasons.
+
+There is no Error Frame in case of errors.
+
+\paragraph{Known issues}
+\begin{itemize}
+	\item \warn{Requesting more than 40 frames will trigger \todo{COMM Hang Prevention System} that will cause COMM reset and resetting queue of frames to be send. That may cause communication data loss.}
+	\item Operator can request up to 255 periodic frames.
+\end{itemize}
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Above nominal power consumption and transmitter heating.
+\end{itemize}
+
+\paragraph{Usage limitations}\mbox{}\\ 
+This command should not be used when battery level is low.
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item \textbf{Do not} request more than 40 frames and be careful when requesting more than 20. You should not hit limit of 40 frames in COMM TX Queue.
+	\item Monitor power usage and transmitter temperature during Idle State.
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{SendPeriodicMessageTelecommand}
+\ctor{SendPeriodicMessageTelecommand}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{count}{8}{Number of Periodic Messages to be send}
+\end{tcarglist}
+
+\subsection{Responses}
+
+\paragraph{PeriodicMessageFrame}
+\ResponseApid{PeriodicMessageFrame}
+Correlated response frame \texttt{PeriodicMessageFrame} contains just Periodic message.
+
+Default content is: \\
+\texttt{We are the Borg. Lower your shields and surrender your ships. We will add your biological and \\
+technological distinctiveness to our own. Your culture will adapt to service us. Resistance is futile.}
+
+\subsection{Example usage}
+Send Periodic Message 6 times.
+\binaryForm{SendPeriodicMessageTelecommand(6)}
