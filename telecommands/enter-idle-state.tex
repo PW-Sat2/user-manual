@@ -1,0 +1,71 @@
+\telecommand{Enter Idle State}
+
+\tccategory{D}
+
+\subsection{General description}
+\texttt{EnterIdleState} telecommand allows switching COMM to Idle State mode for given time.
+
+In this mode when Transmitter is idle it will continuously transmit Idle Sequence (0x7E) to help the ground receiver to lock.
+When Mission Time advances to time set in telecommand, COMM restart or Power Cycle the Idle State is automatically disabled.
+
+\warn{Leaving satellite in this state too long will discharge battery and may cause transmitter overheating and failure.}
+\\\\
+Success frame indicates that transmitter entered Idle State.
+
+\paragraph{Known issues}
+\begin{itemize}
+	\item Maximum Idle Time duration is 255 seconds (4 m 15 s)
+	\item All response error codes return the same value.
+	\item Time of disabling Idle State is based on Mission Time, not some specialized timer. That may introduce small variations in time.
+\end{itemize}
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item \warn{Above nominal power consumption and transmitter heating.}
+\end{itemize}
+
+\paragraph{Usage limitations}\mbox{}\\ 
+This command should not be used when battery level is low.
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item \textbf{Do not} leave Idle State active beyond communication window.
+	\item Monitor power usage and transmitter temperature during Idle State.
+	\item If possible use repeated \todo{Send Beacon} or \nameref{tc:Ping} telecommand instead.
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{EnterIdleState}
+\ctor{EnterIdleState}
+
+Parameters: 
+
+\begin{tabular}{r | l | l}
+	Argument                    & Size [bits] & Description \\
+	\hline
+	\texttt{correlation\_id}    & 8 		  &	Correlation ID \\
+	\texttt{duration}			& 8 		  & Time in seconds how long COMM should be kept in Idle State
+\end{tabular}
+
+\subsection{Responses}
+
+\paragraph{CommSuccessFrame}
+\ResponseApid{CommSuccessFrame}
+Correlated response frame \texttt{CommSuccessFrame} confirms that telecommand was received COMM entered Idle State.
+
+\paragraph{CommErrorFrame}
+\ResponseApid{CommErrorFrame}
+Correlated response frame \texttt{CommErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{0x01} & Malformed (too short) telecommand \\ 
+	 			  & Failed to read current time for setting timeout \\
+				  & Failed to enter Idle State by COMM
+	
+\end{tabular}
+
+\subsection{Example usage}
+Enter Idle State for 2 minute 15 seconds (135 seconds), correlation ID = 11
+\binaryForm{EnterIdleState(11, 135)}

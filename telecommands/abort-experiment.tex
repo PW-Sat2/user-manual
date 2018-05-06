@@ -1,0 +1,66 @@
+\telecommand{Abort Experiment}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{AbortExperiment} telecommand aborts currently running experiment.\\
+Success frame does not indicate that abort was successful.\\
+If no experiment is running, the command is ignored.\\
+The abort \textbf{is not} immediate, it is executed during next loop of \nameref{obc:proc:Experiment loop}.
+
+\paragraph{Known issues}
+\begin{itemize}
+	\item Some experiments [\todo{List of such experiments?}] are written in one loop iteration so they can't be aborted.
+	\item Operation is not immediate. State change is applied during next Mission Loop iteration and next Experiment Loop iteration.
+\end{itemize}
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Experiment is not fully executed.
+	\item Result of Experiment is unpredictable (generated files, executed actions)
+	\item Subsystems started during experiment execution may be left in undefined state (enabled, not fully commissioned, ...).
+\end{itemize}
+
+\paragraph{Usage limitations}\mbox{}\\ 
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Check Experiment's manual for possible effects of aborting.
+	\item Plan additional steps in next session to retrieve state of satellite.
+	\item Nominal state of subsystems can be reverted by \nameref{obc:proc:Power cycle}.
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{AbortExperiment}
+\ctor{AbortExperiment}
+
+Parameters: 
+
+\begin{tabular}{r | l | l}
+	Argument                    & Size [bits] & Description \\
+	\hline
+	\texttt{correlation\_id}    & 8 		  &	Correlation ID \\
+\end{tabular}
+
+\subsection{Responses}
+
+\paragraph{ExperimentSuccessFrame}
+\ResponseApid{ExperimentSuccessFrame}
+Correlated response frame \texttt{ExperimentSuccessFrame} confirms that telecommand was received and Abort of Experiment will be performed. It DOES NOT mean that it has be succesfully executed.
+No extra payload is carried in this response frame.
+
+\paragraph{ExperimentErrorFrame}
+\ResponseApid{ExperimentErrorFrame}
+Correlated response frame \texttt{ExperimentErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{0x01} & Malformed (too short) telecommand \\
+	
+\end{tabular}
+
+\subsection{Example usage}
+Abort experiment, correlation ID = 11
+\binaryForm{AbortExperiment(11)}
