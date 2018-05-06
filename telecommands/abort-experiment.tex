@@ -1,4 +1,4 @@
-\telecommand{AbortExperiment}
+\telecommand{Abort Experiment}
 
 \tccategory{PD}
 
@@ -18,7 +18,7 @@ The abort \textbf{is not} immediate, it is executed during next loop of \nameref
 \begin{itemize}
 	\item Experiment is not fully executed.
 	\item Result of Experiment is unpredictable (generated files, executed actions)
-	\item Subsystems started during experiment execution may be left .
+	\item Subsystems started during experiment execution may be left in undefined state (enabled, not fully commissioned, ...).
 \end{itemize}
 
 \paragraph{Usage limitations}\mbox{}\\ 
@@ -28,6 +28,7 @@ The abort \textbf{is not} immediate, it is executed during next loop of \nameref
 \begin{itemize}
 	\item Check Experiment's manual for possible effects of aborting.
 	\item Plan additional steps in next session to retrieve state of satellite.
+	\item Nominal state of subsystems can be reverted by \nameref{obc:proc:Power cycle}.
 \end{itemize}
 
 \subsection{Definition}
