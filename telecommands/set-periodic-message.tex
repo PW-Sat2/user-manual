@@ -1,0 +1,52 @@
+\telecommand{SetPeriodicMessage}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{SetPeriodicMessageTelecommand} sets periodic message. Periodic message settings are stored in Persistent State. To retrieve current settings, use \texttt{GetPersistentState} telecommand. 
+
+\paragraph{Known issues} \mbox{} \\
+It's not possible to change interval of periodic message without changing its content.
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Periodic message is enabled
+	\item Increased power usage
+\end{itemize}
+
+\paragraph{Usage limitations} \mbox{} \\
+Periodic message can cause increased power usage. Before enabling make sure that enough power can be provided.
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+Before enabling periodic message make sure that enough power can be provided. \todo{Describe how periodic message affects power usage}.
+
+\subsection{Definition}
+\TelecommandApid{SetPeriodicMessageTelecommand}
+\ctor{SetPeriodicMessageTelecommand}
+
+Parameters:
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{interval\_minutes}{8}{Interval between sending messages, in minutes}
+	\tcarg{repeat\_count}{8}{Number of messages to send at once}
+	\tcarg{message}{max 200 * 8 (String)}{Message payload}
+\end{tcarglist}
+
+\subsection{Responses}
+\responseFrame{PeriodicSetSuccessFrame}
+\ResponseApid{PeriodicSetSuccessFrame}
+Correlated success response frame is of type \texttt{PeriodicSetSuccessFrame} is sent after periodic message settings have been saved correctly.
+
+\responseFrame{PeriodicSetErrorFrame}
+\ResponseApid{PeriodicSetErrorFrame}
+Error frame is of type \texttt{PeriodicSetErrorFrame} and contains error code. 
+
+\begin{tabular}{r | l}
+	Error code & Description \\ \hline
+	\texttt{0x01} & Malformed (too short) telecommand or empty periodic message
+\end{tabular}
+
+\subsubsection{Example usage}
+Set periodic message "We are The Borg", sent twice every 5 minutes. Correlation ID = 11:
+\binaryForm{SetPeriodicMessageTelecommand(11, 5, 2, "We are The Borg")}
