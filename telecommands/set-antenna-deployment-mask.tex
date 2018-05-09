@@ -1,0 +1,66 @@
+\telecommand{SetAntennaDeploymentMask}
+
+\tccategory{D}
+
+\subsection{General description}
+\texttt{SetAntennaDeploymentMask} telecommand is capable of enabling/disabling \nameref{obc:proc:Antenna Deployment Process}.
+
+Deployment disabled flag is set immediately in \todo{Persistent State} and prevents any further deployment steps from executing. Deployment is not resumed after \OBC restart.
+
+\paragraph{Known issues}
+\begin{itemize}
+	\item Aborting deployment while it's already in progress can leave satellite in undetermined state (e.g.\ enabled LCLs)
+	\item Deployment process will be \textbf{resumed} (not restarted from step 0) if enabled again without \OBC restart
+\end{itemize}
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Antenna deployment is stopped
+	\item On next \OBC boot process will not be started
+\end{itemize}
+
+\paragraph{Usage limitations} 
+\begin{itemize}
+	\item Disable deployment process only if antennas are deployed correctly. 
+	\item Total burn time for ANT resistors is limited (300s, 100 burn cycles)
+\end{itemize}
+
+\paragraph{Recommendations for operation team} 
+\begin{itemize}
+	\item Disable deployment process as soon as stable communication is established to decrease power usage
+	\item Download telemetry gathered during deployment process to verify ANT module status
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{SetAntennaDeployment}
+\ctor{SetAntennaDeployment}
+
+Parameters:
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{deployment disabled}{boolean}{0 - deployment enabled, non-zero - deployment disabled}
+\end{tcarglist}
+
+\subsection{Responses}
+
+\responseFrame{StopAntennaDeploymentSuccessFrame}
+\ResponseApid{StopAntennaDeploymentSuccessFrame}
+
+Correlated success response frame is of type \texttt{StopAntennaDeploymentSuccessFrame} and contains single byte with value 0. If this frame is sent, change of deployment flag was successfully saved in \todo{Persistent State}.
+
+\responseFrame{StopAntennaDeploymentErrorFrame}
+\ResponseApid{StopAntennaDeploymentErrorFrame}
+
+Correlated error response frame type type is \texttt{StopAntennaDeploymentErrorFrame} and contains error code:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    -1 & Malformed request (i.e. missing parameters) \\
+    -2 & Unable to disable antenna deployment - cannot set persistent state
+\end{tabular}
+
+\subsection{Example usage}
+Disable antenna deployment process, respond with correlation ID 12
+\binaryForm{SetAntennaDeployment(12, 1)}
