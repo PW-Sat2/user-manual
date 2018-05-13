@@ -1,0 +1,74 @@
+\telecommand{Open Sail}
+
+\tccategory{D}
+
+\subsection{General description}
+\warn{\textbf{This is the abort mission command}. For planned usage send \todo{Sail Experiment}.} 
+
+\warn{This command likely ends mission} 
+
+\texttt{OpenSailTelecommand} schedules start of sail opening during next Mission Loop iteration (about 10 seconds later). 
+
+Additional parameter allows to ignore overheat protection in EPS.
+Nominally temperature on all LCL is controlled and they are switched off in case temperature would be to high. In case of emergency sail opening this protection should be turned off to maximize changes of successful deployment.
+
+Deployment procedure can be stopped by \todo{StopSailDeployment} telecommand.
+
+
+
+\paragraph{Known issues}
+\begin{itemize}
+	\item Sail can be deployed only once. 
+\end{itemize}
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Possible communication loss after sail will be deployed.
+    \item Possible high angular velocity of satellite after sail will be deployed.
+    \item High power consumption by IMTQ trying to stabilize angular velocity.
+    \item \warn{Possible end of mission}
+\end{itemize}
+
+\paragraph{Usage limitations}\mbox{}\\ 
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+    \item In case of earlier but planned sail opening, don't switch off the Overheat Protection.
+	\item In case of emergency deployment, switch off the Overheat Protection.
+	\item In case of failed deployment take cover from the Management team.
+\end{itemize}
+
+
+\subsection{Definition}
+\TelecommandApid{OpenSailTelecommand}
+\ctor{OpenSailTelecommand}
+
+Parameters: 
+
+\begin{tcarglist}
+    \tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{ignore\_overheat}{8}{Switch off Overheat Protection}
+\end{tcarglist}
+
+
+\subsection{Responses}
+
+\paragraph{SailSuccessFrame}
+\ResponseApid{SailSuccessFrame}
+Correlated response frame \texttt{SailSuccessFrame} confirms that telecommand was received and Open Sail was scheduled to execute. It DOES NOT mean that opening was successful. 
+
+\paragraph{SailErrorFrame}
+\ResponseApid{SailErrorFrame}
+Correlated response frame \texttt{SailErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{0x01} & Malformed (too short) telecommand \\
+\end{tabular}
+
+\subsection{Example usage}
+Open sail, correlation ID = 11, ignoring overheat protection.
+\binaryForm{OpenSailTelecommand(11,True)}
+
