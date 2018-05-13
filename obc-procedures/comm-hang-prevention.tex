@@ -1,0 +1,22 @@
+\obcproc{COMM Hang Prevention System}
+
+The COMM module has an issue when using built-in SetBeacon functionality.
+Under random conditions this command causes entering invalid state when COMM starts continuously transmitting synchronization frame (like in Idle Mode), and stops sending incoming regular frames.
+During this "hang" the Transmit Queue is filing with new messages to be send until the limit od 40 is reached.
+
+The Receiver is not affected by this issue and works correctly.
+
+The only solution is the power cycle of the Transmitter.
+
+This state is extremally dangerous to the satellite as it starts uncontrolled and constant power drain and heating of COMM module. 
+
+Except of not using SetBeacon functionality, the COMM Hang Prevention System was added.
+
+After each new frame send scheduling the two values are calculated:
+\begin{itemize}
+\item Difference between current time and previous frame send scheduling.
+\item Difference in number of items in Transmit Queue. 
+\end{itemize}
+
+If time between last send and current exceed 15 seconds and number of free slots in Transmit Queue is reduced, it means that no frame has been transmitted for 15 seconds so hang is likely occurring.
+Then Transmitter Reset is performed.

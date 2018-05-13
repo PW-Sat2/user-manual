@@ -11,7 +11,7 @@ There is no Error Frame in case of errors.
 
 \paragraph{Known issues}
 \begin{itemize}
-	\item \warn{Requesting more than 40 frames will trigger \todo{COMM Hang Prevention System} that will cause COMM reset and resetting queue of frames to be send. That may cause communication data loss.}
+	\item \warn{Requesting more than 40 frames will trigger \nameref{obc:proc:COMM Hang Prevention System} that will cause COMM reset and resetting queue of frames to be send. That may cause communication data loss.}
 	\item Operator can request up to 255 periodic frames.
 \end{itemize}
 
@@ -48,6 +48,7 @@ Correlated response frame \texttt{PeriodicMessageFrame} contains just Periodic m
 Default content is: \\
 \texttt{We are the Borg. Lower your shields and surrender your ships. We will add your biological and \\
 technological distinctiveness to our own. Your culture will adapt to service us. Resistance is futile.}
+Content can be set by \nameref{tc:SetPeriodicMessage}.
 
 \subsection{Example usage}
 Send Periodic Message 6 times.
