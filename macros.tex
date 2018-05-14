@@ -1,3 +1,9 @@
+%via https://tex.stackexchange.com/questions/257521/getting-colons-after-every-description-item-not-using-listing-package
+\let\svitem\item
+\newcommand\altitem[1][\relax]{\ifx\relax#1\svitem\else\svitem[#1:]\fi}
+\let\svdescription\description
+\def\description{\let\item\altitem\svdescription}
+
 \newcommand{\binaryForm}[1]{
 	\begin{description}
 		\item[Call] \hfill \\ \pyv{#1}
@@ -13,13 +19,13 @@
 
 \newcommand{\TelecommandApid}[1]{
 	\begin{description}
-		\item[Telecommand APID]: \texttt{\pyc{get_uplink_apid(telecommand.#1)}}
+		\item[Telecommand APID] \texttt{\pyc{get_uplink_apid(telecommand.#1)}}
 	\end{description}
 }
 
 \newcommand{\ResponseApid}[1]{
 	\begin{description}
-		\item[Frame APID]: \texttt{\pyc{get_downlink_apid(response_frames.#1)}}
+		\item[Frame APID] \texttt{\pyc{get_downlink_apid(response_frames.#1)}}
 	\end{description}
 }
 
@@ -47,7 +53,6 @@
 \definecolor{dangerousbackground}{RGB}{224, 105, 116}
 \definecolor{potentiallydangerousbackground}{RGB}{249, 210, 92}
 \definecolor{safebackground}{RGB}{97, 226, 127}
-
 
 \newenvironment{warning}
 {\par\begin{mdframed}[linecolor=black, backgroundcolor=warningbackground]
