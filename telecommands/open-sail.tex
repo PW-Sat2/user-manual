@@ -5,16 +5,14 @@
 \subsection{General description}
 \warn{\textbf{This is the abort mission command}. For planned usage send \todo{Sail Experiment}.} 
 
-\warn{This command likely ends mission} 
+\danger{\textbf{This command ends the mission.}}
 
 \texttt{OpenSailTelecommand} schedules start of sail opening during next Mission Loop iteration (about 10 seconds later). 
 
 Additional parameter allows to ignore overheat protection in EPS.
-Nominally temperature on all LCL is controlled and they are switched off in case temperature would be to high. In case of emergency sail opening this protection should be turned off to maximize changes of successful deployment.
+Nominally temperature on all LCL is controlled and they are switched off in case temperature would be to high. In case of emergency sail opening this protection should be turned off to maximize chances of successful deployment.
 
 Deployment procedure can be stopped by \todo{StopSailDeployment} telecommand.
-
-
 
 \paragraph{Known issues}
 \begin{itemize}
@@ -23,18 +21,20 @@ Deployment procedure can be stopped by \todo{StopSailDeployment} telecommand.
 
 \paragraph{Side effects}
 \begin{itemize}
-	\item Possible communication loss after sail will be deployed.
-    \item Possible high angular velocity of satellite after sail will be deployed.
-    \item High power consumption by IMTQ trying to stabilize angular velocity.
-    \item \warn{Possible end of mission}
+	\item Almost certain communication loss after sail will be deployed.
+    \item Expected high angular velocity (${\sim}200$ deg/s) of satellite after deployment.
+    \item Negative energy balance caused by rotation with expected battery depletion in 1.5 days. 
+    \item \danger{\textbf{End of mission}}
 \end{itemize}
 
-\paragraph{Usage limitations}\mbox{}\\ 
-\None
+\paragraph{Usage limitations}
+\begin{itemize}
+	\item If iMTQ is turned on, try to turn it off before opening the sail.
+\end{itemize}
 
 \paragraph{Recommendations for operation team}
 \begin{itemize}
-    \item In case of earlier but planned sail opening, don't switch off the Overheat Protection.
+    \item In case of earlier but planned sail opening, don't switch off the Overheat Protection. OPER team should monitor actual temperatures before sail opening.
 	\item In case of emergency deployment, switch off the Overheat Protection.
 	\item In case of failed deployment take cover from the Management team.
 \end{itemize}
@@ -42,7 +42,7 @@ Deployment procedure can be stopped by \todo{StopSailDeployment} telecommand.
 
 \subsection{Definition}
 \TelecommandApid{OpenSailTelecommand}
-\ctor{OpenSailTelecommand}
+\TelecommandDeclaration{OpenSailTelecommand}
 
 Parameters: 
 
@@ -70,5 +70,5 @@ Correlated response frame \texttt{SailErrorFrame} represents error. Error code i
 
 \subsection{Example usage}
 Open sail, correlation ID = 11, ignoring overheat protection.
-\binaryForm{OpenSailTelecommand(11,True)}
+\exampleCall{OpenSailTelecommand(11,True)}
 
