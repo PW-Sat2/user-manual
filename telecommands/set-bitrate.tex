@@ -55,15 +55,15 @@ Bitrate values:
 
 \subsection{Responses}
 
-\paragraph{CommSuccessFrame}
-\ResponseApid{CommSuccessFrame}
+\paragraph{SetBitrateSuccessFrame}
+\ResponseApid{SetBitrateSuccessFrame}
 
-Correlated frame of type \texttt{CommSuccessFrame} indicates that command was successfully delivered to COMM module. It is not determinable if this frame will be sent with updated bitrate.
+Correlated frame of type \texttt{SetBitrateSuccessFrame} indicates that command was successfully delivered to COMM module. It is not determinable if this frame will be sent with updated bitrate.
 
-\paragraph{CommErrorFrame}
-\ResponseApid{CommSuccessFrame}
+\paragraph{SetBitrateErrorFrame}
+\ResponseApid{SetBitrateSuccessFrame}
 
-Correlated frame of type \texttt{CommErrorFrame} indicates error during telecommand processing. Error code value carries failure reason
+Correlated frame of type \texttt{SetBitrateErrorFrame} indicates error during telecommand processing. Error code value carries failure reason
 
 \begin{tabular}{r | l}
 	Error code & Description \\ \hline
