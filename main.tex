@@ -1,65 +1,12 @@
 % !TeX spellcheck = en_US
 \documentclass{book}
-
-\usepackage[a4paper,margin=1in,lmargin=0.5in,rmargin=0.5in]{geometry}
-\usepackage{pythontex}
-\usepackage{cprotect}
-\usepackage[english]{babel}
-\usepackage{blindtext}
-\usepackage[parfill]{parskip}
-\usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
-\usepackage{titlepic}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{pgf-umlsd}
-\usepackage{underscore}
-\usepgflibrary{arrows}
-\usepackage{pifont,mdframed}
-\usepackage{fontawesome}
-\usepackage{xstring}
-\usepackage{titlesec}
-\usepackage{textcomp}
-
-\setlist[description]{leftmargin=1cm,labelindent=0cm}
-
-\setpythontexoutputdir{.} 
-
-\begin{pythontexcustomcode}[begin]{py}
-import sys
-sys.path.append('../obc/integration_tests')
-sys.path.append('..')
-
-pytex.add_dependencies('../helpers.py') 
-from helpers import *
-
-import telecommand
-import response_frames
-\end{pythontexcustomcode}
-
-\hypersetup{
-	colorlinks=true,
-	linkcolor=blue
-}
-
-\titleformat{\subsection}
-{\normalfont\large\bfseries}   % The style of the section title
-{}                             % a prefix
-{0pt}                          % How much space exists between the prefix and the title
-{}  
-
-%opening
-\title{PW-Sat2\\User manual}
-\author{}
-
-\titlepic{\includegraphics[width=0.7\textwidth]{image.png}}
+\input{settings.tex}
 
 \input{macros.tex}
 \input{todo.tex}
 
 \begin{document}
 \maketitle
-
 
 \tableofcontents
 
