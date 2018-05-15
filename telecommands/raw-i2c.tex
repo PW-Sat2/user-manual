@@ -1,0 +1,104 @@
+\telecommand{Raw I2C Transfer}
+
+\tccategory{D}
+
+\subsection{General description}
+
+\danger{This is "admin mode" command. You can do everything possible on I2C, including bricking satellite.}
+
+\warn{This command requires knowledge about I2C communication and protocol.}
+
+\texttt{RawI2C} performs raw data transfer on selected I2C bus.
+Two modes are available:
+\begin{itemize}
+	\item Direct Write-Read, when no delay between operations are provided.
+	\item Write-Delay-Read, for some devices that not correctly implement I2C Standard. 
+\end{itemize}
+\todo{List of devices that require I2C Write-Delay-Read mode}.
+
+\paragraph{Known issues}
+\begin{itemize}
+	\item Success response frame is sent even if I2C transfer failed. Then error code is in first byte of response.
+	\item Length of returned data is not provided. 
+	\item Maximum length of returned buffer is 230 bytes. 
+\end{itemize}
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item \warn{This is command allowing direct interaction with hardware. Side effects can't be listed in advance.}
+\end{itemize}
+
+\paragraph{Usage limitations}\mbox{}\\ 
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+    \item Don't use it unless you \textbf{really} have to.
+    \item Be familiar with I2C addressing and data transfers.
+    \item Check documentation about parameters and possible side effects.
+	\item Double check you provide correct data.
+	\item Check first byte of response - there can be error indicator.
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{RawI2C}
+\TelecommandDeclaration{RawI2C}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{busSelect}{8}{Selected bus. (see list below for avaiable values)}
+	\tcarg{address}{8}{Device address.}
+	\tcarg{delay}{16}{Delay in ms between Write and Read operations.}
+	\tcarg{data}{max 190 * 8}{Data to write.}
+\end{tcarglist}
+
+Available buses:
+
+\begin{tabular}{r | l}
+	Hex value & selected bus \\ \hline
+	\texttt{0x00} & System Bus. \\
+	\texttt{0x01} & Payload Bus. \\
+	\texttt{default} & Error. 
+\end{tabular}
+
+\subsection{Responses}
+
+\paragraph{I2CSuccessFrame}
+\ResponseApid{I2CSuccessFrame}
+Correlated response frame \texttt{I2CSuccessFrame} confirms that telecommand was received and I2C transfer has ended. It does not mean that transfer is successful.
+
+First byte of response is status indicator:
+
+\begin{tabular}{r | l | l}
+	Status indicator & Code & Description \\
+	\hline
+	\texttt{0} & OK & Transfer completed successfully. \\
+	\texttt{-1} & Nack & NACK received during transfer. \\
+	\texttt{-2} & BusErr & Bus error during transfer (misplaced START/STOP). \\
+	\texttt{-3} & ArbLost & Arbitration lost during transfer. \\
+	\texttt{-4} & UsageFault & Usage fault. \\
+	\texttt{-5} & SwFault & Software fault. \\
+	\texttt{-6} & Timeout & Timeout error. \\
+	\texttt{-7} & LineLatched & SCL or SDA line is latched low at the end of transfer. \\
+	\texttt{-8} & Failure & General I2C error. \\
+	\texttt{-9} & LineAlreadyLatched & SCL or SDA line is latched low before transfer. \\
+\end{tabular}
+
+Remaining part of response frame is zero-initialized buffer with data read on I2C bus. 
+
+\paragraph{I2CErrorFrame}
+\ResponseApid{I2CErrorFrame}
+Correlated response frame \texttt{I2CErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{0x01} & Malformed (too short) telecommand \\
+	\texttt{0x02} & Unknown bus selected \\
+\end{tabular}
+
+\subsection{Example usage}
+Reset COMM transmitter, correlation ID = 11, System bus (0), Address = 97, delay = 100 ms, data = 170 (reset command code)
+\exampleCall{RawI2C(11, 0, 97, 100, [170])}
