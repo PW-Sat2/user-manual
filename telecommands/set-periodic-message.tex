@@ -22,7 +22,7 @@ Before enabling periodic message make sure that enough power can be provided. \t
 
 \subsection{Definition}
 \TelecommandApid{SetPeriodicMessageTelecommand}
-\ctor{SetPeriodicMessageTelecommand}
+\TelecommandDeclaration{SetPeriodicMessageTelecommand}
 
 Parameters:
 
@@ -49,4 +49,4 @@ Error frame is of type \texttt{PeriodicSetErrorFrame} and contains error code.
 
 \subsubsection{Example usage}
 Set periodic message "We are The Borg", sent twice every 5 minutes. Correlation ID = 11:
-\binaryForm{SetPeriodicMessageTelecommand(11, 5, 2, "We are The Borg")}
+\exampleCall{SetPeriodicMessageTelecommand(11, 5, 2, "We are The Borg")}

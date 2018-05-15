@@ -4,13 +4,13 @@
 \let\svdescription\description
 \def\description{\let\item\altitem\svdescription}
 
-\newcommand{\binaryForm}[1]{
+\newcommand{\exampleCall}[1]{
 	\begin{description}
-		\item[Call] \hfill \\ \pyv{#1}
+		\item[Call] \hfill \\ \pyv{#1} \pyc{validate_tc(telecommand.#1)}
 	\end{description}
 }
 
-\newcommand{\ctor}[1]{
+\newcommand{\TelecommandDeclaration}[1]{
 	\begin{description}
 		\item[Declaration] \hfill \\ \texttt{\pyc{dump_ctor(telecommand.#1)}}
 	\end{description}

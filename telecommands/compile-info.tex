@@ -19,7 +19,7 @@ Always send this telecommand after uploading new software version or rebooting i
 
 \subsection{Definition}
 \TelecommandApid{GetCompileInfoTelecommand}
-\ctor{GetCompileInfoTelecommand}
+\TelecommandDeclaration{GetCompileInfoTelecommand}
 
 No parameters are required for this telecommand.
 
@@ -62,7 +62,7 @@ In case single \texttt{CompileInfoFrame} will not be able to hold entire version
 \subsection{Examples}
 Get version info of currently running \OBC software
 
-\binaryForm{GetCompileInfoTelecommand()}
+\exampleCall{GetCompileInfoTelecommand()}
 
 For current version of flight software it should return:
 \begin{verbatim}

@@ -33,7 +33,7 @@ Deployment disabled flag is set immediately in \todo{Persistent State} and preve
 
 \subsection{Definition}
 \TelecommandApid{SetAntennaDeployment}
-\ctor{SetAntennaDeployment}
+\TelecommandDeclaration{SetAntennaDeployment}
 
 Parameters:
 
@@ -63,4 +63,4 @@ Correlated error response frame type type is \texttt{StopAntennaDeploymentErrorF
 
 \subsection{Example usage}
 Disable antenna deployment process, respond with correlation ID 12
-\binaryForm{SetAntennaDeployment(12, 1)}
+\exampleCall{SetAntennaDeployment(12, 1)}
