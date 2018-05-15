@@ -1,0 +1,68 @@
+\usepackage[a4paper,margin=1in,lmargin=0.5in,rmargin=0.5in]{geometry}
+\usepackage{pythontex}
+\usepackage{cprotect}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[parfill]{parskip}
+\usepackage{enumitem}
+\usepackage[hidelinks,
+    pdfauthor={PW-Sat2 Team},
+    pdftitle={PW-Sat2 satellite operation user manual},
+    pdfsubject={Earth CubeSat user manual},
+    pdfkeywords={PW-Sat2, CubeSat, space, user manual, Warsaw University of Technology}]{hyperref}
+\usepackage{titlepic}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepackage{underscore}
+\usepgflibrary{arrows}
+\usepackage{pifont,mdframed}
+\usepackage{fontawesome}
+\usepackage{xstring}
+\usepackage{titlesec}
+\usepackage{textcomp}
+\usepackage{authoraftertitle}
+
+% Header and footer settings
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\MyAuthor}
+\fancyhead[RE,LO]{\MyTitle}
+\fancyfoot[CE,CO]{\leftmark}
+\fancyfoot[LE,RO]{\thepage}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\setlist[description]{leftmargin=1cm,labelindent=0cm}
+
+\setpythontexoutputdir{.} 
+
+\begin{pythontexcustomcode}[begin]{py}
+import sys
+sys.path.append('../obc/integration_tests')
+sys.path.append('..')
+
+pytex.add_dependencies('../helpers.py') 
+from helpers import *
+
+import telecommand
+import response_frames
+\end{pythontexcustomcode}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	bookmarks=true
+}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}   % The style of the section title
+{}                             % a prefix
+{0pt}                          % How much space exists between the prefix and the title
+{}  
+
+%Metadata
+\title{PW-Sat2 satellite operation user manual}
+\author{PW-Sat2 Team}
+
+\titlepic{\includegraphics[width=0.7\textwidth]{img/pwsat2-logo}}
