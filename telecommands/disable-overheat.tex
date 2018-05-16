@@ -1,0 +1,70 @@
+\telecommand{DisableOverheatSubmode}
+
+\tccategory{D}
+
+\subsection{General description}
+\texttt{DisableOverheatSubmode} telecommand can be used to disable EPS overheat submode for selected controller.
+
+\paragraph{Known issues} 
+\begin{itemize}
+	\item Overheat submode can be enabled only by restarting EPS controller
+	\item Only one controller can instructed in single telecommand
+	\item Power cycles ordered by OBC are favoring single controller which may result in prolonged disabled overheat submode for other controller.
+	\item It is not possible to determine if overheat submode is disabled
+\end{itemize}
+
+\paragraph{Side effects} 
+\begin{itemize}
+	\item EPS will \textbf{NOT} detect overheating and may be damaged resulting in mission loss.
+\end{itemize}
+
+\paragraph{Usage limitations}\mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Use only if overheat detection could result in critical procedure (emergency sail opening)
+	\item Before issuing confirm that overheat detection is not reliable (i.e.\ temperature sensor malfunction)
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{DisableOverheatSubmode}
+\TelecommandDeclaration{DisableOverheatSubmode}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{controller}{8}{EPS controller selector (see table below)}
+\end{tcarglist}
+
+EPS controllers: 
+
+\begin{tabular}{r|l}
+	\texttt{controller} parameter & Controller \\ \hline
+	0 & Controller A \\
+	1 & Controller B
+\end{tabular}
+
+\subsection{Responses}
+\responseFrame{DisableOverheatSubmodeSuccessFrame}
+\ResponseApid{DisableOverheatSubmodeSuccessFrame}
+Correlated response frame \texttt{DisableOverheatSubmodeSuccessFrame} confirms that EPS was instructed to disable overheat submode.
+
+\paragraph{DisableOverheatSubmodeErrorFrame}
+\ResponseApid{DisableOverheatSubmodeErrorFrame}
+Correlated response frame \texttt{DisableOverheatSubmodeSuccessFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	1 & Malformed (too short) telecommand \\ 
+	2 & Failed to instruct EPS controller to disable overheat submode
+	
+\end{tabular}
+
+
+\subsection{Example usage}
+Disable overheat submode for EPS controller B (\texttt{controller=1}), use correlation ID 0x44
+
+\exampleCall{DisableOverheatSubmode(0x44, 1)}
