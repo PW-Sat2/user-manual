@@ -47,6 +47,8 @@ Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power c
 \begin{itemize}
 	\item Plan regular power cycles
 	\item Perform power cycles during long sessions to be able to verify that satellite is back in operational state
+	\item Following telemetry counters should be incremented after power cycle: \texttt{OBC_Startup_BootCounter}, \texttt{EPS_A_PowerCycleCounter}, \texttt{EPS_B_PowerCycleCounter}
+	\item Following telemetry fields should be reset after power cycle: \texttt{OBC_Uptime}, \texttt{EPS_A_Uptime}, \texttt{EPS_B_Uptime}, \texttt{IMTQ_State_Uptime}
 \end{itemize}
 
 
