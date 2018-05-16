@@ -1,9 +1,6 @@
 % !TeX spellcheck = en_US
 \documentclass{book}
 \input{settings.tex}
-\usepackage{hyperref}
-}
-
 
 \input{macros.tex}
 \input{todo.tex}
@@ -11,10 +8,7 @@
 \begin{document}
 \maketitle
 
-{
-	\hypersetup{linkcolor=black}
-	\tableofcontents
-}
+\tableofcontents
 
 \chapter{Telecommands}
 \input{telecommands/categories.tex}
@@ -37,10 +31,8 @@
 
 \chapter{OBC procedures}
 \input{obc-procedures/power-cycle.tex}
-
-\section{Reference}
-\input{obc-reference/error-counters.tex}
-\input{obc-reference/persistent-state.tex}
+\input{obc-procedures/error-counters.tex}
+\input{obc-procedures/persistent-state.tex}
 \input{obc-procedures/experiment-loop.tex}
 \input{obc-procedures/periodic-message.tex}
 \input{obc-procedures/antenna-deployment.tex}

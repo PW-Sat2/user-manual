@@ -1,7 +1,7 @@
-\refsection{Persistent State}
+\obcproc{Persistent State}
 
 Persistent state is stored on 3 FRAM \texttt{fm25w} chips using TMR. 
-It can be retrieved using \nameref{GetPersistentState} telecommand.
+It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
 
 \subsubsection{Stored variables}
 
@@ -18,7 +18,7 @@ It can be retrieved using \nameref{GetPersistentState} telecommand.
     \hline
     SailState                   & currentState                  & Sail opening state & 8 \\
     \hline
-    ErrorCountersConfigState    & 14 error counters             & Value of each \hyperref[sec:ref-errorcounters]{error counter} & 14 * 32 LE \\
+    ErrorCountersConfigState    & 14 error counters             & Value of each \nameref{obc:proc:Error Counters} & 14 * 32 LE \\
     \hline
     AdcsState                   & internalDetumblingDisabled    & Flag indicating whether the internal detumbling is disabled & 8 \\
     \hline
