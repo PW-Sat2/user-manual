@@ -1,5 +1,5 @@
-def dump_tc(tc):
-    print ' '.join([format(x, '02X') for x in tc.build()])
+def validate_tc(tc):
+    tc.build()
 
 def dump_ctor(telecommandType):
     import inspect

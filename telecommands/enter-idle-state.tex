@@ -36,7 +36,7 @@ This command should not be used when battery level is low.
 
 \subsection{Definition}
 \TelecommandApid{EnterIdleState}
-\ctor{EnterIdleState}
+\TelecommandDeclaration{EnterIdleState}
 
 Parameters: 
 
@@ -68,4 +68,4 @@ Correlated response frame \texttt{CommErrorFrame} represents error. Error code i
 
 \subsection{Example usage}
 Enter Idle State for 2 minute 15 seconds (135 seconds), correlation ID = 11
-\binaryForm{EnterIdleState(11, 135)}
+\exampleCall{EnterIdleState(11, 135)}

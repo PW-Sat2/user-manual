@@ -32,7 +32,7 @@
 
 \subsection{Definition}
 \TelecommandApid{SetBitrate}
-\ctor{SetBitrate}
+\TelecommandDeclaration{SetBitrate}
 
 Parameters: 
 
@@ -74,6 +74,6 @@ Correlated frame of type \texttt{SetBitrateErrorFrame} indicates error during te
 \subsection{Example usage}
 Set bitrate to 9600 bps (\texttt{bitrate=0x08}) and use correlation ID \texttt{11} (\texttt{correlation\_id=11}).
 
-\binaryForm{SetBitrate(11, 0x8)}
+\exampleCall{SetBitrate(11, 0x8)}
 
 If \texttt{CommSuccessFrame} is received, further communication should be performed using 9600 bps speed.
