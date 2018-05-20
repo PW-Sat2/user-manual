@@ -6,21 +6,20 @@
 
 \danger{This is "admin mode" command. You can do everything possible on I2C, including bricking satellite.}
 
-\warn{This command requires knowledge about I2C communication and protocol.}
+\warn{This command requires knowledge about I2C communication and protocol, hardware internals, subsystem operations and data protocols.}
 
 \texttt{RawI2C} performs raw data transfer on selected I2C bus.
 Two modes are available:
 \begin{itemize}
 	\item Direct Write-Read, when no delay between operations are provided.
-	\item Write-Delay-Read, for some devices that not correctly implement I2C Standard. 
+	\item Write-Delay-Read, for some devices that require special timing during communication. 
 \end{itemize}
 \todo{List of devices that require I2C Write-Delay-Read mode}.
 
 \paragraph{Known issues}
 \begin{itemize}
 	\item Success response frame is sent even if I2C transfer failed. Then error code is in first byte of response.
-	\item Length of returned data is not provided. 
-	\item Maximum length of returned buffer is 230 bytes. 
+	\item OBC always reads from device 230 bytes (full frame). Operator should know response data length meaningful for provided command.
 \end{itemize}
 
 \paragraph{Side effects}
@@ -36,7 +35,8 @@ Two modes are available:
     \item Don't use it unless you \textbf{really} have to.
     \item Be familiar with I2C addressing and data transfers.
     \item Check documentation about parameters and possible side effects.
-	\item Double check you provide correct data.
+	\item Double check you provide correct data and device address.
+	\item \warn{Test command on flatsat.}
 	\item Check first byte of response - there can be error indicator.
 \end{itemize}
 
