@@ -45,8 +45,16 @@ Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power c
 
 \paragraph{Recommendations for operation team}
 \begin{itemize}
-	\item Plan regular power cycles
-	\item Perform power cycles during long sessions to be able to verify that satellite is back in operational state
+	\item Plan regular power cycles.
+	\item There will be no communication with sattelite during power cycle.
+	\item Perform power cycles during long sessions to be able to verify that satellite is back in operational state.
+	\item Expected OBC telemetry state after successfull power cycle: incremented \texttt{OBC_Startup_BootCounter} field and reset \texttt{OBC_Uptime} field. 
+	\item Only one of the EPS controllers will perform it's power cycle. 
+		\begin{itemize} 
+			\item If Controller A rebooted, then \texttt{EPS_A_PowerCycleCounter} field will be incremented and \texttt{EPS_A_Uptime} will be reset.
+			\item If Controller B rebooted, then \texttt{EPS_B_PowerCycleCounter} field will be incremented and \texttt{EPS_B_Uptime} will be reset.
+		\end{itemize}	
+	\item Expected IMTQ telemetry state after successfull power cycle: reset \texttt{IMTQ_State_Uptime} field.	
 \end{itemize}
 
 

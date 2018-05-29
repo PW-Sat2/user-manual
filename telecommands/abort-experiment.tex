@@ -29,6 +29,7 @@ The abort \textbf{is not} immediate, it is executed during next loop of \nameref
 	\item Check Experiment's manual for possible effects of aborting.
 	\item Plan additional steps in next session to retrieve state of satellite.
 	\item Nominal state of subsystems can be reverted by \nameref{obc:proc:Power cycle}.
+	\item When experiment is stopped, the \texttt{OBC_Experiments_Code} telemetry field should be set to 0 (No experiment), \texttt{OBC_Experiments_LastIterationStatus} should be set to 3 (Failure).
 \end{itemize}
 
 \subsection{Definition}

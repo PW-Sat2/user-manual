@@ -15,7 +15,7 @@
 	\item Bitrate value is \textbf{NOT} verified - it must be one of valid values
 \end{itemize}
 
-\paragraph{Side effects} 
+\paragraph{Side effects}
 \begin{itemize}
 	\item Downlink frames will be sent with changed bitrate.
 \end{itemize}
@@ -25,9 +25,11 @@
 
 \paragraph{Recommendations for operation team}
 \begin{itemize}
-	\item Use higher bitrate for faster data transmission
-	\item Use higher bitrate for reduced power usage
-	\item Use lower bitrate for more reliable transmission
+	\item Use higher bitrate for faster data transmission.
+	\item Use higher bitrate for reduced power usage.
+	\item Use lower bitrate for more reliable transmission.
+	\item After changing the bitrate, \texttt{COMM_TX_Bitrate} telemetry field should be set to the same value as passed in \texttt{bitrate} parameter.
+	\item After changing the bitrate, check radio spectrum for visible change.
 \end{itemize}
 
 \subsection{Definition}
