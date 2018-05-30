@@ -1,0 +1,22 @@
+\obcproc{Mission Time}
+\todo{Describe mission time}
+
+\subsection{Time correction}\label{obc:proc:time-correction}
+\todo{Describe time correction}
+
+The time correction is calculated using weighted sum from two deltas (based on measuring time from two sources):
+
+$\correctionValue = \frac{\wMcu \deltaMcu + \wRtc \deltaRtc}{\wMcu + \wRtc}$
+
+where:
+
+\begin{tabular}{r | l}
+	Symbol & Meaning \\
+	\hline
+	$\deltaMcu$ & time change according to microcontroller clock \\ 
+	$\deltaRtc$ & time change according to external real time clock \\
+	\label{sec:time-wMcu} $\wMcu$ & weight for $\deltaMcu$ \\
+	\label{sec:time-wRtc} $\wRtc$ & weight for $\deltaRtc$ \\
+\end{tabular}
+
+The maximum allowed value for $\correctionValue$ is 2 hours. If the $\correctionValue > 2 h$ then the correction is abandoned and current time is assumed to be time indicated by microcontroller clock.

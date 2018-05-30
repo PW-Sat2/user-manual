@@ -1,0 +1,76 @@
+\newcommand{\deltaMcu}{\Delta t_{\mu C}}
+\newcommand{\deltaRtc}{\Delta t_{RTC}}
+\newcommand{\wMcu}{w_{\mu C}}
+\newcommand{\wRtc}{w_{RTC}}
+\newcommand{\correctionValue}{\Delta t}
+
+\telecommand{SetTimeCorrectionConfig}
+
+\tccategory{PD}
+
+\subsection{General description}
+Telecommand \texttt{SetTimeCorrectionConfig} configures time correction mechanism. See \nameref{obc:proc:time-correction} for more details.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} 
+\begin{itemize}
+	\item Mission time calculation is changed
+	\item Mission time can go faster or slower
+\end{itemize}
+
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Do not use unless problem with one of the clocks is confirmed
+	\item Set $\wMcu = 0$ n order to disable internal MCU clock
+	\item Set $\wRtc = 0$ in order to disable external RTC clock	
+	\item Never set $\wMcu = 0$ and $\wRtc = 0$  - it will freeze time
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{SetTimeCorrectionConfig}
+\TelecommandDeclaration{SetTimeCorrectionConfig}
+
+Parameters:
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{missionTimeWeight}{16 LE}{Value for \hyperref[sec:time-wMcu]{$\wMcu$}}
+    \tcarg{externalTimeWeight}{16 LE}{Value for \hyperref[sec:time-wRtc]{$\wRtc$}}
+\end{tcarglist}
+
+Notice:
+\begin{itemize}
+    \item Setting \texttt{externalTimeWeight} to 0 means disabling external RTC's influence on mission time. Mission time will be measured by internal MCU clock alone.
+    \item Setting \texttt{missionTimeWeight} to 0 means disabling internal MCU clock's influence on mission time. Mission time will still be measured by internal MCU clock (ticks), but each time the correction procedure is run, the time will be reset to value indicated by external RTC.
+    \item Both \texttt{missionTimeWeight} and \texttt{externalTimeWeight} cannot be 0.
+\end{itemize}
+
+\subsection{Responses}
+\responseFrame{TimeCorrectionSuccessFrame}
+\ResponseApid{TimeCorrectionSuccessFrame}
+Correlated success response frame is of type \texttt{TimeCorrectionSuccessFrame} and contains no additional payload.
+
+\subsubsection{Error response}
+\ResponseApid{TimeCorrectionErrorFrame}
+Correlated error frame is of type \texttt{TimeCorrectionErrorFrame} and contains error code:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    -1 & Cannot set time correction configuration with both weights equal to 0 \\
+    -2 & Error when setting the persistent state value for time configuration \\
+    
+\end{tabular}
+
+\subsection{Example usage}
+\paragraph{Disable external RTC clock} $\wRtc = 0$ $\wMcu = 1$ Correlation ID = 22
+\exampleCall{SetTimeCorrectionConfig(22, 1, 0)}
+
+\paragraph{Increase \textit{speed} of both clocks} $\wRtc = 2$ (RTC ticks twice as fast) $\wMcu = 0.5$ (MCU clock ticks three times faster) Correlation ID = 22
+\exampleCall{SetTimeCorrectionConfig(22, 3, 2)}
