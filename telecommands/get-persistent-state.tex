@@ -1,0 +1,36 @@
+\telecommand{Get Persistent State}
+
+\tccategory{S}
+
+\subsection{General description}
+\texttt{GetPersistentState} retrieves current content of satellite's \nameref{obc:proc:Persistent State}. 
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+When storing retrieved persistent state data, note the exact date and time of retrival. 
+
+\subsection{Definition}
+\TelecommandApid{GetPersistentState}
+\TelecommandDeclaration{GetPersistentState}
+
+No parameters are required for this telecommand.
+
+\subsection{Responses}
+\responseFrame{PersistentStateFrame}
+\ResponseApid{PersistentStateFrame}
+
+Response frame is of type \texttt{PersistentStateFrame} will contain entire persistent state. There's no correlation id for this telecommand.
+
+Response frame will contain all variables as defined in \nameref{obc:proc:Persistent State}. All variables will be sent in first frame. Since \texttt{MessageState::message} can have up to 200 bytes, if it doesn't fit in the first frame, second frame will be sent with the rest of the message.
+
+\subsection{Example usage}
+Retrieve persistent state:
+\exampleCall{GetPersistentState()}
