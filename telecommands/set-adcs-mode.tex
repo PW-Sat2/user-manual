@@ -7,9 +7,10 @@
 
 \paragraph{Known issues}
 \begin{itemize}
-    \item \danger \texttt{ExperimentalDetumbling} mode's tests have shown that they are unstable.
-    DO NOT TURN ON experimental detumbling! It's harmful to satellite's power budget and may cause an overheat!
-    \item \danger \texttt{ExperimentalSunpointing} mode has not been implemented. DO NOT TURN ON ADCS experimental sun pointing!
+    \item \danger \texttt{ExperimentalDetumbling} mode's tests have shown that it is unstable. \\
+    \textbf{DO NOT TURN ON} experimental detumbling! It's harmful to satellite's power budget and may cause an overheat, tumbling and power loss! 
+    \item \danger \texttt{ExperimentalSunpointing} mode has not been implemented.  \\
+    \textbf{DO NOT TURN ON} ADCS experimental sun pointing!
     \item \warn Adcs has two "inactive" modes: \texttt{Stopped} and \texttt{Disabled}. There's almost no difference in effects, both will cause iMTQ to be powered off. However, if satellite is in \texttt{Disabled} mode, then it must first be set to \texttt{Stopped} before enabling detumbling.
 \end{itemize}
 
