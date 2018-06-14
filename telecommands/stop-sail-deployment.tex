@@ -3,25 +3,24 @@
 \tccategory{D}
 
 \subsection{General description}
-TODO
+\texttt{StopSailDeployment} disables sail deployment after each OBC restart. 
 
 
 \paragraph{Known issues}
 \begin{itemize}
-	\item TODO
+	\item Probably after sail deployment there will be no communication with satellite
 \end{itemize}
 
 \paragraph{Side effects}
 \begin{itemize}
-	\item TODO
+	\item Sail will not be opened after OBC restart
 \end{itemize}
 
-\paragraph{Usage limitations}\mbox{}\\ 
-TODO
+\paragraph{Usage limitations}\mbox{}\\ \None
 
 \paragraph{Recommendations for operation team}
 \begin{itemize}
-	\item TODO
+	\item Send this telecommand after confirming correct sail opening
 \end{itemize}
 
 
@@ -38,12 +37,22 @@ Parameters:
 
 \subsection{Responses}
 
-\paragraph{PowerSuccessFrame}
-\ResponseApid{PowerSuccessFrame}
-TODO
+\paragraph{StopSailDeploymentSuccessFrame}
+\ResponseApid{StopSailDeploymentSuccessFrame}
+Correlated response frame \texttt{StopSailDeploymentSuccessFrame} represents success.
 
+\paragraph{StopSailDeploymentErrorFrame}
+\ResponseApid{StopSailDeploymentErrorFrame}
+Correlated response frame \texttt{TimeSetErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{-1} & Malformed (too short) telecommand \\	
+	\texttt{-2} & Failed to disable sail opening \\	
+\end{tabular}
 
 \subsection{Example usage}
-Perform power cycle, correlation ID = 11
-\exampleCall{PowerCycleTelecommand(11)}
+Stop sail deployment, correlation ID = 11
+\exampleCall{StopSailDeployment(11)}
 
