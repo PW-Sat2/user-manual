@@ -1,27 +1,28 @@
 \telecommand{PurgePhotoTelecommand}
 
-\tccategory{PD}
+\tccategory{S}
 
 \subsection{General description}
-TODO
+\texttt{PurgePhotoTelecommand} purges current photo queue and resets photo service to it's default state. Disabling LCLs is done in asynchronous manner so success response for this telecommand \textbf{DOES NOT} indicate correct power off of cameras.
 
 
 \paragraph{Known issues}
 \begin{itemize}
-	\item TODO
+	\item If current photo processing has encountered serious error and is hanging purging photo queue \textbf{WILL NOT} solve that situation. Full power cycle is required.
+	\item Success response does not indicate that CAM LCLs have been turned off. This can be verified in telemetry.
 \end{itemize}
 
 \paragraph{Side effects}
 \begin{itemize}
-	\item TODO
+	\item Abort of queued photo operations
 \end{itemize}
 
-\paragraph{Usage limitations}\mbox{}\\ 
-TODO
+\paragraph{Usage limitations}\mbox{}\\ \None
 
 \paragraph{Recommendations for operation team}
 \begin{itemize}
-	\item TODO
+	\item Use this command to ensure empty photo processing pipeline before queueing another photo operation.
+	\item Wait for response before queueing next operation
 \end{itemize}
 
 
@@ -38,12 +39,22 @@ Parameters:
 
 \subsection{Responses}
 
-\paragraph{PowerSuccessFrame}
-\ResponseApid{PowerSuccessFrame}
-TODO
+\paragraph{PurgePhotoSuccessFrame}
+\ResponseApid{PurgePhotoSuccessFrame}
+Correlated response frame \texttt{PurgePhotoSuccessFrame} represents success. 
+
+\paragraph{PurgePhotoErrorFrame}
+\ResponseApid{PurgePhotoErrorFrame}
+Correlated response frame \texttt{PurgePhotoErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{1} & Malformed (too short) telecommand \\	
+\end{tabular}
 
 
 \subsection{Example usage}
-Perform power cycle, correlation ID = 11
-\exampleCall{PowerCycleTelecommand(11)}
+Purge photo queue, correlation ID = 11
+\exampleCall{PurgePhotoTelecommand(11)}
 
