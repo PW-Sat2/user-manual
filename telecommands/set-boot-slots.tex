@@ -1,0 +1,94 @@
+\section{Set boot slots}
+
+\tccategory{D}
+
+\subsection{General description}
+\texttt{SetBootSlots} telecommand allows switching boot slots used for booting OBC. 
+
+There are 6 boot slots storing exact copies of OBC firmware. They are divided into 2 groups: 3 Main slots and 3 Failsafe slots. 
+The parameters are bitmasks where 3 slots for each group must be chosen.
+
+Bootloader using TMR boots main program from Main Slots or after 10 failed attempts from Failsafe Slots.
+There als also two special cases: Upper Boot Slot, using during development and Safe Mode boot slot used during abnormal conditions.
+
+\paragraph{Known issues}
+\begin{itemize}
+    \item \danger{It is possible to set the same slots as Main and Failsafe.}
+	\item \danger{It is possible to set UpperBoot slot and SafeMode slot as Main or Failsafe.}
+	\item Change is not reflected in telemetry as value in telemetry says from which slots program was started, not what is stored in those slots.
+\end{itemize}
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Main and Failsafe slots are changed.
+	\item Next reboot will use new vales of slots.
+\end{itemize}
+
+\paragraph{Usage limitations} 
+\begin{itemize}
+	\item Should be used only during emergency scenarios and during software upload process.
+\end{itemize}
+
+\paragraph{Recommendations for operation team} 
+\None
+
+\subsection{Definition}
+\TelecommandApid{SetBootSlots}
+\TelecommandDeclaration{SetBootSlots}
+
+Parameters:
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{primary}{8 bit mask}{Arithmetical OR of 3 values below}
+	\tcarg{failsafe}{8 bit mask}{Arithmetical OR of 3 values below}
+\end{tcarglist}
+
+Values for \texttt{primary} and \texttt{failsafe} arguments:
+
+\begin{tabular}{r | r | l}
+    Value (Bin) & Value (Hex) & Slot \\
+    \hline
+	0b00000001 & 0x01 & Slot 0 \\
+	0b00000010 & 0x02 & Slot 1 \\
+	0b00000100 & 0x04 & Slot 2 \\
+	0b00001000 & 0x08 & Slot 3 \\
+	0b00010000 & 0x10 & Slot 4 \\
+	0b00100000 & 0x20 & Slot 5 \\
+	0b01000000 & 0x40 & \danger{Safe Mode Slot} \\
+	0b10000000 & 0x80 & \danger{Upper Boot Slot} \\
+\end{tabular}
+
+\subsection{Responses}
+
+\responseFrame{BootSlotsInfoSuccessFrame}
+\ResponseApid{BootSlotsInfoSuccessFrame}
+
+Correlated success response frame is of type \texttt{BootSlotsInfoSuccessFrame} and contains 3 bytes: 
+
+\begin{tabular}{l | l}
+    Item & value \\
+    \hline
+	Success indicator & 0 \\
+	Current value of Main slots & values as in above table \\
+	Current value of Failsafe slots & values as in above table \\
+\end{tabular}
+
+If this frame is sent, change of boot slots was successfully saved in \todo{Boot Settings}.
+
+\responseFrame{BootSlotsInfoErrorFrame}
+\ResponseApid{BootSlotsInfoErrorFrame}
+
+Correlated error response frame type type is \texttt{BootSlotsInfoErrorFrame} and contains error code:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    0xE0 (224) & Malformed request (i.e. missing parameters) \\
+    0xE1 (225) & Invalid Main Bootslots - cannot set persistent state \\
+    0xE2 (226) & Invalid Failsafe Bootslots - cannot set persistent state \\
+\end{tabular}
+
+\subsection{Example usage}
+Set boot slots, respond with correlation ID 12, Set slots 0, 1, 2 (0x07) as Main, 3, 4, 5 (0x38) as Failsafe
+\exampleCall{SetBootSlots(12, 0x7, 0x38)}
