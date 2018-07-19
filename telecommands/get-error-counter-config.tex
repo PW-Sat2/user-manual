@@ -1,0 +1,49 @@
+\telecommand{Get Error Counter Configuration}
+
+\tccategory{S}
+
+\subsection{General Description}
+\texttt{GetErrorCounterConfig} telecommand provides capability of accessing current
+\nameref{obc:proc:Error Counters} configuration. 
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+    \item Always use this command after \todo{Set Error Counter Configuration} telecommand 
+    to confirm that Error Counter configuration has been correctly updated.
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{GetErrorCounterConfig}
+\TelecommandDeclaration{GetErrorCounterConfig}
+
+No parameters are required for this telecommand.
+
+\subsection{Responses}
+\responseFrame{ErrorCountersFrame}
+\ResponseApid{ErrorCountersFrame}
+
+This frame contains full error counter configuration. This frame is composed of fourteen
+ exactly the same sections each of them composed as follows:
+
+\begin{tabular}{r| l | l}
+    Element     & Size in bytes & Description \\
+    \hline
+    Current     & 1 & Current Error Counter Value \\
+    Limit       & 1 & Error Counter Limit \\
+    Increment   & 1 & Value added to error counter value when new error occurs \\
+    Decrement   & 1 & Value subtracted from error counter value when device successfully responds \\
+\end{tabular}
+
+\subsection{Example usage}
+Get current Error Counter Configuration.
+
+\exampleCall{GetErrorCounterConfig()}
