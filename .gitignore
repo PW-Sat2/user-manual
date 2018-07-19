@@ -3,4 +3,4 @@ aux-files/
 .vscode/
 *.pyc
 *.pdf
-
+*.synctex(busy)

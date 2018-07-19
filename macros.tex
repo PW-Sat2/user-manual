@@ -89,11 +89,11 @@
 }
 
 \newenvironment{tcarglist}
-	{
-		\begin{tabular}{l | r | l}
-			Argument                    & Size [bits] & Description \\
-			\hline
-	}{\end{tabular}}
+    {
+        \tabularx{\textwidth}{ l | r | X }
+            Argument                    & Size [bits] & Description \\
+            \hline 
+    }{\endtabularx}
 
 \newcommand{\tcarg}[3]{\texttt{#1} & #2 & #3 \\}
 
