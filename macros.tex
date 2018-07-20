@@ -33,6 +33,8 @@
 	\label{tc:#1}
 }
 
+\newcommand{\tcref}[1]{\nameref{tc:#1}}
+
 \newcommand{\responseFrame}[1]{
 	\paragraph{#1}
 	\label{tc:response:#1}
@@ -43,11 +45,7 @@
 	\label{obc:proc:#1}
 }
 
-\newcommand{\None}{None. }
-
-\newcommand{\pwsat}{PW-Sat2 }
-
-\newcommand{\OBC}{OBC }
+\newcommand{\procref}[1]{\nameref{obc:proc:#1}}
 
 \definecolor{dangerousbackground}{RGB}{224, 105, 116}
 \definecolor{potentiallydangerousbackground}{RGB}{249, 210, 92}
