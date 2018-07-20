@@ -1,0 +1,60 @@
+\telecommand{Perform Payload Commissioning Experiment}
+
+\tccategory{PD}
+\subsection{General description}
+\texttt{PerformPayloadCommissioningExperiment} can be used to request performing a payload 
+commissioning experiment at first given opportunity. 
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+This command overrides previously requested experiments that has not been started yet. 
+
+\paragraph{Usage limitations} \mbox{} \\
+This command does not ensure that payload commissioning experiment will be started 
+by the time that response is sent back to the operator. It only requests performing 
+an experiment, which will be done at earliest opportunity.
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+The experiment will overwrite selected output file if it already exists therefore ensure 
+that selected file does not already exists or is no longer needed or some important data
+may be lost.
+
+\subsection{Definition}
+\TelecommandApid{PerformPayloadCommissioningExperiment}
+\TelecommandDeclaration{PerformPayloadCommissioningExperiment}
+
+\begin{tcarglist}
+    \tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{file\_name}{up to 30 * 8}{Path to file that should contain experiments results}
+\end{tcarglist}
+
+\subsection{Responses}
+\ResponseApid{ExperimentSuccessFrame}
+\paragraph{ExperimentSuccessFrame}
+
+Correlated response frame \texttt{ExperimentSuccessFrame} confirming 
+that \radfet experiment performance has been requested.
+
+\paragraph{ExperimentErrorFrame}
+Correlated response frame \texttt{ExperimentErrorFrame} representing an error. 
+Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    \texttt{0x00}   & Success \\
+    \texttt{0x01}   & Malformed (too short) telecommand \\
+    \texttt{0x02}   & Another experiment may already be running \\
+\end{tabular}
+
+\subsection{Examples}
+Request performing payload commissioning experiment with results saved to 
+to '/payload' file with communication correlation id set to 20.
+
+\exampleCall{PerformPayloadCommissioningExperiment(
+    correlation_id=20,
+    file_name='/payload'
+)}
+
