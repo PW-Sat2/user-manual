@@ -1,0 +1,74 @@
+\telecommand{SetTime}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{SetTime} allows changing mission time to arbitrary values overriding time correction mechanism. Essentially it provides a way to ``jump through time'' both to future and past.
+
+After invoking this telecommand new mission time should be visible in telemetry.
+
+\paragraph{Known issues} \mbox{}\\
+\None
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Mission time is changed.
+	\item If mission time is moved beyond T=40 days, emergency sail opening will begin.
+\end{itemize}
+
+\paragraph{Usage limitations}
+\begin{itemize}
+	\item If sail opening procedure has already started, moving time backwards \textbf{WILL NOT} prevent sail from opening
+	\item Moving time back inside LEOP timeframe \textbf{WILL} start LEOP experiment again after OBC restart.
+\end{itemize}
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Use only to correct clock skews that slows mission time considerably (more than 25\%)
+	\item In case of major clock skews analyze time source measurements as it may indicating MCU clock/MCU RTC/external RTC failure. See \nameref{tc:SetTimeCorrectionConfig} for more information on how to disable RTCs.
+\end{itemize}
+
+
+\subsection{Definition}
+\TelecommandApid{SetTime}
+\TelecommandDeclaration{SetTime}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{new\_time}{32}{New mission time in seconds}
+\end{tcarglist}
+
+
+\subsection{Responses}
+
+\paragraph{TimeSetSuccessFrame}
+\ResponseApid{TimeSetSuccessFrame}
+Correlated response frame \texttt{TimeSetSuccessFrame} represents success and carries additional status of the set time operation:
+
+\begin{tabular}{r | l}
+	Status & Value \\
+	\hline
+	\texttt{0} & Operation performed correctly \\	
+	\texttt{1} & Failed to retrieve time from external RTC. Last known value has been used \\
+\end{tabular}
+
+\paragraph{TimeSetErrorFrame}
+\ResponseApid{TimeSetErrorFrame}
+Correlated response frame \texttt{TimeSetErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{-2} & Unable to set time \\	
+	\texttt{-3} & Cannot set time state \\	
+	\texttt{-4} & Unable to acquire time synchronization lock \\
+	\texttt{-5} & Cannot get time state \\
+\end{tabular}
+
+
+
+\subsection{Example usage}
+Set mission time to 20 days 13 hours 56 minutes 4 seconds (50164 seconds in total), correlation ID = 11
+\exampleCall{SetTime(11, datetime.timedelta(days=20, hours=13, minutes=56, seconds=4))}

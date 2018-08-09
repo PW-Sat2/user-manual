@@ -1,0 +1,72 @@
+\telecommand{PerformSailExperiment}
+
+\tccategory{D}
+
+\subsection{General description}
+\texttt{PerformSailExperiment} starts sail experiment. \todo{Describe sail experiment}
+
+\danger{\textbf{This command ends the mission.}}
+
+Although similar to \nameref{tc:Open Sail} this command schedules full SAIL experiment which gathers data and takes photos. SAIL opening procedure is the same as in \nameref{tc:Open Sail} (see \nameref{obc:proc:Sail Deployment Process}).
+
+\paragraph{Known issues} \mbox{} \\ \None
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item SAIL experiment is started.
+	\item A lot of frames are sent during experiment.
+	\item Increased power usage
+	\item End of mission
+	\item Very low probability of successful communication
+	\item A lot of photo files which causes longer boot and increased memory usage
+\end{itemize}
+
+\paragraph{Usage limitations}
+\begin{itemize}
+	\item Use only when satellite is in good condition
+\end{itemize}
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Use only when mission is going well.
+	\item If satellite condition indicate possible problems use \nameref{tc:Open Sail} to open sail without performing experiment.
+	\item Ensure proper power levels before performing experiment.
+	\item Prepare to receive a lot of frames during next 4 minutes.
+	\item Schedule data and photo download for next sessions (if possible)
+	\item When experiment is running, the \texttt{OBC_Experiments_Code} telemetry field should be set to 7 (SAIL experiment), \texttt{OBC_Experiments_LastIterationStatus} should be set to 2 (LoopImmediately) or 3 (WaitForNextCycle).
+\end{itemize}
+
+
+\subsection{Definition}
+\TelecommandApid{PerformSailExperiment}
+\TelecommandDeclaration{PerformSailExperiment}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+\end{tcarglist}
+
+
+\subsection{Responses}
+
+\paragraph{ExperimentSuccessFrame}
+\ResponseApid{ExperimentSuccessFrame}
+Correlated response frame \texttt{ExperimentSuccessFrame} represents success. 
+
+\paragraph{ExperimentErrorFrame}
+\ResponseApid{ExperimentErrorFrame}
+Correlated response frame \texttt{ExperimentErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{1} & Malformed (too short) telecommand \\	
+	\texttt{2} & Error while requesting experiment start \\	
+\end{tabular}
+
+
+\subsection{Example usage}
+Perform sail experiment, correlation ID = 11
+\exampleCall{PerformSailExperiment(11)}
+

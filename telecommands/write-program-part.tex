@@ -1,0 +1,79 @@
+\telecommand{WriteProgramPart}
+
+\tccategory{D}
+
+\subsection{General description}
+\texttt{WriteProgramPart} writes part of program into selected boot slots as step in \nameref{obc:proc:Program upload} procedure.
+
+
+\paragraph{Known issues}
+\begin{itemize}
+	\item Failure to write to single boot slots aborts procedure
+	\item Writing part in long (up to a minute) operation
+\end{itemize}
+
+\paragraph{Side effects}\mbox{}\\ 
+\None
+
+\paragraph{Usage limitations}
+\begin{itemize}
+	\item This telecommand must be used exactly as described in \nameref{obc:proc:Program upload} procedure.
+\end{itemize}
+
+\paragraph{Recommendations for operation team}1
+Refer to \nameref{obc:proc:Program upload} procedure for details on uploading new software version.
+
+
+\subsection{Definition}
+\TelecommandApid{WriteProgramPart}
+\TelecommandDeclaration{WriteProgramPart}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{entries}{8}{Bitmask indicating boot slots program part will be written to}
+	\tcarg{offset}{32}{Offset in bytes from boot slot start where part should be written}
+	\tcarg{content}{(variable)}{Byte list that will be written}
+\end{tcarglist}
+
+
+\subsection{Responses}
+
+\paragraph{EntryProgramPartWriteSuccess}
+\ResponseApid{EntryProgramPartWriteSuccess}
+Response frame \texttt{EntryProgramPartWriteSuccess} indicates successful write of program parts. It carries additional values:
+
+\begin{tabular}{r | r | l}
+	Field & Size [bits] & Value \\
+	\hline
+	\texttt{entries} & 8 & Bitmask indicating boot slots program part was written to \\	
+	\texttt{offset} & 32 & Offset in bytes from boot slot start where part was written \\
+	\texttt{size} & 8 & Size of written part (should match length of \texttt{content} parameter) \\
+\end{tabular}
+
+\paragraph{EntryProgramPartWriteError} \mbox{} \\
+%\ResponseApid{EntryProgramPartWriteError}
+\todo{Add EntryProgramPartWriteError to OBC response frames} \\
+Response frame \texttt{EntryProgramPartWriteError} indicates failure of writing program part. Carried error code indicates reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{1} & Malformed telecommand (no further information available) \\	
+	\texttt{\textit{FlashStatus}} & Program flash has reported error. Referer to \texttt{FlashStatus} for exact meaning \\	
+\end{tabular}
+
+Beside error code additional fields are contained within this response frame:
+
+\begin{tabular}{r | r | l}
+	Field & Size [bits] & Value \\
+	\hline
+	\texttt{entry} & 8 & Bitmask indicating boot slot in which error occured \\	
+	\texttt{offset} & 32 & Offset at which error occured \\
+\end{tabular}
+
+
+\subsection{Example usage}
+Write bytes \texttt{0xDE, 0xAD, 0xBE, 0xEF} at addresses \texttt{0x100, 0x101, 0x102, 0x103} in boot slots 3,4,5.
+\exampleCall{WriteProgramPart([3,4,5], 0x100, [0xDE, 0xAD, 0xBE, 0xEF])}
+

@@ -1,0 +1,58 @@
+\telecommand{StopSailDeployment}
+
+\tccategory{D}
+
+\subsection{General description}
+\texttt{StopSailDeployment} disables sail deployment after each OBC restart. 
+
+
+\paragraph{Known issues}
+\begin{itemize}
+	\item Probably after sail deployment there will be no communication with satellite
+\end{itemize}
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Sail will not be opened after OBC restart
+\end{itemize}
+
+\paragraph{Usage limitations}\mbox{}\\ \None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item Send this telecommand after confirming correct sail opening
+\end{itemize}
+
+
+\subsection{Definition}
+\TelecommandApid{StopSailDeployment}
+\TelecommandDeclaration{StopSailDeployment}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+\end{tcarglist}
+
+
+\subsection{Responses}
+
+\paragraph{StopSailDeploymentSuccessFrame}
+\ResponseApid{StopSailDeploymentSuccessFrame}
+Correlated response frame \texttt{StopSailDeploymentSuccessFrame} represents success.
+
+\paragraph{StopSailDeploymentErrorFrame}
+\ResponseApid{StopSailDeploymentErrorFrame}
+Correlated response frame \texttt{TimeSetErrorFrame} represents error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+	Error code & Value \\
+	\hline
+	\texttt{-1} & Malformed (too short) telecommand \\	
+	\texttt{-2} & Failed to disable sail opening \\	
+\end{tabular}
+
+\subsection{Example usage}
+Stop sail deployment, correlation ID = 11
+\exampleCall{StopSailDeployment(11)}
+
