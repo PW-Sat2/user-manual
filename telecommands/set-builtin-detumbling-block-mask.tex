@@ -1,0 +1,62 @@
+\telecommand{Set Builtin Detumbling Block Mask}
+
+\tccategory{D}
+\subsection{General description}
+\texttt{SetBuiltinDetumblingBlockMask} telecommand can be used to enable/disable use of 
+\Imtq's builtin detumbling algorithm. Such change is persistent and no satellite reboot 
+will change. The block mask is stored in \procref{Persistent State}. The only 
+way to undo changes made by this telecommand is to issue it again with appropriate 
+block mask.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\
+Successful response for this command does not mean that builtin is no longer running. 
+This command merely prevents \OBC from using it in future. This command will cause \OBC
+to go out builtin detumbling is it was already active. To to that use \tcref{Set ADCS Mode}.
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+This command allows permanent blocking of \Imtq's builtin detumbling. It \textbf{should not} 
+be used unless the \Imtq's internal detubmling is known to be no longer working or is causing
+problems of any kind. 
+Note that when \Imtq's builtin detubmling is blocked it will not be possible to switch 
+current \Adcs mode to the builtin detumbing even by using \tcref{Set ADCS Mode} telecommand.
+
+\subsection{Definition}
+\TelecommandApid{SetBuiltinDetumblingBlockMaskTelecommand}
+\TelecommandDeclaration{SetBuiltinDetumblingBlockMaskTelecommand}
+
+Parameters: 
+
+\begin{tcarglist}
+    \tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{mask}{8}{Builtin detumbling mask. Non zero value block \Imtq's builtin detubmling. Zero unblocks it.}
+\end{tcarglist}
+
+\subsection{Responses}
+\ResponseApid{SetInternalDetumblingModeSuccessFrame}
+\paragraph{SetInternalDetumblingModeSuccessFrame}
+Correlated response frame \texttt{SetInternalDetumblingModeSuccessFrame} confirming 
+that builtin detumbling mask has been updated.
+
+\paragraph{FileRemoveErrorFrame}
+Correlated response frame \texttt{SetInternalDetumblingModeErrorFrame} representing an error. 
+Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    \texttt{0x00}   & Success \\
+    \texttt{0x01}   & Malformed (too short) telecommand \\
+    \texttt{0x02}   & Unable to update detumbling mask in persistent storage \\
+\end{tabular}
+
+\subsection{Examples}
+Disable builtin detumbling with correlation id set to 10
+
+\exampleCall{SetBuiltinDetumblingBlockMaskTelecommand(10, True)}
+

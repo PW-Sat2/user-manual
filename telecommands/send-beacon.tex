@@ -1,0 +1,29 @@
+\telecommand{Send Beacon}
+
+\tccategory{S}
+
+\subsection{General description}
+\texttt{SendBeacon} telecommand can be used to request sending single beacon frame with current satellite state. 
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\subsection{Definition}
+\TelecommandApid{SendBeacon}
+\TelecommandDeclaration{SendBeacon}
+
+No parameters are required for this telecommand.
+
+\subsection{Responses}
+Single beacon frame. See the \nameref{obc:proc:Beacon} section for details and the contents of the beacon frame.
+
+\subsection{Examples}
+Request sending beacon frame with current satellite state.
+
+\exampleCall{SendBeacon()}

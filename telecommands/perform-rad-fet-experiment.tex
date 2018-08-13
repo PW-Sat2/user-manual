@@ -1,0 +1,65 @@
+\telecommand{Perform RadFET Experiment}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{PerformRadFETExperiment} telecomand can be used to request performing an \radfet 
+experiment at first given opportunity.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+This command overrides previously requested experiments that has not been started yet. 
+
+\paragraph{Usage limitations} \mbox{} \\
+This command does not ensure that \radfet experiment will be started by the time that 
+response is sent back to the operator. It only requests performing an experiment, which 
+will be done at earliest opportunity.
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+The experiment will overwrite selected output file if it already exists therefore ensure 
+that selected file does not already exists or is no longer needed or some important data
+may be lost.
+
+\subsection{Definition}
+\TelecommandApid{PerformRadFETExperiment}
+\TelecommandDeclaration{PerformRadFETExperiment}
+
+Parameters: 
+
+\begin{tcarglist}
+    \tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{delay}{8}{Time delay in seconds between subsequent \radfet measurements}
+    \tcarg{samples\_count}{8}{Number of measurements to take}
+    \tcarg{output\_file\_name}{up to 30 * 8}{Path to file that should contain experiments results}
+\end{tcarglist}
+
+\subsection{Responses}
+\ResponseApid{ExperimentSuccessFrame}
+\paragraph{ExperimentSuccessFrame}
+
+Correlated response frame \texttt{ExperimentSuccessFrame} confirming 
+that \radfet experiment performance has been requested.
+
+\paragraph{ExperimentErrorFrame}
+Correlated response frame \texttt{ExperimentErrorFrame} representing an error. 
+Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    \texttt{0x00}   & Success \\
+    \texttt{0x01}   & Malformed (too short) telecommand \\
+    \texttt{0x02}   & Another experiment may already be running \\
+\end{tabular}
+
+\subsection{Examples}
+Request performing \radfet experiment with 4 samples taken once every second and save results
+to '/radfet' file with communication correlation id set to 12.
+
+\exampleCall{PerformRadFETExperiment(
+    correlation_id=12,
+    delay=1,
+    samples_count=4,
+    output_file_name='/radfet')}
