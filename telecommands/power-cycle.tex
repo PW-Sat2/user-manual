@@ -29,9 +29,9 @@ Figure \ref{fig:tc:powercycle} shows flow of power cycle telecommand. If power c
 \end{figure}
 
 \paragraph{Known issues}
-\begin{itemize}
+\begin{itemize} 
 	\item Confirmation response frame might not be sent if power cycle will be faster than COMM module
-	\item It is not possible to force usage of specific EPS controller to perform power cycle. If control over used EPS controller is required, RawI2CTelecommand should be used.\todo{Describe RawI2CTelecommand}
+	\item It is not possible to force usage of specific EPS controller to perform power cycle. If control over used EPS controller is required, \nameref{tc:Raw I2C Transfer} should be used.
 \end{itemize}
 
 \paragraph{Side effects}

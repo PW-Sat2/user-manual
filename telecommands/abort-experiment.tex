@@ -10,7 +10,11 @@ The abort \textbf{is not} immediate, it is executed during next loop of \nameref
 
 \paragraph{Known issues}
 \begin{itemize}
-	\item Some experiments [\todo{List of such experiments?}] are written in one loop iteration so they can't be aborted.
+	\item Some experiments are written in one loop iteration so they can't be aborted:
+		\begin{itemize}
+			\item EraseFlashExperiment
+			\item CopyBootSlotsExperiment
+		\end{itemize}
 	\item Operation is not immediate. State change is applied during next Mission Loop iteration and next Experiment Loop iteration.
 \end{itemize}
 
