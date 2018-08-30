@@ -13,8 +13,12 @@ Two modes are available:
 \begin{itemize}
 	\item Direct Write-Read, when no delay between operations are provided.
 	\item Write-Delay-Read, for some devices that require special timing during communication. 
+		\begin{itemize}
+			\item Antenna (both controllers)
+			\item COMM (both controllers)
+			\item iMTQ
+		\end{itemize}
 \end{itemize}
-\todo{List of devices that require I2C Write-Delay-Read mode}.
 
 \paragraph{Known issues}
 \begin{itemize}

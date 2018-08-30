@@ -5,7 +5,7 @@
 \subsection{General description}
 \texttt{SetAntennaDeploymentMask} telecommand is capable of enabling/disabling \nameref{obc:proc:Antenna Deployment Process}.
 
-Deployment disabled flag is set immediately in \todo{Persistent State} and prevents any further deployment steps from executing. Deployment is not resumed after \OBC restart.
+Deployment disabled flag is set immediately in \nameref{obc:proc:Persistent State} and prevents any further deployment steps from executing. Deployment is not resumed after \OBC restart.
 
 \paragraph{Known issues}
 \begin{itemize}
@@ -47,7 +47,7 @@ Parameters:
 \responseFrame{StopAntennaDeploymentSuccessFrame}
 \ResponseApid{StopAntennaDeploymentSuccessFrame}
 
-Correlated success response frame is of type \texttt{StopAntennaDeploymentSuccessFrame} and contains single byte with value 0. If this frame is sent, change of deployment flag was successfully saved in \todo{Persistent State}.
+Correlated success response frame is of type \texttt{StopAntennaDeploymentSuccessFrame} and contains single byte with value 0. If this frame is sent, change of deployment flag was successfully saved in \nameref{obc:proc:Persistent State}.
 
 \responseFrame{StopAntennaDeploymentErrorFrame}
 \ResponseApid{StopAntennaDeploymentErrorFrame}
