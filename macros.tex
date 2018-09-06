@@ -98,3 +98,23 @@
 \newcommand{\warn}[1]{\faWarning\mbox{} #1}
 
 \newcommand{\danger}[1]{\faBomb\mbox{} #1}
+
+\newcommand{\obcfunc}[1]{
+	\section{#1}
+	\label{obc:func:#1}
+}
+
+\newcommand{\memsection}[4]{%
+	% define the height of the memsection
+	\bytefieldsetup{bitheight=#3\baselineskip}%
+	\bitbox[]{10}{%
+		\texttt{#1}% print end address
+		\\
+		% do some spacing
+		\vspace{#3\baselineskip}
+		\vspace{-2\baselineskip}
+		\vspace{-#3pt}
+		\texttt{#2}% print start address
+	}%
+	\bitbox{16}{#4}% print box with caption
+}
