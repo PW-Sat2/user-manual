@@ -1,2 +1,261 @@
 \obcproc{Beacon}
-\todo{Beacon}
+
+Beacon is a automated subsystem used for broadcasting current satellite state. It starts automatically and is activated after 
+initial satellite quiet period. Once activated it works continuously and cannot be disabled. It works by periodically sending
+single frame over the radio. The minimal length of time period between two subsequent beacon frames sent by the satellite is 
+60s. It is possible - barring any communication problems - that due to internal error the time between two subsequent beacon 
+frames will be longer. If there is an error during beacon preparation and/or beacon sending process its transmission will
+be retried in 5s intervals until it successfully finishes. Once that happens the system goes back to the 60s intervals between
+beacon frames. \\\\
+It is possible for the operator to request immediate sending of the beacon frame. To do that operator is to send \tcref{Send Beacon} 
+telecommand. \\\\
+The beacon frame contains copy of most recently acquired telemetry, which itself is sampled in 30s intervals. The content 
+of the beacon frame is presented in the table below. 
+
+\begin{longtable}{c|l|c|l}
+    \toprule
+    \multirow{2}{*}{Source}            & \multirow{2}{*}{Element Name}          & Sample rate & \multirow{2}{*}{Expected Range}  \\
+    & & [s] & \\
+    \midrule
+    \endhead
+    \multirow{7}{*}{Boot loader} & \multirow{2}{*}{Boot Counter}          & once \\
+    & & per boot &  \\
+    & \multirow{2}{*}{Boot Index}            & once \\
+    & & per boot &  \\
+    & \multirow{2}{*}{OBC Reboot Reason}     & once \\
+    & & per boot &  \\
+    & OBC Code CRC          & 30 \\
+    \hline
+    Time Service      & Mission Time          & 30 \\
+    \hline
+    Persistent State  & External Time         & 30 \\
+    \hline
+    \multirow{13}{*}{Error Counters} & COMM & 30 & \\
+    & EPS & 30 \\
+    & RTC & 30 \\
+    & Imtq & 30 \\
+    & N25q Flash 1 & 30 \\
+    & N25q Flash 2 & 30 \\
+    & N25q Flash 3 & 30 \\
+    & N25q TMR Corrections & 30 \\
+    & FRAM TMR Corrections & 30 \\
+    & Payload & 30 \\
+    & Camera & 30 \\
+    & Suns Exp & 30 \\
+    & Antenna primary & 30 \\
+    & Antenna secondary & 30 \\
+    \hline
+    \multirow{3}{*}{Scrubbing State} & Primary Flash Scrubbing pointer & 30 \\
+    & Secondary Flash Scrubbing pointer & 30 \\
+    & RAM Scrubbing pointer & 30 \\
+    \hline
+    System & Uptime & 30 \\
+    \hline
+    yaffs & Flash Free Space & 30 \\
+    \hline
+    \multirow{42}{*}{Antenna Driver} & Ant 1 Deployment Switch Ch A & 30 \\
+    & Ant 2 Deployment Switch Ch A & 30 \\
+    & Ant 3 Deployment Switch Ch A & 30 \\
+    & Ant 4 Deployment Switch Ch A & 30 \\
+    \cline{2-4}
+    & Ant 1 Deployment Switch Ch B & 30 \\
+    & Ant 2 Deployment Switch Ch B & 30 \\
+    & Ant 3 Deployment Switch Ch B & 30 \\
+    & Ant 4 Deployment Switch Ch B & 30 \\
+    \cline{2-4}
+    & Ant 1 last stop due to time Ch A & 30 \\
+    & Ant 2 last stop due to time Ch A & 30 \\
+    & Ant 3 last stop due to time Ch A & 30 \\
+    & Ant 4 last stop due to time Ch A & 30 \\
+    \cline{2-4}
+    & Ant 1 last stop due to time Ch B & 30 \\
+    & Ant 2 last stop due to time Ch B & 30 \\
+    & Ant 3 last stop due to time Ch B & 30 \\
+    & Ant 4 last stop due to time Ch B & 30 \\
+    \cline{2-4}
+    & Ant 1 burn active Ch A & 30 \\
+    & Ant 2 burn active Ch A & 30 \\
+    & Ant 3 burn active Ch A & 30 \\
+    & Ant 4 burn active Ch A & 30 \\
+    \cline{2-4}
+    & Ant 1 burn active Ch B & 30 \\
+    & Ant 2 burn active Ch B & 30 \\
+    & Ant 3 burn active Ch B & 30 \\
+    & Ant 4 burn active Ch B & 30 \\ 
+    \cline{2-4}
+    & System independent burn Ch A & 30 \\
+    & System independent burn Ch B & 30 \\
+    \cline{2-4}
+    & Antenna Ignoring switches Ch A & 30 \\
+    & Antenna Ignoring switches Ch B & 30 \\
+    \cline{2-4}
+    & Antenna Armed Ch A & 30 \\
+    & Antenna Armed Ch B & 30 \\
+    \cline{2-4}
+    & Ant 1 Activation Count Ch A & 30 \\
+    & Ant 2 Activation Count Ch A & 30 \\
+    & Ant 3 Activation Count Ch A & 30 \\
+    & Ant 4 Activation Count Ch A & 30 \\
+    \cline{2-4}
+    & Ant 1 Activation Count Ch B & 30 \\
+    & Ant 2 Activation Count Ch B & 30 \\
+    & Ant 3 Activation Count Ch B & 30 \\
+    & Ant 4 Activation Count Ch B & 30 \\
+    \cline{2-4}
+    & Ant 1 Activation Time Ch A & 30 \\
+    & Ant 2 Activation Time Ch A & 30 \\
+    & Ant 3 Activation Time Ch A & 30 \\
+    & Ant 4 Activation Time Ch A & 30 \\
+    \cline{2-4}
+    & Ant 1 Activation Time Ch B & 30 \\
+    & Ant 2 Activation Time Ch B & 30 \\
+    & Ant 3 Activation Time Ch B & 30 \\
+    & Ant 4 Activation Time Ch B & 30 \\
+    \hline
+    \multirow{3}{*}{Experiments} & Current experiment code & 30 \\
+    & Experiment Startup Result & 30 \\
+    & Last Experiment Iteration Status & 30 \\
+    \hline
+    \multirow{4}{*}{Gyroscope Driver} & X measurement & 30 \\ 
+    & Y measurement & 30 \\
+    & Z measurement & 30 \\
+    & Temperature & 30 \\
+    \hline
+    \multirow{15}{*}{COMM Transmitter} & Transmitter Uptime & 30 \\
+    & Bitrate & 30 \\
+    & Last Transmitted  & \multirow{2}{*}{30} \\
+    & RF Reflected Power& \\
+    & Last Transmitted  & \multirow{2}{*}{30} \\
+    & Power Amplifier Temperature & \\
+    & Last Transmitted  & \multirow{2}{*}{30} \\
+    & RF Forward Power & \\
+    & Last Transmitted Transmitter & \multirow{2}{*}{30} \\
+    & Current Consumption & \\
+    & Now RF Forward Power & 30 \\
+    & Now Transmitter & \multirow{2}{*}{30} \\
+    & Current Consumption & \\
+    & State When Idle & 30 \\
+    & BeaconState & 30 \\
+    \hline
+    \multirow{11}{*}{COMM Receiver} & Uptime & 30 \\
+    & Last Received Doppler Offset & 30 \\
+    & Last Received RSSI & 30 \\
+    & Now Doppler Offset & 30 \\
+    & Now Receiver & \multirow{2}{*}{30} \\
+    & Current Consumption & \\
+    & Supply Voltage & 30 \\
+    & Oscilator Temperature & 30 \\
+    & Now Power Amplifier  & \multirow{2}{*}{30} \\
+    & Temperature & \\
+    & Now RSSI & 30 \\
+    \hline
+    \multirow{2}{*}{Hardware State} & Sail Deployed & 30 \\
+    & MCU Temperature & 30 \\
+    \hline
+    \multirow{38}{*}{EPS Controller A} & MPPTX.SOL_VOLT & 30 \\
+    & MPPTX.SOL_CURR & 30 \\
+    & MPPTX.OUT_VOLT & 30 \\
+    & MPPTX.TEMP & 30 \\
+    & MPPTX.STATE & 30 \\
+    \cline{2-4}
+    & MPPTY+.SOL_VOLT & 30 \\
+    & MPPTY+.SOL_CURR & 30 \\
+    & MPPTY+.OUT_VOLT & 30 \\
+    & MPPTY+.TEMP & 30 \\
+    & MPPTY+.STATE & 30 \\
+    \cline{2-4}
+    & MPPTY-.SOL_VOLT & 30 \\
+    & MPPTY-.SOL_CURR & 30 \\
+    & MPPTY-.OUT_VOLT & 30 \\
+    & MPPTY-.TEMP & 30 \\
+    & MPPTY-.STATE & 30 \\
+    \cline{2-4}
+    & DISTR.VOLT_3V3 & 30 \\
+    & DISTR.CURR_3V3 & 30 \\
+    & DISTR.VOLT_5V & 30 \\
+    & DISTR.CURR_5V & 30 \\
+    & DISTR.VOLT_VBAT & 30 \\
+    & DISTR.CURR_VBAT & 30 \\
+    & DISTR.LCL_STATE & 30 \\
+    & DISTR.LCL_FLAGB & 30 \\
+    \cline{2-4}
+    & BATC.VOLT_A & 30 \\
+    & BATC.CHRG_CURR & 30 \\
+    & BATC.DCHRG_CURR & 30 \\
+    & BATC.TEMP & 30 \\
+    & BATC.STATE & 30 \\
+    \cline{2-4}
+    & BP.TEMP_A & 30 \\
+    & BP.TEMP_B & 30 \\
+    \cline{2-4}
+    & CTRLA.SAFETY-CTR & 30 \\
+    & CTRLA.PWR-CYCLES & 30 \\
+    & CTRLA.UPTIME & 30 \\
+    & CTRLA.TEMP & 30 \\
+    & CTRLA.SUPP_TEMP & 30 \\
+    & CTRLB.3V3d_VOLT & 30 \\
+    \cline{2-4}
+    & DCDC.3V3_TEMP & 30 \\
+    & DCDC.5V_TEMP & 30 \\
+    \hline
+    \multirow{8}{*}{EPS Controller B} & BP.TEMP_C & 30 \\
+    & BATC.VOLT_B & 30 \\
+    & CTRLB.SAFETY-CTR & 30 \\
+    & CTRLB.PWR-CYCLES & 30 \\
+    & CTRLB.UPTIME & 30 \\
+    & CTRLB.TEMP & 30 \\
+    & CTRLB.SUPP_TEMP & 30 \\
+    & CTRLA.3V3d_VOLT & 30 \\
+    \hline
+    \multirow{3}{*}{Imtq Driver} & Magnetometer Measurement 1 & 30 \\
+    & Magnetometer Measurement 2 & 30 \\
+    & Magnetometer Measurement 3 & 30 \\
+    \hline
+    Imtq Coil Active & Coil active during measurement & 30 \\
+    \hline
+    \multirow{3}{*}{Imtq Dipole} & Dipole 1 & 30 \\
+    & Dipole 2 & 30 \\
+    & Dipole 3 & 30 \\
+    \hline
+    \multirow{3}{*}{Imtq BDot} & BDot 1 & 30 \\
+    & BDot 2 & 30 \\
+    & BDot 3 & 30 \\
+    \hline
+    \multirow{3}{*}{Imtq Housekeeping} & Digital Voltage & 30 \\
+    & Analog Voltage & 30 \\
+    & Digital Current & 30 \\
+    & Analog Current & 30 \\
+    & MCU Temperature & 30 \\
+    \hline
+    \multirow{3}{*}{Imtq Coil} & Coil Current 1 & 30 \\
+    & Coil Current 2 & 30 \\
+    & Coil Current 3 & 30 \\
+    \hline
+    \multirow{3}{*}{Imtq Temperature} & Coil Temperature 1 & 30 \\
+    & Coil Temperature 2 & 30 \\
+    & Coil Temperature 3 & 30 \\
+    \hline
+    \multirow{5}{*}{Imtq state} & Status & 30 \\
+    & Mode & 30 \\
+    & Error during previous iteration & 30 \\
+    & Configuration changed & 30 \\
+    & Uptime & 30 \\
+    \hline
+    \multirow{16}{*}{Imtq Self Test} & \multirow{2}{*}{SelfTest Error INIT} & once \\
+    & & per boot \\
+    & \multirow{2}{*}{SelfTest Error X+} & once \\
+    & & per boot \\
+    & \multirow{2}{*}{SelfTest Error X-} & once \\
+    & & per boot \\
+    & \multirow{2}{*}{SelfTest Error Y+} & once \\
+    & & per boot \\
+    & \multirow{2}{*}{SelfTest Error Y-} & once \\
+    & & per boot \\
+    & \multirow{2}{*}{SelfTest Error Z+} & once \\
+    & & per boot \\
+    & \multirow{2}{*}{SelfTest Error Z-} & once \\
+    & & per boot \\
+    & \multirow{2}{*}{SelfTest Error FINA} & once \\
+    & & per boot \\
+    \bottomrule
+\end{longtable}
