@@ -1,0 +1,42 @@
+\telecommand{Reset Transmitter}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{ResetTransmitterTelecommand} telecommand allows resetting COMM transmitter. It sends \texttt{Software Reset} command (0xAA) to COMM Transmitter which causes TX MCU to reboot.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects}
+\begin{itemize}
+	\item Resetting transmitter prunes transmitter queue - any waiting frame will be lost.
+	\item After sending reset command, OBC will not be able to transmit any frame for short period of time because it takes some time for TX MCU to boot up. 	
+\end{itemize}
+
+\paragraph{Usage limitations} \mbox{} \\
+Use it only in case of detected malfunction.
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+	\item When OPER detects COMM transmitter malfunction (i.e. uninterrupted carrier wave transmission), then sending \texttt{ResetTransmitterTelecommand} may mitigate this situation.
+	\item Because it takes some time for TX MCU to boot, it's possible that after resetting transmitter there will be a temporary spike in error counter values.
+	\item OBC has a mechanism to monitor COMM malfunctions. \todo{Link to COMM watchdog}.
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{ResetTransmitterTelecommand}
+\TelecommandDeclaration{ResetTransmitterTelecommand}
+
+Parameters: 
+
+\None
+
+\subsection{Responses}
+
+Since \texttt{ResetTransmitterTelecommand} resets the transmitter, it's unable to send any response. 
+
+\subsection{Example usage}
+Reset COMM transmitter.
+
+\exampleCall{ResetTransmitterTelecommand()}

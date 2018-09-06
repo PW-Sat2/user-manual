@@ -10,13 +10,13 @@ Boot table contains following elements:
 Figure \ref{fig:func:boottable} shows boot table layout inside memory.
 
 \begin{figure}
-	\label{fig:func:boottable}
 	\includegraphics[width=20cm,angle=90]{img/boot-table.png}
 	\caption{Boot table layout}
+	\label{fig:func:boottable}
 \end{figure}
 
 \subsection{Boot configuration}
-There are 4 setting in \nameref{obc:proc:Persistent State} related to boot process:
+There are 4 settings in \nameref{obc:proc:Persistent State} related to boot process:
 \begin{itemize}
 	\item Primary boot slots
 	\item Failsafe boot slots
@@ -74,7 +74,7 @@ Safe-mode is everything-gone-shit-program trigged when bootloader is unable to b
 
 Safe mode will keep mission time but erase all telemetry and experiment data. 
 
-\danger{Using not standard boot slots configuration will result very fast moving brick as OBC will not be able to boot again.}
+\danger{Using not standard boot slots configuration will result in very fast moving brick as OBC will not be able to boot again.}
 
 \subsection{Periodic restart}
 Restart after 23 hours of mission time since last boot according to \nameref{obc:proc:Power cycle}. 
