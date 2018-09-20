@@ -1,2 +1,29 @@
-\section{Periodic message}
-\todo{Describe Periodic message}
+\obcproc{Periodic message}
+
+Periodic message is a functionality that allows periodically broadcasting messages with fixed content
+This functionality works by sending one or more copies of the message through on board communication module,
+ and waiting configured number of minutes before repeating the process. 
+
+The configuration of this functionality is stored in a persistent state and is defined as follows:
+\begin{center}
+\begin{tabular}{c | m{4.5cm} | c | m{9cm}}
+    \textbf{Parameter} & \textbf{Description} & \textbf{size [bits]} & \textbf{Default Value} \\
+    \hline \hline
+    Interval & Time period in minutes between two subsequent messages & 8 & 10 \\
+    \hline
+    Count & Number of messages being sent in one session & 8 & 0 \\
+    \hline
+    Message & Requested message content & 1600 & 
+    \texttt{We are the Borg. Lower your shields and surrender your ships. We will add your biological and technological distinctiveness to our own Your culture will adapt to service us. Resistance is futile.} \\
+    \hline
+\end{tabular}
+\end{center}
+
+Configuration of the periodic message subsystem can be updated by using \tcref{SetPeriodicMessage}
+
+\danger{Enabling periodic message has very significant negative impact on satellite power budget to the point of 
+it being negative. It is recommented to not configure periodic message to work continously.}
+
+It is possible to request immediate sending of one or more periodic message(s) by using \tcref{Send Periodic Message} telecommand. 
+
+
