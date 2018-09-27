@@ -12,32 +12,28 @@ telecommand. \\\\
 The beacon frame contains copy of most recently acquired telemetry, which itself is sampled in 30s intervals. The content 
 of the beacon frame is presented in the table below. 
 
-\begin{longtable}{c|l|c|l}
+\begin{longtable}{c|m{5cm}|M{1.5cm}|c}
     \toprule
-    \multirow{2}{*}{Source}            & \multirow{2}{*}{Element Name}          & Sample rate & \multirow{2}{*}{Expected Range}  \\
-    & & [s] & \\
+    Source            & Element Name          & Sample rate [s] & Expected Range \\
     \midrule
     \endhead
-    \multirow{7}{*}{Boot loader} & \multirow{2}{*}{Boot Counter}          & once \\
-    & & per boot &  \\
-    & \multirow{2}{*}{Boot Index}            & once \\
-    & & per boot &  \\
-    & \multirow{2}{*}{OBC Reboot Reason}     & once \\
-    & & per boot &  \\
+    Boot loader & Boot Counter & once per boot & \\
+    & Boot Index            & once per boot \\
+    & OBC Reboot Reason     & once per boot \\
     & OBC Code CRC          & 30 \\
     \hline
     Time Service      & Mission Time          & 30 \\
     \hline
     Persistent State  & External Time         & 30 \\
     \hline
-    \multirow{13}{*}{Error Counters} & COMM & 30 & \\
+    \multirow{14}{*}{Error Counters} & COMM & 30 \\
     & EPS & 30 \\
     & RTC & 30 \\
     & Imtq & 30 \\
-    & N25q Flash 1 & 30 \\
-    & N25q Flash 2 & 30 \\
-    & N25q Flash 3 & 30 \\
-    & N25q TMR Corrections & 30 \\
+    & N25Q Flash 1 & 30 \\
+    & N25Q Flash 2 & 30 \\
+    & N25Q Flash 3 & 30 \\
+    & N25Q TMR Corrections & 30 \\
     & FRAM TMR Corrections & 30 \\
     & Payload & 30 \\
     & Camera & 30 \\
@@ -53,7 +49,7 @@ of the beacon frame is presented in the table below.
     \hline
     yaffs & Flash Free Space & 30 \\
     \hline
-    \multirow{42}{*}{Antenna Driver} & Ant 1 Deployment Switch Ch A & 30 \\
+    \multirow{46}{*}{Antenna Driver} & Ant 1 Deployment Switch Ch A & 30 \\
     & Ant 2 Deployment Switch Ch A & 30 \\
     & Ant 3 Deployment Switch Ch A & 30 \\
     & Ant 4 Deployment Switch Ch A & 30 \\
@@ -123,17 +119,12 @@ of the beacon frame is presented in the table below.
     \hline
     \multirow{15}{*}{COMM Transmitter} & Transmitter Uptime & 30 \\
     & Bitrate & 30 \\
-    & Last Transmitted  & \multirow{2}{*}{30} \\
-    & RF Reflected Power& \\
-    & Last Transmitted  & \multirow{2}{*}{30} \\
-    & Power Amplifier Temperature & \\
-    & Last Transmitted  & \multirow{2}{*}{30} \\
-    & RF Forward Power & \\
-    & Last Transmitted Transmitter & \multirow{2}{*}{30} \\
-    & Current Consumption & \\
+    & Last Transmitted RF Reflected Power & 30 \\
+    & Last Transmitted Power Amplifier Temperature & 30 \\
+    & Last Transmitted RF Forward Power & 30 \\
+    & Last Transmitted Transmitter Current Consumption & 30 \\
     & Now RF Forward Power & 30 \\
-    & Now Transmitter & \multirow{2}{*}{30} \\
-    & Current Consumption & \\
+    & Now Transmitter Current Consumption & 30 \\
     & State When Idle & 30 \\
     & BeaconState & 30 \\
     \hline
@@ -141,18 +132,16 @@ of the beacon frame is presented in the table below.
     & Last Received Doppler Offset & 30 \\
     & Last Received RSSI & 30 \\
     & Now Doppler Offset & 30 \\
-    & Now Receiver & \multirow{2}{*}{30} \\
-    & Current Consumption & \\
+    & Now Receiver Current Consumption & 30 \\
     & Supply Voltage & 30 \\
     & Oscilator Temperature & 30 \\
-    & Now Power Amplifier  & \multirow{2}{*}{30} \\
-    & Temperature & \\
+    & Now Power Amplifier Temperature & 30 \\
     & Now RSSI & 30 \\
     \hline
     \multirow{2}{*}{Hardware State} & Sail Deployed & 30 \\
     & MCU Temperature & 30 \\
     \hline
-    \multirow{38}{*}{EPS Controller A} & MPPTX.SOL_VOLT & 30 \\
+    \multirow{30}{*}{EPS Controller A} & MPPTX.SOL_VOLT & 30 \\
     & MPPTX.SOL_CURR & 30 \\
     & MPPTX.OUT_VOLT & 30 \\
     & MPPTX.TEMP & 30 \\
@@ -241,21 +230,13 @@ of the beacon frame is presented in the table below.
     & Configuration changed & 30 \\
     & Uptime & 30 \\
     \hline
-    \multirow{16}{*}{Imtq Self Test} & \multirow{2}{*}{SelfTest Error INIT} & once \\
-    & & per boot \\
-    & \multirow{2}{*}{SelfTest Error X+} & once \\
-    & & per boot \\
-    & \multirow{2}{*}{SelfTest Error X-} & once \\
-    & & per boot \\
-    & \multirow{2}{*}{SelfTest Error Y+} & once \\
-    & & per boot \\
-    & \multirow{2}{*}{SelfTest Error Y-} & once \\
-    & & per boot \\
-    & \multirow{2}{*}{SelfTest Error Z+} & once \\
-    & & per boot \\
-    & \multirow{2}{*}{SelfTest Error Z-} & once \\
-    & & per boot \\
-    & \multirow{2}{*}{SelfTest Error FINA} & once \\
-    & & per boot \\
+    \multirow{16}{*}{Imtq Self Test} & SelfTest Error INIT & once per boot \\
+    & SelfTest Error X+ & once per boot \\
+    & SelfTest Error X- & once once per boot \\
+    & SelfTest Error Y+ & once once per boot \\
+    & SelfTest Error Y- & once once per boot \\
+    & SelfTest Error Z+ & once once per boot \\
+    & SelfTest Error Z- & once once per boot \\
+    & SelfTest Error FINA & once once per boot \\
     \bottomrule
 \end{longtable}
