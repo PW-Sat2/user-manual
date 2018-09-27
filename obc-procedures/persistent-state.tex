@@ -10,10 +10,10 @@ It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
     \hline \hline
     AntennaConfiguration        & isDeploymentDisabled          & Information whether the antenna deployment process is disabled & 8 \\
     \hline
-    \multirow{2}{*}{TimeState}                   & lastMissionTime               & Current mission time in milliseconds as seen on internal clock during last time synchronization process. & 64 LE \\
+    \multirow{4}{*}{TimeState}  & lastMissionTime               & Current mission time in milliseconds as seen on internal clock during last time synchronization process. & 64 LE \\
                                 & lastExternalTime              & Current mission time in milliseconds as seen on external clock during last time synchronization process. & 32 LE \\
     \hline                            
-    \multirow{2}{*}{TimeCorrectionConfiguration} & missionTimeFactor             & Time correction weight for time change as seen on microcontroller clock & 16 LE \\
+    \multirow{3}{*}{TimeCorrectionConfiguration} & missionTimeFactor             & Time correction weight for time change as seen on microcontroller clock & 16 LE \\
                                 & externalTimeFactor            & Time correction weight for time change as seen on external RTC & 16 LE \\
     \hline
     SailState                   & currentState                  & Sail opening state & 8 \\
@@ -22,8 +22,6 @@ It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
     \hline
     AdcsState                   & internalDetumblingDisabled    & Flag indicating whether the internal detumbling is disabled & 8 \\
     \hline
-    \multirow{3}{*}{MessageState} & interval                    & \multirow{3}{6cm}{See the \procref{Periodic message} for the details regarding periodic message configuration} & 8 \\
-                                & repeatCount                   &  & 8 \\
-                                & message                       &  & 1600 String\\
+    MessageState & \parbox[c]{5cm}{interval \\ repeatCount \\ message} & See the \procref{Periodic message} for the details regarding periodic message configuration & \parbox[c]{5cm}{8\\8\\1600} \\
     \hline
 \end{tabular}
