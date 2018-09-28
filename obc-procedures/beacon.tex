@@ -1,6 +1,6 @@
 \obcproc{Beacon}
 
-Beacon is a automated subsystem used for broadcasting current satellite state. It starts automatically and is activated after 
+Beacon is an automated subsystem used for broadcasting current satellite state. It starts automatically and is activated after 
 initial satellite quiet period. Once activated it works continuously and cannot be disabled. It works by periodically sending
 single frame over the radio. The minimal length of time period between two subsequent beacon frames sent by the satellite is 
 60s. It is possible - barring any communication problems - that due to internal error the time between two subsequent beacon 
@@ -12,9 +12,10 @@ telecommand. \\\\
 The beacon frame contains copy of most recently acquired telemetry, which itself is sampled in 30s intervals. The content 
 of the beacon frame is presented in the table below. 
 
-\begin{longtable}{c|m{5cm}|M{1.5cm}|c}
+\begin{longtable}{c|m{5cm}|M{1.5cm}|ccccc}
     \toprule
-    Source            & Element Name          & Sample rate [s] & Expected Range \\
+    \multirow{2}{*}{Source} & \multirow{2}{*}{Element Name} & Sample & \multicolumn{2}{c}{Full Range} & \multicolumn{2}{c}{Safe Range} & \multirow{2}{*}{Unit} \\
+    & & Rate [s] & {Low} & {High} & {Low} & {High} \\
     \midrule
     \endhead
     Boot loader & Boot Counter & once per boot & \\
@@ -29,7 +30,7 @@ of the beacon frame is presented in the table below.
     \multirow{14}{*}{Error Counters} & COMM & 30 \\
     & EPS & 30 \\
     & RTC & 30 \\
-    & Imtq & 30 \\
+    & iMTQ & 30 \\
     & N25Q Flash 1 & 30 \\
     & N25Q Flash 2 & 30 \\
     & N25Q Flash 3 & 30 \\
@@ -53,56 +54,56 @@ of the beacon frame is presented in the table below.
     & Ant 2 Deployment Switch Ch A & 30 \\
     & Ant 3 Deployment Switch Ch A & 30 \\
     & Ant 4 Deployment Switch Ch A & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 Deployment Switch Ch B & 30 \\
     & Ant 2 Deployment Switch Ch B & 30 \\
     & Ant 3 Deployment Switch Ch B & 30 \\
     & Ant 4 Deployment Switch Ch B & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 last stop due to time Ch A & 30 \\
     & Ant 2 last stop due to time Ch A & 30 \\
     & Ant 3 last stop due to time Ch A & 30 \\
     & Ant 4 last stop due to time Ch A & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 last stop due to time Ch B & 30 \\
     & Ant 2 last stop due to time Ch B & 30 \\
     & Ant 3 last stop due to time Ch B & 30 \\
     & Ant 4 last stop due to time Ch B & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 burn active Ch A & 30 \\
     & Ant 2 burn active Ch A & 30 \\
     & Ant 3 burn active Ch A & 30 \\
     & Ant 4 burn active Ch A & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 burn active Ch B & 30 \\
     & Ant 2 burn active Ch B & 30 \\
     & Ant 3 burn active Ch B & 30 \\
     & Ant 4 burn active Ch B & 30 \\ 
-    \cline{2-4}
+    \cline{2-8}
     & System independent burn Ch A & 30 \\
     & System independent burn Ch B & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Antenna Ignoring switches Ch A & 30 \\
     & Antenna Ignoring switches Ch B & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Antenna Armed Ch A & 30 \\
     & Antenna Armed Ch B & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 Activation Count Ch A & 30 \\
     & Ant 2 Activation Count Ch A & 30 \\
     & Ant 3 Activation Count Ch A & 30 \\
     & Ant 4 Activation Count Ch A & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 Activation Count Ch B & 30 \\
     & Ant 2 Activation Count Ch B & 30 \\
     & Ant 3 Activation Count Ch B & 30 \\
     & Ant 4 Activation Count Ch B & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 Activation Time Ch A & 30 \\
     & Ant 2 Activation Time Ch A & 30 \\
     & Ant 3 Activation Time Ch A & 30 \\
     & Ant 4 Activation Time Ch A & 30 \\
-    \cline{2-4}
+    \cline{2-8}
     & Ant 1 Activation Time Ch B & 30 \\
     & Ant 2 Activation Time Ch B & 30 \\
     & Ant 3 Activation Time Ch B & 30 \\
@@ -112,10 +113,10 @@ of the beacon frame is presented in the table below.
     & Experiment Startup Result & 30 \\
     & Last Experiment Iteration Status & 30 \\
     \hline
-    \multirow{4}{*}{Gyroscope Driver} & X measurement & 30 \\ 
-    & Y measurement & 30 \\
-    & Z measurement & 30 \\
-    & Temperature & 30 \\
+    \multirow{4}{*}{Gyroscope Driver} & X measurement & 30 & -15 & +15 & -1 & +1 & \textdegree /s \\
+    & Y measurement & 30 & -15 & +15 & -1 & +1 & \textdegree /s \\
+    & Z measurement & 30 & -15 & +15 & -1 & +1 & \textdegree /s \\
+    & Temperature & 30 & -40 & +70 & -20 & +60 & \textdegree C \\
     \hline
     \multirow{15}{*}{COMM Transmitter} & Transmitter Uptime & 30 \\
     & Bitrate & 30 \\
@@ -134,103 +135,103 @@ of the beacon frame is presented in the table below.
     & Now Doppler Offset & 30 \\
     & Now Receiver Current Consumption & 30 \\
     & Supply Voltage & 30 \\
-    & Oscilator Temperature & 30 \\
+    & Oscillator Temperature & 30 \\
     & Now Power Amplifier Temperature & 30 \\
     & Now RSSI & 30 \\
     \hline
-    \multirow{2}{*}{Hardware State} & Sail Deployed & 30 \\
-    & MCU Temperature & 30 \\
+    \multirow{2}{*}{Hardware State} & Sail Deployed & 30 & 0 & 1 & 0 & 0 & dec \\
+    & OBC MCU Temperature & 30 & -40 & +70 & -20 & +60 & \textdegree C \\
     \hline
-    \multirow{30}{*}{EPS Controller A} & MPPTX.SOL_VOLT & 30 \\
-    & MPPTX.SOL_CURR & 30 \\
-    & MPPTX.OUT_VOLT & 30 \\
-    & MPPTX.TEMP & 30 \\
-    & MPPTX.STATE & 30 \\
-    \cline{2-4}
-    & MPPTY+.SOL_VOLT & 30 \\
-    & MPPTY+.SOL_CURR & 30 \\
-    & MPPTY+.OUT_VOLT & 30 \\
-    & MPPTY+.TEMP & 30 \\
-    & MPPTY+.STATE & 30 \\
-    \cline{2-4}
-    & MPPTY-.SOL_VOLT & 30 \\
-    & MPPTY-.SOL_CURR & 30 \\
-    & MPPTY-.OUT_VOLT & 30 \\
-    & MPPTY-.TEMP & 30 \\
-    & MPPTY-.STATE & 30 \\
-    \cline{2-4}
-    & DISTR.VOLT_3V3 & 30 \\
-    & DISTR.CURR_3V3 & 30 \\
-    & DISTR.VOLT_5V & 30 \\
-    & DISTR.CURR_5V & 30 \\
-    & DISTR.VOLT_VBAT & 30 \\
-    & DISTR.CURR_VBAT & 30 \\
-    & DISTR.LCL_STATE & 30 \\
-    & DISTR.LCL_FLAGB & 30 \\
-    \cline{2-4}
-    & BATC.VOLT_A & 30 \\
-    & BATC.CHRG_CURR & 30 \\
-    & BATC.DCHRG_CURR & 30 \\
-    & BATC.TEMP & 30 \\
-    & BATC.STATE & 30 \\
-    \cline{2-4}
-    & BP.TEMP_A & 30 \\
-    & BP.TEMP_B & 30 \\
-    \cline{2-4}
-    & CTRLA.SAFETY-CTR & 30 \\
-    & CTRLA.PWR-CYCLES & 30 \\
-    & CTRLA.UPTIME & 30 \\
-    & CTRLA.TEMP & 30 \\
-    & CTRLA.SUPP_TEMP & 30 \\
-    & CTRLB.3V3d_VOLT & 30 \\
-    \cline{2-4}
-    & DCDC.3V3_TEMP & 30 \\
-    & DCDC.5V_TEMP & 30 \\
+    \multirow{30}{*}{EPS Controller A} & MPPTX.SOL_VOLT & 30 & 0 & 8.00 & 3.60 & 5.50 & V \\
+    & MPPTX.SOL_CURR & 30 & 0 & 0.90 & 0.05 & 0.60 & A \\
+    & MPPTX.OUT_VOLT & 30 & 0 & 8.20 & 5.30 & 7.80 & V \\
+    & MPPTX.TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & MPPTX.STATE & 30 & 0 & 7 & 0 & 1 & dec \\
+    \cline{2-8}
+    & MPPTY+.SOL_VOLT & 30 & 0 & 16.0 & 6.00 & 12.0 & V \\
+    & MPPTY+.SOL_CURR & 30 & 0 & 0.90 & 0.05 & 0.60 & A \\
+    & MPPTY+.OUT_VOLT & 30 & 0 & 8.20 & 6.30 & 7.80 & V \\
+    & MPPTY+.TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & MPPTY+.STATE & 30 & 0 & 7 & 0 & 1 & dec \\
+    \cline{2-8}
+    & MPPTY-.SOL_VOLT & 30 & 0 & 16.0 & 6.00 & 12.0 & V \\
+    & MPPTY-.SOL_CURR & 30 & 0 & 0.90 & 0.05 & 0.60 & A \\
+    & MPPTY-.OUT_VOLT & 30 & 0 & 8.20 & 6.30 & 7.80 & V \\
+    & MPPTY-.TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & MPPTY-.STATE & 30 & 0 & 7 & 0 & 1 & dec \\
+    \cline{2-8}
+    & DISTR.VOLT_3V3 & 30 & 0 & 3.6 & 3.2 & 3.4 & V \\
+    & DISTR.CURR_3V3 & 30 & 0 & 1.00 & 0.02 & 0.25 & A \\
+    & DISTR.VOLT_5V & 30 & 0 & 6.0 & 4.8 & 5.2 & V \\
+    & DISTR.CURR_5V & 30 & 0 & 1.00 & 0.005 & 0.10 & A \\
+    & DISTR.VOLT_VBAT & 30 & 0 & 8.20 & 7.0 & 7.8 & V \\
+    & DISTR.CURR_VBAT & 30 & 0 & 2.00 & 0.05 & 0.25 & A \\
+    & DISTR.LCL_STATE & 30 & 0 & 127 & 0 & 0 & dec \\
+    & DISTR.LCL_FLAGB & 30 & 0 & 63 & 0 & 0 & dec \\
+    \cline{2-8}
+    & BATC.VOLT_A & 30 & 0 & 8.20 & 7.0 & 7.8 & V \\
+    & BATC.CHRG_CURR & 30 & 0 & 2.00 & 0.05 & 1.00 & A \\
+    & BATC.DCHRG_CURR & 30 & 0 & 2.00 & 0.05 & 0.25 & A \\
+    & BATC.TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & BATC.STATE & 30 & 0 & 7 & 3 & 3 & dec \\
+    \cline{2-8}
+    & BP.TEMP_A & 30 & -50 & +100 & +10 & +35 & \textdegree C \\
+    & BP.TEMP_B & 30 & -50 & +100 & +10 & +35 & \textdegree C \\
+    \cline{2-8}
+    & CTRLA.SAFETY-CTR & 30 & 0 & 255 & 0 & 1 & dec \\
+    & CTRLA.PWR-CYCLES & 30 & 0 & 65535 & 23379 & 23500 & dec \\
+    & CTRLA.UPTIME & 30 & 0 & \begin{math}4*10^9\end{math} & 60 & 82800 & dec \\
+    & CTRLA.TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & CTRLA.SUPP_TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & CTRLB.3V3d_VOLT & 30 & 0 & 3.6 & 3.2 & 3.4 & V \\
+    \cline{2-8}
+    & DCDC.3V3_TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & DCDC.5V_TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
     \hline
-    \multirow{8}{*}{EPS Controller B} & BP.TEMP_C & 30 \\
-    & BATC.VOLT_B & 30 \\
-    & CTRLB.SAFETY-CTR & 30 \\
-    & CTRLB.PWR-CYCLES & 30 \\
-    & CTRLB.UPTIME & 30 \\
-    & CTRLB.TEMP & 30 \\
-    & CTRLB.SUPP_TEMP & 30 \\
-    & CTRLA.3V3d_VOLT & 30 \\
+    \multirow{8}{*}{EPS Controller B} & BP.TEMP_C & 30 & -50 & +100 & +10 & +35 & \textdegree C \\
+    & BATC.VOLT_B & 30 & 0 & 8.20 & 7.0 & 7.8 & V \\
+    & CTRLB.SAFETY-CTR & 30 & 0 & 255 & 0 & 1 & dec \\
+    & CTRLB.PWR-CYCLES & 30 & 0 & 65535 & 45685 & 45800 & dec \\
+    & CTRLB.UPTIME & 30 & 0 & \begin{math}4*10^9\end{math} & 60 & 82800 & dec \\
+    & CTRLB.TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & CTRLB.SUPP_TEMP & 30 & -50 & +100 & -20 & +60 & \textdegree C \\
+    & CTRLA.3V3d_VOLT & 30 & 0 & 3.6 & 3.2 & 3.4 & V \\
     \hline
-    \multirow{3}{*}{Imtq Driver} & Magnetometer Measurement 1 & 30 \\
+    \multirow{3}{*}{iMTQ Driver} & Magnetometer Measurement 1 & 30 \\
     & Magnetometer Measurement 2 & 30 \\
     & Magnetometer Measurement 3 & 30 \\
     \hline
-    Imtq Coil Active & Coil active during measurement & 30 \\
+    iMTQ Coil Active & Coil active during measurement & 30 \\
     \hline
-    \multirow{3}{*}{Imtq Dipole} & Dipole 1 & 30 \\
+    \multirow{3}{*}{iMTQ Dipole} & Dipole 1 & 30 \\
     & Dipole 2 & 30 \\
     & Dipole 3 & 30 \\
     \hline
-    \multirow{3}{*}{Imtq BDot} & BDot 1 & 30 \\
+    \multirow{3}{*}{iMTQ BDot} & BDot 1 & 30 \\
     & BDot 2 & 30 \\
     & BDot 3 & 30 \\
     \hline
-    \multirow{3}{*}{Imtq Housekeeping} & Digital Voltage & 30 \\
-    & Analog Voltage & 30 \\
-    & Digital Current & 30 \\
-    & Analog Current & 30 \\
-    & MCU Temperature & 30 \\
+    \multirow{3}{*}{iMTQ Housekeeping} & Digital Voltage & 0 & 30 & 3.6 & 3.2 & 3.4 & V \\
+    & Analog Voltage & 30 & 0 & 3.6 & 3.2 & 3.4 & V \\
+    & Digital Current & 30 & 0 & 250 & 35 & 45 & mA \\
+    & Analog Current & 30 & 0 & 250 & 5 & 15 & mA \\
+    & MCU Temperature & 30 & -40 & +70 & -20 & +60 & \textdegree C \\
     \hline
-    \multirow{3}{*}{Imtq Coil} & Coil Current 1 & 30 \\
-    & Coil Current 2 & 30 \\
-    & Coil Current 3 & 30 \\
+    \multirow{3}{*}{iMTQ Coil} & Coil Current 1 & 30 & -200 & +200 & -50 & +50 & mA \\
+    & Coil Current 2 & 30 & -200 & +200 & -50 & +50 & mA \\
+    & Coil Current 3 & 30 & -200 & +200 & -125 & +125 & mA \\
     \hline
-    \multirow{3}{*}{Imtq Temperature} & Coil Temperature 1 & 30 \\
-    & Coil Temperature 2 & 30 \\
-    & Coil Temperature 3 & 30 \\
+   \multirow{3}{*}{iMTQ Temperature} & Coil Temperature 1 & 30 & -40 & +70 & -20 & +60 & \textdegree C \\
+    & Coil Temperature 2 & 30 & -40 & +70 & -20 & +60 & \textdegree C \\
+    & Coil Temperature 3 & 30 & -40 & +70 & -20 & +60 & \textdegree C \\
     \hline
-    \multirow{5}{*}{Imtq state} & Status & 30 \\
+    \multirow{5}{*}{iMTQ state} & Status & 30 \\
     & Mode & 30 \\
     & Error during previous iteration & 30 \\
     & Configuration changed & 30 \\
     & Uptime & 30 \\
     \hline
-    \multirow{16}{*}{Imtq Self Test} & SelfTest Error INIT & once per boot \\
+    \multirow{16}{*}{iMTQ Self Test} & SelfTest Error INIT & once per boot \\
     & SelfTest Error X+ & once per boot \\
     & SelfTest Error X- & once once per boot \\
     & SelfTest Error Y+ & once once per boot \\
