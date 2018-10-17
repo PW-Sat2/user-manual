@@ -1,3 +1,128 @@
+\newcommand{\currentbs}{\texttt{CurrentBootSlots}}
+\newcommand{\targetbs}{\texttt{TargetBootSlots}}
+
 \obcproc{Program upload}
 
-\todo{Program upload procedure}
+\danger{During program upload OBC has \textbf{no failsafe boot slots}}
+
+\danger{Failed program upload will result in \textbf{bricked OBC}}
+
+During satellite operation treat program upload as last resort to solve issues. Due to low uplink speed it is necessary to strip down OBC program to minimum before starting upload. 
+
+Upload itself is divided into 7 stages and during stages 1-3 is running with only one set of valid boot slots.
+
+\subsection{Stage 0: Plan software upload}
+Program upload must be carefully planned. Following variables are used throughout this procedure:
+
+\begin{itemize}
+	\item \currentbs{} - boot slots currently used to boot OBC
+	\item \targetbs{} - boot slots to which program is being uploaded
+\end{itemize}
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Note down \currentbs{}
+	\item Determine \targetbs{} as 3 other slots that pointed by \currentbs{}
+	\item Prepare program file in BIN format padded to 128 bytes with \texttt{0x1A} byte
+	\item Note down CRC for program file
+\end{enumerate}
+
+\subsection{Stage 1: Erase boot slots}
+In order to be reprogrammed \targetbs{} need to be erased. After that boot loader WILL NOT use them for booting even in case of \currentbs{} failure.
+
+\danger{This is point of no-return for program upload}
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Issue EraseBootSlotsTelecommand for \targetbs{}
+	\item Expect success response
+\end{enumerate}
+
+In case of failure: repeat procedure or use CopyBootSlots experiment to copy \currentbs{} to \targetbs{} and abort procedure.
+
+\subsection{Stage 2: Upload program parts}
+After erasing \targetbs{} they can be programmed with new content. Due to low uplink speed it may take several communication sessions to upload full program.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Split program into parts of maximum size of 190 bytes numbered $0...N$
+	\item For each part $i$ in $0..N$ issue \nameref{tc:WriteProgramPart} telecommand with parameters:
+	
+		\begin{tabular}{l|r}
+			Parameter & Value \\
+			\hline
+			\texttt{entries} & \targetbs{} bitmask \\ 
+			\texttt{offset} & $i * 190$ \\
+			\texttt{content} & Content of $i$ part
+		\end{tabular}
+	\item For each sent telecommand expect success response 
+\end{enumerate}
+
+In case of failure: Use CopyBootSlots experiment to copy \currentbs{} to \targetbs{} and abort procedure. Please note that it is not possible to overwrite partially written program part, whole boot slot will need to be erased. The only situation in which attempt to write single program part can succeed is when OBC or flash memory rejected write as a whole.
+
+\subsection{Stage 3: Finalize boot slot}
+After uploading all program parts, boot slots need to finalized (verified and marked as valid) before they can be used in boot process.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Send FinalizeBootSlots telecommand with parameters:
+	
+		\begin{tabular}{l|r}
+			Parameter & Value \\
+			\hline
+			\texttt{entries} & \targetbs{} bitmask \\ 
+			\texttt{length} & Length of uploaded program file \\
+			\texttt{expected\_crc} & CRC of uploaded program file \\
+			\texttt{name} & Textual description of uploaded program
+		\end{tabular}
+	\item Expect success response
+	\item If CRC mismatch error is received, program upload has failed and boot slots are in undetermined state.
+\end{enumerate}
+
+In case of failure: use CopyBootSlots experiment to copy \currentbs{} to \targetbs{} and abort procedure. 
+
+\subsection{Stage 4: Change boot configuration}
+At this point boot table contains currently running program in \currentbs{} and new program in \targetbs{}. In order to switch to new program boot configuration must be changed: \currentbs{} will become failsafe boot slots and \targetbs{} will become primary boot slots.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Send \nameref{tc:Set boot slots} telecommand with parameters:
+	
+		\begin{tabular}{l|r}
+			Parameter & Value \\
+			\hline
+			\texttt{primary} & \targetbs{} bitmask \\ 
+			\texttt{failsafe} & \currentbs{} bitmask
+		\end{tabular}
+\end{enumerate}
+
+\subsection{Stage 5: Power cycle}
+After changing boot configuration, satellite can be power cycled in order for OBC to boot using new program. Please refer to \nameref{obc:proc:Power cycle} for details.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Send \nameref{tc:Power cycle} to restart satellite.
+	\item Wait for satellite to start again
+	\item Verify in telemetry that \targetbs{} are used to boot OBC
+\end{enumerate}
+
+If OBC is using \currentbs{} that means new program has failed to boot and bootloader switched to fail safe boot slots. In that case OBC is on the edge of becoming brick and reasonable thing to do is sending \nameref{tc:Open Sail} telecommand.
+
+\subsection{Stage 6: Replicate boot slots}
+At this point OBC is running using new program but in case of boot failure will switch to old program. After verifying that new program is working correctly it is necessary to overwrite old program with new program.
+
+\textbf{Steps:}
+\begin{enumerate}
+	\item Send CopyBootSlots telecommand with parameters:
+	
+		\begin{tabular}{l|r}
+			Parameter & Value \\
+			\hline
+			\texttt{source\_mask} & \targetbs{} bitmask \\ 
+			\texttt{target\_mask } & \currentbs{} bitmask
+		\end{tabular}
+\end{enumerate}
+
+
+\let\currentbs\undefined
+\let\targetbs\undefined
