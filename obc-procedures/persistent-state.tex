@@ -5,10 +5,12 @@ It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
 
 \subsubsection{Stored variables}
 
-\begin{tabular}{l|l|m{6cm}|l}
-    \textbf{Group}          & \textbf{Variable}             & \textbf{Description} & \textbf{size [bits]} \\
-    \hline \hline
-    AntennaConfiguration        & isDeploymentDisabled          & Information whether the antenna deployment process is disabled & 8 \\
+\begin{longtable}{l|l|m{6cm}|l}
+    \toprule
+    \textbf{Group} & \textbf{Variable} & \textbf{Description} & \textbf{Size [bits]} \\
+    \midrule
+    \endhead
+    AntennaConfiguration        & isDeploymentDisabled          & See \procref{Antenna Deployment Process} for details. & 8 \\
     \hline
     \multirow{4}{*}{TimeState}  & lastMissionTime               & Current mission time in milliseconds as seen on internal clock during last time synchronization process. & 64 LE \\
                                 & lastExternalTime              & Current mission time in milliseconds as seen on external clock during last time synchronization process. & 32 LE \\
@@ -23,5 +25,5 @@ It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
     AdcsState                   & internalDetumblingDisabled    & Flag indicating whether the internal detumbling is disabled & 8 \\
     \hline
     MessageState & \parbox[c]{5cm}{interval \\ repeatCount \\ message} & See the \procref{Periodic message} for the details regarding periodic message configuration & \parbox[c]{1cm}{8\\8\\1600} \\
-    \hline
-\end{tabular}
+    \bottomrule
+\end{longtable}

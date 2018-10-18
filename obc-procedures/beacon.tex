@@ -10,12 +10,14 @@ beacon frames. \\\\
 It is possible for the operator to request immediate sending of the beacon frame. To do that operator is to send \tcref{Send Beacon} 
 telecommand. \\\\
 The beacon frame contains copy of most recently acquired telemetry, which itself is sampled in 30s intervals. The content 
-of the beacon frame is presented in the table below. Furthermore, the table shows the safe telemetry range. If a given value is out of the safe range the GS team should check this value immedietly. This violation may indicate unsafe system state or a serious issue: some sensor is broken, frame parsing or decoding issue, etc.
+of the beacon frame is presented in the table below. Furthermore, the table shows the safe telemetry range. If a given value is out of 
+the safe range the operations team should check this value immediately. This violation may indicate unsafe system state or a serious issue: 
+some sensor is broken, frame parsing or decoding issue, etc.
 
 \begin{longtable}{c|m{5cm}|c|M{1.5cm}|c|c|c}
     \toprule
-    \multirow{2}{*}{Source} & \multirow{2}{*}{Element Name} & Size & Sample & \multicolumn{2}{c}{Safe Range} & \multirow{2}{*}{Unit} \\
-    & & [bit] & Rate [s] & Low & High & \\
+    \multirow{2}{*}{\textbf{Source}} & \multirow{2}{*}{\textbf{Element Name}} & Size & Sample & \multicolumn{2}{c}{\textbf{Safe Range}} & \multirow{2}{*}{\textbf{Unit}} \\
+    & & \textbf{[bit]} & \textbf{Rate [s]} & \textbf{Low} & \textbf{High} & \\
     \midrule
     \endhead
     \multirow{6}{*}{Boot loader} & Boot Counter & 32 & once per boot & & & \\
