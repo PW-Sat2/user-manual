@@ -3,9 +3,8 @@
 \tccategory{PD}
 
 \subsection{General description}
-\texttt{SendPeriodicMessageTelecommand} sends in response requested number of Periodic Message frames.
-
-By default sending Periodic Message is disabled for power management reasons.
+\texttt{SendPeriodicMessageTelecommand} sends in response requested number of Periodic Message frames. 
+For the details regarding periodic message functionality see the \procref{Periodic message} section.
 
 There is no Error Frame in case of errors.
 
@@ -44,11 +43,6 @@ Parameters:
 \paragraph{PeriodicMessageFrame}
 \ResponseApid{PeriodicMessageFrame}
 Correlated response frame \texttt{PeriodicMessageFrame} contains just Periodic message.
-
-Default content is: \\
-\texttt{We are the Borg. Lower your shields and surrender your ships. We will add your biological and \\
-technological distinctiveness to our own. Your culture will adapt to service us. Resistance is futile.}
-Content can be set by \nameref{tc:SetPeriodicMessage}.
 
 \subsection{Example usage}
 Send Periodic Message 6 times.

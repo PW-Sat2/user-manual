@@ -4,3 +4,13 @@ aux-files/
 *.pyc
 *.pdf
 *.synctex(busy)
+*.aux
+*.fls
+*.log
+*.fdb_latexmk
+*.out
+*.pytxcode
+*.td
+*.toc
+
+
