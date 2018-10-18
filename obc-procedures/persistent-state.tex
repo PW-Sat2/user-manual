@@ -1,7 +1,8 @@
 \obcproc{Persistent State}
 
-Persistent state is stored on 3 FRAM \texttt{fm25w} chips using TMR. 
-It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
+Persistent sate stores satellite state that should not be lost due to \obc restart. It is stored on 
+3 FRAMs \texttt{fm25w} chips with TMR for reliability. The contents of the persistent state cane be 
+retrieved using \tcref{Get Persistent State} telecommand.
 
 \subsubsection{Stored variables}
 
@@ -20,7 +21,7 @@ It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
     \hline
     SailState                   & currentState                  & See \procref{Sail Deployment Process} for details. & 8 \\
     \hline
-    ErrorCountersConfigState    & 14 error counters             & Value of each \nameref{obc:proc:Error Counters} & 14 * 32 LE \\
+    ErrorCountersConfigState    & 14 error counters             & Value of each \procref{Error Counters} & 14 * 32 LE \\
     \hline
     AdcsState                   & internalDetumblingDisabled    & Flag indicating whether the internal detumbling is disabled & 8 \\
     \hline
