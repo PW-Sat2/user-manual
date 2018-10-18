@@ -12,106 +12,106 @@ telecommand. \\\\
 The beacon frame contains copy of most recently acquired telemetry, which itself is sampled in 30s intervals. The content 
 of the beacon frame is presented in the table below. Furthermore, the table shows the safe telemetry range. If a given value is out of the safe range the GS team should check this value immedietly. This violation may indicate unsafe system state or a serious issue: some sensor is broken, frame parsing or decoding issue, etc.
 
-\begin{longtable}{c|m{5cm}|c|M{1.5cm}|ccc}
+\begin{longtable}{c|m{5cm}|c|M{1.5cm}|c|c|c}
     \toprule
     \multirow{2}{*}{Source} & \multirow{2}{*}{Element Name} & Size & Sample & \multicolumn{2}{c}{Safe Range} & \multirow{2}{*}{Unit} \\
-    & & [bit] & Rate [s] & Low & High \\
+    & & [bit] & Rate [s] & Low & High & \\
     \midrule
     \endhead
-    Boot loader & Boot Counter & 32 & once per boot & \\
-    & Boot Index            & 8 & once per boot \\
-    & OBC Reboot Reason     & 16 & once per boot \\
-    & OBC Code CRC          & 16 & 30 \\
+    \multirow{6}{*}{Boot loader} & Boot Counter & 32 & once per boot & & & \\
+    & Boot Index            & 8 & once per boot & & & \\
+    & OBC Reboot Reason     & 16 & once per boot & & & \\
+    & OBC Code CRC          & 16 & 30 & & & \\
     \hline
-    Time Service      & Mission Time          & 64 & 30 \\
+    Time Service      & Mission Time          & 64 & 30 & & & \\
     \hline
-    Persistent State  & External Time         & 32 & 30 \\
+    Persistent State  & External Time         & 32 & 30 & & & \\*
     \hline
-    \multirow{14}{*}{Error Counters} & COMM & 8 & 30 & 0 & 0 & dec \\
+    & COMM & 8 & 30 & 0 & 0 & dec \\*
     & EPS & 8 & 30 & 0 & 0 & dec \\
     & RTC & 8 & 30 & 0 & 0 & dec \\
     & iMTQ & 8 & 30 & 0 & 0 & dec \\
     & N25Q Flash 1 & 8 & 30 & 0 & 0 & dec \\
     & N25Q Flash 2 & 8 & 30 & 0 & 0 & dec \\
-    & N25Q Flash 3 & 8 & 30 & 0 & 0 & dec \\
+    \multirow{2}{*}{Error Counters} & N25Q Flash 3 & 8 & 30 & 0 & 0 & dec \\
     & N25Q TMR Corrections & 8 & 30 & 0 & 0 & dec \\
     & FRAM TMR Corrections & 8 & 30 & 0 & 0 & dec \\
     & Payload & 8 & 30 & 0 & 0 & dec \\
     & Camera & 8 & 30 & 0 & 0 & dec \\
     & Suns Exp & 8 & 30 & 0 & 0 & dec \\
     & Antenna primary & 8 & 30 & 0 & 0 & dec \\
-    & Antenna secondary & 8 & 30 & 0 & 0 & dec \\
+    & Antenna secondary & 8 & 30 & 0 & 0 & dec \\*
     \hline
-    \multirow{3}{*}{Scrubbing State} & Primary Flash Scrubbing pointer & 3 & 30 \\
-    & Secondary Flash Scrubbing pointer & 3 & 30 \\
-    & RAM Scrubbing pointer & 32 & 30 \\
+    \multirow{4}{*}{Scrubbing State} & Primary Flash Scrubbing pointer & 3 & 30 & & & \\
+    & Secondary Flash Scrubbing pointer & 3 & 30 & & & \\
+    & RAM Scrubbing pointer & 32 & 30 & & & \\
     \hline
     System & Uptime & 22 & 30 & 00:01 & 22:59 & hh:mm \\
     \hline
-    yaffs & Flash Free Space & 32 & 30 \\
+    yaffs & Flash Free Space & 32 & 30 & & & \\
     \hline
-    \multirow{46}{*}{Antenna Driver} & Ant 1 Deployment Switch Ch A & 1 & 30 \\
-    & Ant 2 Deployment Switch Ch A & 1 & 30 \\
-    & Ant 3 Deployment Switch Ch A & 1 & 30 \\
-    & Ant 4 Deployment Switch Ch A & 1 & 30 \\
+    \multirow{46}{*}{Antenna Driver} & Ant 1 Deployment Switch Ch A & 1 & 30 & & & \\
+    & Ant 2 Deployment Switch Ch A & 1 & 30 & & & \\
+    & Ant 3 Deployment Switch Ch A & 1 & 30 & & & \\
+    & Ant 4 Deployment Switch Ch A & 1 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 Deployment Switch Ch B & 1 & 30 \\
-    & Ant 2 Deployment Switch Ch B & 1 & 30 \\
-    & Ant 3 Deployment Switch Ch B & 1 & 30 \\
-    & Ant 4 Deployment Switch Ch B & 1 & 30 \\
+    & Ant 1 Deployment Switch Ch B & 1 & 30 & & & \\
+    & Ant 2 Deployment Switch Ch B & 1 & 30 & & & \\
+    & Ant 3 Deployment Switch Ch B & 1 & 30 & & & \\
+    & Ant 4 Deployment Switch Ch B & 1 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 last stop due to time Ch A & 1 & 30 \\
-    & Ant 2 last stop due to time Ch A & 1 & 30 \\
-    & Ant 3 last stop due to time Ch A & 1 & 30 \\
-    & Ant 4 last stop due to time Ch A & 1 & 30 \\
+    & Ant 1 last stop due to time Ch A & 1 & 30 & & & \\
+    & Ant 2 last stop due to time Ch A & 1 & 30 & & & \\
+    & Ant 3 last stop due to time Ch A & 1 & 30 & & & \\
+    & Ant 4 last stop due to time Ch A & 1 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 last stop due to time Ch B & 1 & 30 \\
-    & Ant 2 last stop due to time Ch B & 1 & 30 \\
-    & Ant 3 last stop due to time Ch B & 1 & 30 \\
-    & Ant 4 last stop due to time Ch B & 1 & 30 \\
+    & Ant 1 last stop due to time Ch B & 1 & 30 & & & \\
+    & Ant 2 last stop due to time Ch B & 1 & 30 & & & \\
+    & Ant 3 last stop due to time Ch B & 1 & 30 & & & \\
+    & Ant 4 last stop due to time Ch B & 1 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 burn active Ch A & 1 & 30 \\
-    & Ant 2 burn active Ch A & 1 & 30 \\
-    & Ant 3 burn active Ch A & 1 & 30 \\
-    & Ant 4 burn active Ch A & 1 & 30 \\
+    & Ant 1 burn active Ch A & 1 & 30 & & & \\
+    & Ant 2 burn active Ch A & 1 & 30 & & & \\
+    & Ant 3 burn active Ch A & 1 & 30 & & & \\
+    & Ant 4 burn active Ch A & 1 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 burn active Ch B & 1 & 30 \\
-    & Ant 2 burn active Ch B & 1 & 30 \\
-    & Ant 3 burn active Ch B & 1 & 30 \\
-    & Ant 4 burn active Ch B & 1 & 30 \\ 
+    & Ant 1 burn active Ch B & 1 & 30 & & & \\
+    & Ant 2 burn active Ch B & 1 & 30 & & & \\
+    & Ant 3 burn active Ch B & 1 & 30 & & & \\
+    & Ant 4 burn active Ch B & 1 & 30 & & & \\ 
     \cline{2-7}
-    & System independent burn Ch A & 1 & 30 \\
-    & System independent burn Ch B & 1 & 30 \\
+    & System independent burn Ch A & 1 & 30 & & & \\
+    & System independent burn Ch B & 1 & 30 & & & \\
     \cline{2-7}
-    & Antenna Ignoring switches Ch A & 1 & 30 \\
-    & Antenna Ignoring switches Ch B & 1 & 30 \\
+    & Antenna Ignoring switches Ch A & 1 & 30 & & & \\
+    & Antenna Ignoring switches Ch B & 1 & 30 & & & \\
     \cline{2-7}
-    & Antenna Armed Ch A & 1 & 30 \\
-    & Antenna Armed Ch B & 1 & 30 \\
+    & Antenna Armed Ch A & 1 & 30 & & & \\
+    & Antenna Armed Ch B & 1 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 Activation Count Ch A & 3 & 30 \\
-    & Ant 2 Activation Count Ch A & 3 & 30 \\
-    & Ant 3 Activation Count Ch A & 3 & 30 \\
-    & Ant 4 Activation Count Ch A & 3 & 30 \\
+    & Ant 1 Activation Count Ch A & 3 & 30 & & & \\
+    & Ant 2 Activation Count Ch A & 3 & 30 & & & \\
+    & Ant 3 Activation Count Ch A & 3 & 30 & & & \\
+    & Ant 4 Activation Count Ch A & 3 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 Activation Count Ch B & 3 & 30 \\
-    & Ant 2 Activation Count Ch B & 3 & 30 \\
-    & Ant 3 Activation Count Ch B & 3 & 30 \\
-    & Ant 4 Activation Count Ch B & 3 & 30 \\
+    & Ant 1 Activation Count Ch B & 3 & 30 & & & \\
+    & Ant 2 Activation Count Ch B & 3 & 30 & & & \\
+    & Ant 3 Activation Count Ch B & 3 & 30 & & & \\
+    & Ant 4 Activation Count Ch B & 3 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 Activation Time Ch A & 8 & 30 \\
-    & Ant 2 Activation Time Ch A & 8 & 30 \\
-    & Ant 3 Activation Time Ch A & 8 & 30 \\
-    & Ant 4 Activation Time Ch A & 8 & 30 \\
+    & Ant 1 Activation Time Ch A & 8 & 30 & & & \\
+    & Ant 2 Activation Time Ch A & 8 & 30 & & & \\
+    & Ant 3 Activation Time Ch A & 8 & 30 & & & \\
+    & Ant 4 Activation Time Ch A & 8 & 30 & & & \\
     \cline{2-7}
-    & Ant 1 Activation Time Ch B & 8 & 30 \\
-    & Ant 2 Activation Time Ch B & 8 & 30 \\
-    & Ant 3 Activation Time Ch B & 8 & 30 \\
-    & Ant 4 Activation Time Ch B & 8 & 30 \\
+    & Ant 1 Activation Time Ch B & 8 & 30 & & & \\
+    & Ant 2 Activation Time Ch B & 8 & 30 & & & \\
+    & Ant 3 Activation Time Ch B & 8 & 30 & & & \\
+    & Ant 4 Activation Time Ch B & 8 & 30 & & & \\
     \hline
-    \multirow{3}{*}{Experiments} & Current experiment code & 4 & 30 \\
-    & Experiment Startup Result & 8 & 30 \\
-    & Last Experiment Iteration Status & 8 & 30 \\
+    \multirow{3}{*}{Experiments} & Current experiment code & 4 & 30 & & & \\
+    & Experiment Startup Result & 8 & 30 & & & \\
+    & Last Experiment Iteration Status & 8 & 30 & & & \\
     \hline
     \multirow{4}{*}{Gyroscope Driver} & X measurement & 16 & 30 & -1 & +1 & \textdegree /s \\
     & Y measurement & 16 & 30 & -1 & +1 & \textdegree /s \\
@@ -119,8 +119,8 @@ of the beacon frame is presented in the table below. Furthermore, the table show
     & Temperature & 16 & 30 & -10 & +50 & \textdegree C \\
     \hline
     \multirow{15}{*}{COMM Transmitter} & Transmitter Uptime & 17 & 30 & 00:01 & 22:59 & hh:mm \\
-    & Bitrate & 2 & 30 \\
-    & Last Transmitted RF Reflected Power & 12 & 30 \\
+    & Bitrate & 2 & 30 & & & \\
+    & Last Transmitted RF Reflected Power & 12 & 30 & & & \\
     & Last Transmitted Power Amplifier Temperature & 12 & 30 & -10 & +50 & \textdegree C \\
     & Last Transmitted RF Forward Power & 12 & 30 & 26 & 28 & dBm \\
     & Last Transmitted Transmitter Current Consumption & 12 & 30 & 300 & 490 & mA \\
@@ -130,19 +130,19 @@ of the beacon frame is presented in the table below. Furthermore, the table show
     & BeaconState & 1 & 30 & 0 & 0 & dec \\
     \hline
     \multirow{11}{*}{COMM Receiver} & Uptime & 17 & 30 & 00:01 & 22:59 & hh:mm \\
-    & Last Received Doppler Offset & 12 & 30 \\
-    & Last Received RSSI & 12 & 30 \\
-    & Now Doppler Offset & 12 & 30 \\
+    & Last Received Doppler Offset & 12 & 30 & & & \\
+    & Last Received RSSI & 12 & 30 & & & \\
+    & Now Doppler Offset & 12 & 30 & & & \\
     & Now Receiver Current Consumption & 12 & 30 & 40 & 60 & mA \\
     & Supply Voltage & 12 & 30 & 7.0 & 7.8 & V \\
     & Oscillator Temperature & 12 & 30 & -10 & +50 & \textdegree C \\
     & Now Power Amplifier Temperature & 12 & 30 & -10 & +50 & \textdegree C \\
-    & Now RSSI & 12 & 30 \\
+    & Now RSSI & 12 & 30 & & & \\
     \hline
     \multirow{2}{*}{Hardware State} & Sail Deployed & 1 & 30 & 0 & 0 & dec \\
     & OBC MCU Temperature & 12 & 30 & -10 & +50 & \textdegree C \\
     \hline
-    \multirow{30}{*}{EPS Controller A} & MPPTX.SOL_VOLT & 12 & 30 & 3.60 & 5.50 & V \\
+    & MPPTX.SOL_VOLT & 12 & 30 & 3.60 & 5.50 & V \\
     & MPPTX.SOL_CURR & 12 & 30 & 0.05 & 0.60 & A \\
     & MPPTX.OUT_VOLT & 12 & 30 & 5.30 & 7.80 & V \\
     & MPPTX.TEMP & 12 & 30 & -10 & +50 & \textdegree C \\
@@ -158,7 +158,7 @@ of the beacon frame is presented in the table below. Furthermore, the table show
     & MPPTY-.SOL_CURR & 12 & 30 & 0.05 & 0.60 & A \\
     & MPPTY-.OUT_VOLT & 12 & 30 & 6.30 & 7.80 & V \\
     & MPPTY-.TEMP & 12 & 30 & -10 & +50 & \textdegree C \\
-    & MPPTY-.STATE & 3 & 30 & 0 & 1 & dec \\
+    \multirow{2}{*}{EPS Controller A} & MPPTY-.STATE & 3 & 30 & 0 & 1 & dec \\
     \cline{2-7}
     & DISTR.VOLT_3V3 & 10 & 30 & 3.2 & 3.4 & V \\
     & DISTR.CURR_3V3 & 10 & 30 & 0.02 & 0.25 & A \\
@@ -197,19 +197,19 @@ of the beacon frame is presented in the table below. Furthermore, the table show
     & CTRLB.SUPP_TEMP & 10 & 30 & -10 & +50 & \textdegree C \\
     & CTRLA.3V3d_VOLT & 10 & 30 & 3.2 & 3.4 & V \\
     \hline
-    \multirow{3}{*}{iMTQ Driver} & Magnetometer Measurement 1 & 32 & 30 \\
-    & Magnetometer Measurement 2 & 32 & 30 \\
-    & Magnetometer Measurement 3 & 32 & 30 \\
+    \multirow{3}{*}{iMTQ Driver} & Magnetometer Measurement 1 & 32 & 30 & & & \\
+    & Magnetometer Measurement 2 & 32 & 30 & & & \\
+    & Magnetometer Measurement 3 & 32 & 30 & & & \\
     \hline
-    iMTQ Coil Active & Coil active during measurement & 1 & 30 \\
+    iMTQ Coil Active & Coil active during measurement & 1 & 30 & & & \\
     \hline
-    \multirow{3}{*}{iMTQ Dipole} & Dipole 1 & 16 & 30 \\
-    & Dipole 2 & 16 & 30 \\
-    & Dipole 3 & 16 & 30 \\
+    \multirow{3}{*}{iMTQ Dipole} & Dipole 1 & 16 & 30 & & & \\
+    & Dipole 2 & 16 & 30 & & & \\
+    & Dipole 3 & 16 & 30 & & & \\
     \hline
-    \multirow{3}{*}{iMTQ BDot} & BDot 1 & 32 & 30 \\
-    & BDot 2 & 32 & 30 \\
-    & BDot 3 & 32 & 30 \\
+    \multirow{3}{*}{iMTQ BDot} & BDot 1 & 32 & 30 & & & \\
+    & BDot 2 & 32 & 30 & & & \\
+    & BDot 3 & 32 & 30 & & & \\
     \hline
     \multirow{3}{*}{iMTQ Housekeeping} & Digital Voltage & 16 & 30 & 3.2 & 3.4 & V \\
     & Analog Voltage & 16 & 30 & 3.2 & 3.4 & V \\
@@ -225,19 +225,19 @@ of the beacon frame is presented in the table below. Furthermore, the table show
     & Coil Temperature 2 & 16 & 30 & -10 & +50 & \textdegree C \\
     & Coil Temperature 3 & 16 & 30 & -10 & +50 & \textdegree C \\
     \hline
-    \multirow{5}{*}{iMTQ state} & Status & 8 & 30 \\
-    & Mode & 2 & 30 \\
-    & Error during previous iteration & 8 & 30 \\
-    & Configuration changed & 1 & 30 \\
-    & Uptime & 32 & 30 \\
+    & Status & 8 & 30 & & & \\
+    & Mode & 2 & 30 & & & \\
+    iMTQ state & Error during previous iteration & 8 & 30 & & & \\
+    & Configuration changed & 1 & 30 & & & \\
+    & Uptime & 32 & 30 & & & \\
     \hline
-    \multirow{16}{*}{iMTQ Self Test} & SelfTest Error INIT & 8 & once per boot \\
-    & SelfTest Error X+ & 8 & once per boot \\
-    & SelfTest Error X- & 8 & once per boot \\
-    & SelfTest Error Y+ & 8 & once per boot \\
-    & SelfTest Error Y- & 8 & once per boot \\
-    & SelfTest Error Z+ & 8 & once per boot \\
-    & SelfTest Error Z- & 8 & once per boot \\
-    & SelfTest Error FINA & 8 & once per boot \\
+    \multirow{16}{*}{iMTQ Self Test} & SelfTest Error INIT & 8 & once per boot & & & \\
+    & SelfTest Error X+ & 8 & once per boot & & & \\
+    & SelfTest Error X- & 8 & once per boot & & & \\
+    & SelfTest Error Y+ & 8 & once per boot & & & \\
+    & SelfTest Error Y- & 8 & once per boot & & & \\
+    & SelfTest Error Z+ & 8 & once per boot & & & \\
+    & SelfTest Error Z- & 8 & once per boot & & & \\
+    & SelfTest Error FINA & 8 & once per boot & & & \\
     \bottomrule
 \end{longtable}
