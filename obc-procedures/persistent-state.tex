@@ -5,7 +5,7 @@ It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
 
 \subsubsection{Stored variables}
 
-\begin{tabular}{l | l | m{6cm} | l}
+\begin{tabular}{l|l|m{6cm}|l}
     \textbf{Group}          & \textbf{Variable}             & \textbf{Description} & \textbf{size [bits]} \\
     \hline \hline
     AntennaConfiguration        & isDeploymentDisabled          & Information whether the antenna deployment process is disabled & 8 \\
@@ -22,6 +22,6 @@ It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
     \hline
     AdcsState                   & internalDetumblingDisabled    & Flag indicating whether the internal detumbling is disabled & 8 \\
     \hline
-    MessageState & \parbox[c]{5cm}{interval \\ repeatCount \\ message} & See the \procref{Periodic message} for the details regarding periodic message configuration & \parbox[c]{5cm}{8\\8\\1600} \\
+    MessageState & \parbox[c]{5cm}{interval \\ repeatCount \\ message} & See the \procref{Periodic message} for the details regarding periodic message configuration & \parbox[c]{1cm}{8\\8\\1600} \\
     \hline
 \end{tabular}
