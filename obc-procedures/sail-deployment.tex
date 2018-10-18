@@ -1,7 +1,7 @@
 \obcproc{Sail Deployment Process}
 
 This process is responsible for reliable sail deployment. This process once started will be restarted from the 
-beginning in case of the \obc restart. The started sail deployment process can be stopped by using \tcref{Stop Sail Deployment} telecommand. 
+beginning in case of the \obc restart. The once started sail deployment process can be stopped by using \tcref{Stop Sail Deployment} telecommand. 
 The sail deployment status is recorded in the \procref{Persistent State} as follows:
 
 \begin{longtable}{l|l|l|M{1cm}|M{1.5cm}}
@@ -27,50 +27,54 @@ This process is triggered by a number of possible events:
     \item \tcref{Open Sail} telecommand,
     \item \tcref{Perform Sail Experiment} telecommand,
     \item In case of permanent \obc failure. Once the \eps subsystem loses contact with \obc for more than 
-    \todo{how long after lost contact betwee eps and obc eps will open sail} hours it begins emergency sail deployment.
+    32 hours it begins emergency sail deployment.
+    \item as a result of negative power budged (i.e. when satellite is spinning too fast) which will cause that 
+    single \obc session will be shorter than 30 minutes then sail deployment will be triggered after no more than several hours.
 \end{itemize}
 
 \danger{The sail deployment has a very significant negative impact on the satellite as a whole and mission: 
 \begin{itemize}
-	\item It is almost certain that communication will not be possible after sail deployment,
-    \item Expected high angular velocity (${\sim}200$ deg/s) of satellite after deployment,
-    \item Negative energy balance caused by rotation with expected battery depletion in 1.5 days.
+    \item The deployment itself will cause very fast satellite spinning (${\sim}200$ deg/s),
+	\item It is almost certain that communication will not be possible after sail deployment due to both satellite spinning
+	and the fact that sail itself significantly affects RF antenna characteristics,
+    \item Power budget will become negative due to the very fast satellite rotation. Full battery depletion is expected in 1.5 days since sail deployment.
 \end{itemize}
 }
 
 Following is the list of all of it steps that are performed during the process:
 
-\begin{longtable}{l|m{5cm}|l}
+\begin{longtable}{l|m{10cm}|l}
     \toprule
     \multirow{2}{*}{\textbf{Step}} & \multirow{2}{*}{\textbf{Description}} & \textbf{Execution} \\
     & & \textbf{Time [ms]} \\
     \midrule
     \endhead
-    Disable Overheating Protection & Disables overheating protection which could in case of rising temperature could cut of power to sail thermal knives & \\\hline
-    Wait & & 100 \\\hline
-    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) & \\\hline
-    Wait & & 100 \\\hline
-    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) & \\\hline
-    Wait & & 100 \\\hline
-    Enable Main Burn Switch & Enables burning process on main Thermal Knife & \\\hline
-    Wait & & 100 \\\hline
-    Enable Main Burn Switch & Enables burning process on main Thermal Knife & \\\hline
-    Wait & & 2 * 60 * 1000 \\\hline
-    Disable Main Thermal Switch & Disables Main Thermal Knife (TKmain) & \\\hline
-    Wait & & 100 \\\hline
-    Disable Main Thermal Switch & Enables Main Thermal Knife (TKmain) & \\\hline
-    Wait & & 100 \\\hline
-    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) & \\\hline
-    Wait & & 100 \\\hline
-    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) & \\\hline
-    Wait & & 100 \\\hline
-    Enable Backup Burn Switch & Enables burning process on main Thermal Knife & \\\hline
-    Wait & & 100 \\\hline
-    Enable Backup Burn Switch & Enables burning process on main Thermal Knife & \\\hline
-    Wait & & 2 * 60 * 1000 \\\hline
-    Disable Backup Thermal Switch & Disables Backup Thermal Knife (TKred) & \\\hline
-    Wait & & 100 \\\hline
-    Disable Backup Thermal Switch & Enables Backup Thermal Knife (TKred) & \\\hline
-    Wait & & 100 \\
+    Disable Overheating Protection & Disables overheating protection which could in case of rising temperature could cut of power to sail thermal knives. 
+    This step may be bypassed when sail opening is triggered by the \tcref{Open Sail} telecommand & \\
+    Delay & & 100 \\
+    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) & \\
+    Delay & & 100 \\
+    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) & \\
+    Delay & & 100 \\
+    Enable Main Burn Switch & Enables burning process on Main Thermal Knife & \\
+    Delay & & 100 \\
+    Enable Main Burn Switch & Enables burning process on Main Thermal Knife & \\
+    Delay & & 2 * 60 * 1000 \\
+    Disable Main Thermal Switch & Disables Main Thermal Knife (TKmain) & \\
+    Delay & & 100 \\
+    Disable Main Thermal Switch & Enables Main Thermal Knife (TKmain) & \\
+    Delay & & 100 \\
+    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) & \\
+    Delay & & 100 \\
+    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) & \\
+    Delay & & 100 \\
+    Enable Backup Burn Switch & Enables burning process on Backup Thermal Knife & \\
+    Delay & & 100 \\
+    Enable Backup Burn Switch & Enables burning process on Backup Thermal Knife & \\
+    Delay & & 2 * 60 * 1000 \\
+    Disable Backup Thermal Switch & Disables Backup Thermal Knife (TKred) & \\
+    Delay & & 100 \\
+    Disable Backup Thermal Switch & Enables Backup Thermal Knife (TKred) & \\
+    Delay & & 100 \\
     \bottomrule
 \end{longtable}
