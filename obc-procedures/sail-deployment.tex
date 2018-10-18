@@ -1,35 +1,76 @@
 \obcproc{Sail Deployment Process}
 
-\todo{Sail Deployment Details.}
+This process is responsible for reliable sail deployment. This process once started will be restarted from the 
+beginning in case of the \obc restart. The started sail deployment process can be stopped by using \tcref{Stop Sail Deployment} telecommand. 
+The sail deployment status is recorded in the \procref{Persistent State} as follows:
 
-\begin{itemize}        
-    \item Delay 100ms,                   
-                                   
-    \item Enable Main Thermal Knife,      
-    \item Delay 100 ms,                   
-    \item Enable Main Thermal Knife,       
-    \item Delay 100 ms,                   
-    \item Enable Main Burn Switch,        
-    \item Delay 100 ms,                   
-    \item Enable Main Burn Switch,         
-                            
-    \item Wait for 2 minutes,                 
-                            
-    \item Disable Main Thermal Knife,      
-    \item Delay 100 ms,                   
-    \item Disable Main Thermal Knife,      
-    \item Delay 100 ms,                   
-    \item Enable Redundant Thermal Knife,  
-    \item Delay 100 ms,                   
-    \item Enable Redundant Thermal Knife,  
-    \item Delay 100 ms,                   
-    \item Enable Redundant Burn Switch,    
-    \item Delay 100 ms,                   
-    \item Enable Redundant Burn Switch,    
-                                
-    \item Wait for 2 minutes,                 
-                                
-    \item Disable Redundant Thermal Knife, 
-    \item Delay 100 ms,                   
-    \item Disable Redundant Thermal Knife.
+\begin{longtable}{l|l|l|M{1cm}|M{1.5cm}}
+    \toprule
+    \textbf{Group} & \textbf{Variable} & \textbf{Description} & \textbf{Size [bits]} & \textbf{Default Value} \\
+    \midrule
+    \endhead
+    SailState & currentState & \parbox[c]{10cm}{
+        The Sail opening state which is encoded as follows: \\
+        \begin{tabular}{c|l|m{6.5cm}}
+            \textbf{Value} & \textbf{Name} & \textbf{Description} \\
+            \hline
+            0 & Waiting & Sail deployment has not yet been started \\
+            1 & Opening & Sail is being deployed \\
+            2 & Stopped & Sail deployment either has been completed or has been stopped by the \tcref{Stop Sail Deployment} telecommand. \\
+        \end{tabular}} & 8 & 0 \\
+    \bottomrule
+\end{longtable}
+
+This process is triggered by a number of possible events:
+\begin{itemize}
+    \item Passage of time - sail deployment is automatically performed at the beginning of the 41st day of the mission,
+    \item \tcref{Open Sail} telecommand,
+    \item \tcref{Perform Sail Experiment} telecommand,
+    \item In case of permanent \obc failure. Once the \eps subsystem loses contact with \obc for more than 
+    \todo{how long after lost contact betwee eps and obc eps will open sail} hours it begins emergency sail deployment.
 \end{itemize}
+
+\danger{The sail deployment has a very significant negative impact on the satellite as a whole and mission: 
+\begin{itemize}
+	\item It is almost certain that communication will not be possible after sail deployment,
+    \item Expected high angular velocity (${\sim}200$ deg/s) of satellite after deployment,
+    \item Negative energy balance caused by rotation with expected battery depletion in 1.5 days.
+\end{itemize}
+}
+
+Following is the list of all of it steps that are performed during the process:
+
+\begin{longtable}{l|m{5cm}|l}
+    \toprule
+    \multirow{2}{*}{\textbf{Step}} & \multirow{2}{*}{\textbf{Description}} & \textbf{Execution} \\
+    & & \textbf{Time [ms]} \\
+    \midrule
+    \endhead
+    Disable Overheating Protection & Disables overheating protection which could in case of rising temperature could cut of power to sail thermal knives & \\\hline
+    Wait & & 100 \\\hline
+    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) & \\\hline
+    Wait & & 100 \\\hline
+    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) & \\\hline
+    Wait & & 100 \\\hline
+    Enable Main Burn Switch & Enables burning process on main Thermal Knife & \\\hline
+    Wait & & 100 \\\hline
+    Enable Main Burn Switch & Enables burning process on main Thermal Knife & \\\hline
+    Wait & & 2 * 60 * 1000 \\\hline
+    Disable Main Thermal Switch & Disables Main Thermal Knife (TKmain) & \\\hline
+    Wait & & 100 \\\hline
+    Disable Main Thermal Switch & Enables Main Thermal Knife (TKmain) & \\\hline
+    Wait & & 100 \\\hline
+    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) & \\\hline
+    Wait & & 100 \\\hline
+    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) & \\\hline
+    Wait & & 100 \\\hline
+    Enable Backup Burn Switch & Enables burning process on main Thermal Knife & \\\hline
+    Wait & & 100 \\\hline
+    Enable Backup Burn Switch & Enables burning process on main Thermal Knife & \\\hline
+    Wait & & 2 * 60 * 1000 \\\hline
+    Disable Backup Thermal Switch & Disables Backup Thermal Knife (TKred) & \\\hline
+    Wait & & 100 \\\hline
+    Disable Backup Thermal Switch & Enables Backup Thermal Knife (TKred) & \\\hline
+    Wait & & 100 \\
+    \bottomrule
+\end{longtable}

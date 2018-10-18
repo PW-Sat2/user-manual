@@ -15,7 +15,7 @@
 \None
 
 \paragraph{Recommendations for operation team} \mbox{} \\
-Always send this telecommand after uploading new software version or rebooting into different boot slots to verify that correct version of \OBC software is in use.
+Always send this telecommand after uploading new software version or rebooting into different boot slots to verify that correct version of \obc software is in use.
 
 \subsection{Definition}
 \TelecommandApid{GetCompileInfoTelecommand}
@@ -27,7 +27,7 @@ No parameters are required for this telecommand.
 \responseFrame{CompileInfoFrame}
 \ResponseApid{CompileInfoFrame}
 
-This frame contains full or partial textual description of current \OBC software version in the following format:\bigskip\\
+This frame contains full or partial textual description of current \obc software version in the following format:\bigskip\\
 \begin{verbatim}
 <BUILD_TYPE> Build from '<GIT_COMMIT_HASH>' branch: <GIT_BRANCH>
 MCU: <TARGET_MCU_PLATFORM>
@@ -52,15 +52,15 @@ Where:
 		\item \texttt{FlightModel} - for payload flight model variant,
 		\item \texttt{DM} - for payload mock.
 	\end{itemize}
-	\item \texttt{<HOST_NAME>} - name of the host machine that produced this \OBC software build.
+	\item \texttt{<HOST_NAME>} - name of the host machine that produced this \obc software build.
 	\item \texttt{<BINARY_DIR>} - path to the build directory on the current machine.
-	\item \texttt{<GCC_VERSION>} - GCC compiler version used to build the \OBC software.
+	\item \texttt{<GCC_VERSION>} - GCC compiler version used to build the \obc software.
 \end{itemize}
 
-In case single \texttt{CompileInfoFrame} will not be able to hold entire version information there the \OBC will split the version information into parts and will send them in separate \texttt{CompileInfoFrame}s each containing subsequent parts of the information string. 
+In case single \texttt{CompileInfoFrame} will not be able to hold entire version information there the \obc will split the version information into parts and will send them in separate \texttt{CompileInfoFrame}s each containing subsequent parts of the information string. 
 
 \subsection{Examples}
-Get version info of currently running \OBC software
+Get version info of currently running \obc software
 
 \exampleCall{GetCompileInfoTelecommand()}
 

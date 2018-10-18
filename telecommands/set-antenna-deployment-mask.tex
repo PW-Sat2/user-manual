@@ -5,18 +5,18 @@
 \subsection{General description}
 \texttt{Set Antenna Deployment Mask} telecommand is capable of enabling/disabling \nameref{obc:proc:Antenna Deployment Process}.
 
-Deployment disabled flag is set immediately in \nameref{obc:proc:Persistent State} and prevents any further antenna deployment steps from executing. Deployment is also not started after \OBC restart.
+Deployment disabled flag is set immediately in \nameref{obc:proc:Persistent State} and prevents any further antenna deployment steps from executing. Deployment is also not started after \obc restart.
 
 \paragraph{Known issues}
 \begin{itemize}
 	\item Aborting deployment while it's already in progress can leave satellite in undetermined state (e.g.\ enabled LCLs)
-	\item Deployment process will be \textbf{resumed} (not restarted from step 0) if enabled again without \OBC restart
+	\item Deployment process will be \textbf{resumed} (not restarted from step 0) if enabled again without \obc restart
 \end{itemize}
 
 \paragraph{Side effects}
 \begin{itemize}
 	\item Antenna deployment is stopped
-	\item On next \OBC boot process will not be started
+	\item On next \obc boot process will not be started
 \end{itemize}
 
 \paragraph{Usage limitations} 

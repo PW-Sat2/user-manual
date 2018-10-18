@@ -18,7 +18,7 @@ It can be retrieved using \nameref{tc:Get Persistent State} telecommand.
     \multirow{3}{*}{TimeCorrectionConfiguration} & missionTimeFactor             & Time correction weight for time change as seen on microcontroller clock & 16 LE \\
                                 & externalTimeFactor            & Time correction weight for time change as seen on external RTC & 16 LE \\
     \hline
-    SailState                   & currentState                  & Sail opening state & 8 \\
+    SailState                   & currentState                  & See \procref{Sail Deployment Process} for details. & 8 \\
     \hline
     ErrorCountersConfigState    & 14 error counters             & Value of each \nameref{obc:proc:Error Counters} & 14 * 32 LE \\
     \hline
