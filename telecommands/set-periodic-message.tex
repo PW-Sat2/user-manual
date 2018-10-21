@@ -18,7 +18,50 @@ It's not possible to change interval of periodic message without changing its co
 Periodic message can cause increased power usage. Before enabling make sure that enough power can be provided.
 
 \paragraph{Recommendations for operation team} \mbox{} \\
-Before enabling periodic message make sure that enough power can be provided. See \procref{Periodic message} for more details regarding periodic message functionality.
+Before enabling periodic message make sure that enough power can be provided.
+
+\paragraph{Power budget} \mbox{} \\
+Mean power consumtion of this feature was shown below.
+
+\begin{pycode}
+from pylab import *
+
+TX_MESSAGE_LEN = 200
+TX_BITRATE = 1200
+TX_PREAMBLE_s = 0.5
+TX_PEAK_PWR_mW = 3000
+def tx_mean_pwr_consumption(interval_minutes, repeat_count=1):
+    total_tx_time_min = ((((TX_MESSAGE_LEN * 8) / TX_BITRATE) + TX_PREAMBLE_s) / 60) * repeat_count
+    return (total_tx_time_min / interval_minutes) * TX_PEAK_PWR_mW
+
+clf()
+figure(figsize=(7, 3.5))
+rcParams['font.family'] = 'serif'
+interval_minutes = linspace(1, 15, 60)
+
+plot(interval_minutes, tx_mean_pwr_consumption(interval_minutes, repeat_count=6), 'k', label="repeat_count=6")
+hold(True)
+grid(True)
+plot(interval_minutes, tx_mean_pwr_consumption(interval_minutes, repeat_count=5), 'g', label="repeat_count=5")
+plot(interval_minutes, tx_mean_pwr_consumption(interval_minutes, repeat_count=4), 'b', label="repeat_count=4")
+plot(interval_minutes, tx_mean_pwr_consumption(interval_minutes, repeat_count=3), 'c', label="repeat_count=3")
+plot(interval_minutes, tx_mean_pwr_consumption(interval_minutes, repeat_count=2), 'm', label="repeat_count=2")
+plot(interval_minutes, tx_mean_pwr_consumption(interval_minutes, repeat_count=1), 'y', label="repeat_count=1")
+title("Mean power consumption of transmitter for PeriodicMessage")
+xlabel("Interval [minutes]")
+ylabel("Mean power [mW]")
+ylim(0, 550)
+xlim(1, 15)
+fill_between(interval_minutes, 100, 550, facecolor='red', alpha=0.2)
+text(4, 250, "DANGER ZONE!", color='red')
+legend(bbox_to_anchor=(1, 0.25), loc=4)
+
+savefig("periodicmessage.pdf", bbox_inches="tight")
+
+print(r"\begin{center}")
+print(r"\includegraphics[width=0.9\textwidth]{periodicmessage.pdf}")
+print(r"\end{center}")
+\end{pycode}
 
 \subsection{Definition}
 \TelecommandApid{SetPeriodicMessageTelecommand}
