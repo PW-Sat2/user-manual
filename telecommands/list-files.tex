@@ -1,0 +1,47 @@
+\telecommand{List Files}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{List Files} telecommand can be used to request list files available in specific requested directory 
+from flash memory. 
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\
+\begin{itemize}
+    \item It is not possible to list contents of a directory whose path not including null terminator is longer than 194 bytes.
+    \item Names of reported files/sub directories are trimmed to first 90 characters.
+\end{itemize}
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+\None
+
+\subsection{Definition}
+\TelecommandApid{ListFiles}
+\TelecommandDeclaration{ListFiles}
+
+Parameters: 
+
+\begin{tcarglist}
+    \tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{path}{\texttt{path\_length} * 8}{Path to the directory whose contents should be listed }
+\end{tcarglist}
+
+\subsection{Responses}
+\responseFrame{FileListSuccessFrame}
+\ResponseApid{FileListSuccessFrame}
+Correlated response frame that contains one or more entries available in a requested directory along with
+their size in bytes.
+
+
+
+\subsection{Examples}
+List all files in root directory with correlation id set to 20; 
+
+\exampleCall{ListFiles(20, "/")}
+
