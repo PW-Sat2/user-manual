@@ -19,85 +19,84 @@ The configuration of this process is as follows:
 
 Following is the complete list of steps taken during the antenna deployment:
 
-\begin{longtable}{l|c|c|l}
+\begin{longtable}{c|R{1.5cm}|c|L{2cm}}
     \toprule
-    \multirow{2}{*}{\textbf{Step}} & \multirow{2}{*}{\textbf{Antenna Controller}} & \textbf{Burn} & \textbf{Execution} \\
-    & & \textbf{Time [s]} & \textbf{Time [s]} \\
+    \textbf{Antenna Controller} & \textbf{Burn Time [s]} & \textbf{Step} & \textbf{Execution Time [s]} \\
     \midrule
     \endhead
-    Power On & \multirow{6}{*}{Controller A} & & 9 \\
-    Reset & & & 59 \\
-    Arm Deployment System & & & 59 \\
-    Automatically Deploy All Antennas & &  4 * 30 & 179 \\
-    Disarm Deployment System & & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller A} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 4 * 30 & Automatically Deploy All Antennas & 179 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller A} & & 9 \\
-    Reset & & & 59 \\
-    Arm Deployment System & & & 59 \\
-    Deploy Antenna 1 & & 30 & 89 \\
-    Disarm Deployment System & & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller A} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System &59 \\
+    & 30 & Deploy Antenna 1 & 89 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller A} & & 9 \\
-    Reset & & & 59 \\
-    Arm Deployment System & & & 59 \\
-    Deploy Antenna 2 & & 30 & 89 \\
-    Disarm Deployment System & & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller A} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 30 & Deploy Antenna 2 & 89 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller A} & & 9 \\
-    Reset & & & 59 \\
-    Arm Deployment System & & & 59 \\
-    Deploy Antenna 3 & & 30 & 89 \\
-    Disarm Deployment System & & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller A} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 30 & Deploy Antenna 3 & 89 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller A} & & 9 \\
-    Reset & & & 59 \\
-    Arm Deployment System & & & 59 \\
-    Deploy Antenna 4 & & 30 & 89 \\
-    Disarm Deployment System & & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller A} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 30 & Deploy Antenna 4 & 89 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller B} & & 9 \\
-    Reset &  & & 59 \\
-    Arm Deployment System &  & & 59 \\
-    Automatically Deploy All Antennas & & 4 * 30 & 179 \\
-    Disarm Deployment System &  & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller B} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 4 * 30 & Automatically Deploy All Antennas & 179 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller B} & & 9 \\
-    Reset &  & & 59 \\
-    Arm Deployment System &  & & 59 \\
-    Deploy Antenna 1 & & 30 & 89 \\
-    Disarm Deployment System &  & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller B} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 30 & Deploy Antenna 1 & 89 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller B} & & 9 \\
-    Reset &  & & 59 \\
-    Arm Deployment System &  & & 59 \\
-    Deploy Antenna 2 & & 30 & 89 \\
-    Disarm Deployment System &  & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller B} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 30 & Deploy Antenna 2 & 89 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller B} & & 9 \\
-    Reset &  & & 59 \\
-    Arm Deployment System &  & & 59 \\
-    Deploy Antenna 3 & & 30 & 89 \\
-    Disarm Deployment System &  & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller B} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 30 & Deploy Antenna 3 & 89 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \hline
-    Power On & \multirow{6}{*}{Controller B} & & 9 \\
-    Reset & & & 59 \\
-    Arm Deployment System &  & & 59 \\
-    Deploy Antenna 4 & & 30 & 89 \\
-    Disarm Deployment System & & & 0 \\
-    Power Off & & & 119 \\
+    \multirow{6}{*}{Controller B} & & Power On & 9 \\
+    & & Reset & 59 \\
+    & & Arm Deployment System & 59 \\
+    & 30 & Deploy Antenna 4 & 89 \\
+    & & Disarm Deployment System & 0 \\
+    & & Power Off & 119 \\
     \bottomrule
 \end{longtable}
 
-Whenever there is a problem during performing any step it will be retried up to 3 times. This procedure will run no less then 3530s.
+Whenever there is a problem during performing any step it will be retried up to 3 times. This procedure will run no less than 3530s.
 
 The total burn time (per controller): $5 \cdot 30s = 150s$\\
 The total burn time (per resistor): $30s (auto) + 30s (override) = 60s$\\
