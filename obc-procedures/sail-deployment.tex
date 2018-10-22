@@ -43,38 +43,37 @@ This process is triggered by a number of possible events:
 
 Following is the list of all of it steps that are performed during the process:
 
-\begin{longtable}{l|m{10cm}|l}
+\begin{longtable}{l|m{10cm}}
     \toprule
-    \multirow{2}{*}{\textbf{Step}} & \multirow{2}{*}{\textbf{Description}} & \textbf{Execution} \\
-    & & \textbf{Time [ms]} \\
+    \textbf{Step} & \textbf{Description} \\
     \midrule
     \endhead
     Disable Overheating Protection & Disables overheating protection which could in case of rising temperature could cut of power to sail thermal knives. 
-    This step may be bypassed when sail opening is triggered by the \tcref{Open Sail} telecommand & \\
-    Delay & & 100 \\
-    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) & \\
-    Delay & & 100 \\
-    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) & \\
-    Delay & & 100 \\
-    Enable Main Burn Switch & Enables burning process on Main Thermal Knife & \\
-    Delay & & 100 \\
-    Enable Main Burn Switch & Enables burning process on Main Thermal Knife & \\
-    Delay & & 2 * 60 * 1000 \\
-    Disable Main Thermal Switch & Disables Main Thermal Knife (TKmain) & \\
-    Delay & & 100 \\
-    Disable Main Thermal Switch & Enables Main Thermal Knife (TKmain) & \\
-    Delay & & 100 \\
-    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) & \\
-    Delay & & 100 \\
-    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) & \\
-    Delay & & 100 \\
-    Enable Backup Burn Switch & Enables burning process on Backup Thermal Knife & \\
-    Delay & & 100 \\
-    Enable Backup Burn Switch & Enables burning process on Backup Thermal Knife & \\
-    Delay & & 2 * 60 * 1000 \\
-    Disable Backup Thermal Switch & Disables Backup Thermal Knife (TKred) & \\
-    Delay & & 100 \\
-    Disable Backup Thermal Switch & Enables Backup Thermal Knife (TKred) & \\
-    Delay & & 100 \\
+    This step may be bypassed when sail opening is triggered by the \tcref{Open Sail} telecommand \\
+    Delay 100ms & \\
+    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) \\
+    Delay 100ms & \\
+    Enable Main Thermal Knife & Enables Main Thermal Knife (TKmain) \\
+    Delay 100ms & \\
+    Enable Main Burn Switch & Enables burning process on Main Thermal Knife \\
+    Delay 100ms & \\
+    Enable Main Burn Switch & Enables burning process on Main Thermal Knife \\
+    Delay 2min & \\
+    Disable Main Thermal Switch & Disables Main Thermal Knife (TKmain) \\
+    Delay 100ms & \\
+    Disable Main Thermal Switch & Enables Main Thermal Knife (TKmain) \\
+    Delay 100ms & \\
+    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) \\
+    Delay 100ms & \\
+    Enable Backup Thermal Knife & Enables Backup Thermal Knife (TKred) \\
+    Delay 100ms & \\
+    Enable Backup Burn Switch & Enables burning process on Backup Thermal Knife \\
+    Delay 100ms & \\
+    Enable Backup Burn Switch & Enables burning process on Backup Thermal Knife \\
+    Delay 2min & \\
+    Disable Backup Thermal Switch & Disables Backup Thermal Knife (TKred) \\
+    Delay 100ms & \\
+    Disable Backup Thermal Switch & Enables Backup Thermal Knife (TKred) \\
+    Delay 100ms & \\
     \bottomrule
 \end{longtable}
