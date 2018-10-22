@@ -16,23 +16,23 @@ some sensor is broken, frame parsing or decoding issue, etc.
 
 \begin{longtable}{c|m{5cm}|c|M{1.5cm}|c|c|c}
     \toprule
-    \multirow{2}{*}{\textbf{Source}} & \multirow{2}{*}{\textbf{Element Name}} & Size & Sample & \multicolumn{2}{c}{\textbf{Safe Range}} & \multirow{2}{*}{\textbf{Unit}} \\
+    \multirow{2}{*}{\textbf{Source}} & \multirow{2}{*}{\textbf{Element Name}} & \textbf{Size} & \textbf{Sample} & \multicolumn{2}{c}{\textbf{Safe Range}} & \multirow{2}{*}{\textbf{Unit}} \\
     & & \textbf{[bit]} & \textbf{Rate [s]} & \textbf{Low} & \textbf{High} & \\
     \midrule
     \endhead
     \multirow{6}{*}{Boot loader} & Boot Counter & 32 & once per boot & & & \\
     & Boot Index            & 8 & once per boot & & & \\
-    & OBC Reboot Reason     & 16 & once per boot & & & \\
-    & OBC Code CRC          & 16 & 30 & & & \\
+    & \obc Reboot Reason     & 16 & once per boot & & & \\
+    & \obc Code CRC          & 16 & 30 & & & \\
     \hline
     Time Service      & Mission Time          & 64 & 30 & & & \\
     \hline
     Persistent State  & External Time         & 32 & 30 & & & \\*
     \hline
-    & COMM & 8 & 30 & 0 & 0 & dec \\*
-    & EPS & 8 & 30 & 0 & 0 & dec \\
+    & COMM & 8 & 30 & 0 & 0 & dec \\
+    & \eps & 8 & 30 & 0 & 0 & dec \\
     & RTC & 8 & 30 & 0 & 0 & dec \\
-    & iMTQ & 8 & 30 & 0 & 0 & dec \\
+    & \Imtq & 8 & 30 & 0 & 0 & dec \\
     & N25Q Flash 1 & 8 & 30 & 0 & 0 & dec \\
     & N25Q Flash 2 & 8 & 30 & 0 & 0 & dec \\
     \multirow{2}{*}{Error Counters} & N25Q Flash 3 & 8 & 30 & 0 & 0 & dec \\
@@ -42,7 +42,7 @@ some sensor is broken, frame parsing or decoding issue, etc.
     & Camera & 8 & 30 & 0 & 0 & dec \\
     & Suns Exp & 8 & 30 & 0 & 0 & dec \\
     & Antenna primary & 8 & 30 & 0 & 0 & dec \\
-    & Antenna secondary & 8 & 30 & 0 & 0 & dec \\*
+    & Antenna secondary & 8 & 30 & 0 & 0 & dec \\
     \hline
     \multirow{4}{*}{Scrubbing State} & Primary Flash Scrubbing pointer & 3 & 30 & & & \\
     & Secondary Flash Scrubbing pointer & 3 & 30 & & & \\
@@ -142,7 +142,7 @@ some sensor is broken, frame parsing or decoding issue, etc.
     & Now RSSI & 12 & 30 & & & \\
     \hline
     \multirow{2}{*}{Hardware State} & Sail Deployed & 1 & 30 & 0 & 0 & dec \\
-    & OBC MCU Temperature & 12 & 30 & -10 & +50 & \textdegree C \\
+    & \obc MCU Temperature & 12 & 30 & -10 & +50 & \textdegree C \\
     \hline
     & MPPTX.SOL_VOLT & 12 & 30 & 3.60 & 5.50 & V \\
     & MPPTX.SOL_CURR & 12 & 30 & 0.05 & 0.60 & A \\
@@ -160,7 +160,7 @@ some sensor is broken, frame parsing or decoding issue, etc.
     & MPPTY-.SOL_CURR & 12 & 30 & 0.05 & 0.60 & A \\
     & MPPTY-.OUT_VOLT & 12 & 30 & 6.30 & 7.80 & V \\
     & MPPTY-.TEMP & 12 & 30 & -10 & +50 & \textdegree C \\
-    \multirow{2}{*}{EPS Controller A} & MPPTY-.STATE & 3 & 30 & 0 & 1 & dec \\
+    \multirow{2}{*}{\eps Controller A} & MPPTY-.STATE & 3 & 30 & 0 & 1 & dec \\
     \cline{2-7}
     & DISTR.VOLT_3V3 & 10 & 30 & 3.2 & 3.4 & V \\
     & DISTR.CURR_3V3 & 10 & 30 & 0.02 & 0.25 & A \\
@@ -190,7 +190,7 @@ some sensor is broken, frame parsing or decoding issue, etc.
     & DCDC.3V3_TEMP & 10 & 30 & -10 & +50 & \textdegree C \\
     & DCDC.5V_TEMP & 10 & 30 & -10 & +50 & \textdegree C \\
     \hline
-    \multirow{8}{*}{EPS Controller B} & BP.TEMP_C & 10 & 30 & +10 & +35 & \textdegree C \\
+    \multirow{8}{*}{\eps Controller B} & BP.TEMP_C & 10 & 30 & +10 & +35 & \textdegree C \\
     & BATC.VOLT_B & 10 & 30 & 7.0 & 7.8 & V \\
     & CTRLB.SAFETY-CTR & 8 & 30 & 0 & 1 & dec \\
     & CTRLB.PWR-CYCLES & 16 & 30 & 45685 & 45800 & dec \\
@@ -199,41 +199,41 @@ some sensor is broken, frame parsing or decoding issue, etc.
     & CTRLB.SUPP_TEMP & 10 & 30 & -10 & +50 & \textdegree C \\
     & CTRLA.3V3d_VOLT & 10 & 30 & 3.2 & 3.4 & V \\
     \hline
-    \multirow{3}{*}{iMTQ Driver} & Magnetometer Measurement 1 & 32 & 30 & & & \\
+    \multirow{3}{*}{\Imtq Driver} & Magnetometer Measurement 1 & 32 & 30 & & & \\
     & Magnetometer Measurement 2 & 32 & 30 & & & \\
     & Magnetometer Measurement 3 & 32 & 30 & & & \\
     \hline
-    iMTQ Coil Active & Coil active during measurement & 1 & 30 & & & \\
+    \Imtq Coil Active & Coil active during measurement & 1 & 30 & & & \\
     \hline
-    \multirow{3}{*}{iMTQ Dipole} & Dipole 1 & 16 & 30 & & & \\
+    \multirow{3}{*}{\Imtq Dipole} & Dipole 1 & 16 & 30 & & & \\
     & Dipole 2 & 16 & 30 & & & \\
     & Dipole 3 & 16 & 30 & & & \\
     \hline
-    \multirow{3}{*}{iMTQ BDot} & BDot 1 & 32 & 30 & & & \\
+    \multirow{3}{*}{\Imtq BDot} & BDot 1 & 32 & 30 & & & \\
     & BDot 2 & 32 & 30 & & & \\
     & BDot 3 & 32 & 30 & & & \\
     \hline
-    \multirow{3}{*}{iMTQ Housekeeping} & Digital Voltage & 16 & 30 & 3.2 & 3.4 & V \\
+    \multirow{3}{*}{\Imtq Housekeeping} & Digital Voltage & 16 & 30 & 3.2 & 3.4 & V \\
     & Analog Voltage & 16 & 30 & 3.2 & 3.4 & V \\
     & Digital Current & 16 & 30 & 35 & 45 & mA \\
     & Analog Current & 16 & 30 & 5 & 15 & mA \\
     & MCU Temperature & 16 & 30 & -10 & +50 & \textdegree C \\
     \hline
-    \multirow{3}{*}{iMTQ Coil} & Coil Current 1 & 16 & -30 & -50 & +50 & mA \\
+    \multirow{3}{*}{\Imtq Coil} & Coil Current 1 & 16 & -30 & -50 & +50 & mA \\
     & Coil Current 2 & 16 & 30 & -50 & +50 & mA \\
     & Coil Current 3 & 16 & 30 & -125 & +125 & mA \\
     \hline
-   \multirow{3}{*}{iMTQ Temperature} & Coil Temperature 1 & 16 & 30 & -10 & +50 & \textdegree C \\
+   \multirow{3}{*}{\Imtq Temperature} & Coil Temperature 1 & 16 & 30 & -10 & +50 & \textdegree C \\
     & Coil Temperature 2 & 16 & 30 & -10 & +50 & \textdegree C \\
     & Coil Temperature 3 & 16 & 30 & -10 & +50 & \textdegree C \\
     \hline
     & Status & 8 & 30 & & & \\
     & Mode & 2 & 30 & & & \\
-    iMTQ state & Error during previous iteration & 8 & 30 & & & \\
+    \Imtq state & Error during previous iteration & 8 & 30 & & & \\
     & Configuration changed & 1 & 30 & & & \\
     & Uptime & 32 & 30 & & & \\
     \hline
-    \multirow{16}{*}{iMTQ Self Test} & SelfTest Error INIT & 8 & once per boot & & & \\
+    \multirow{16}{*}{\Imtq Self Test} & SelfTest Error INIT & 8 & once per boot & & & \\
     & SelfTest Error X+ & 8 & once per boot & & & \\
     & SelfTest Error X- & 8 & once per boot & & & \\
     & SelfTest Error Y+ & 8 & once per boot & & & \\

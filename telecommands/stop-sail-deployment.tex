@@ -1,9 +1,9 @@
-\telecommand{StopSailDeployment}
+\telecommand{Stop Sail Deployment}
 
 \tccategory{D}
 
 \subsection{General description}
-\texttt{StopSailDeployment} disables sail deployment after each OBC restart. 
+\texttt{Stop Sail Deployment} disables sail deployment after each OBC restart. 
 
 
 \paragraph{Known issues}
@@ -13,7 +13,9 @@
 
 \paragraph{Side effects}
 \begin{itemize}
+	\item Already ongoing sail deployment process is suspended in its current stage
 	\item Sail will not be opened after OBC restart
+	\item This command disables automatic sail deployment mechanism 
 \end{itemize}
 
 \paragraph{Usage limitations}\mbox{}\\ \None
@@ -21,6 +23,7 @@
 \paragraph{Recommendations for operation team}
 \begin{itemize}
 	\item Send this telecommand after confirming correct sail opening
+	\item Do not use it before sail deployment begins 
 \end{itemize}
 
 

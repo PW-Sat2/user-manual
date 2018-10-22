@@ -1,15 +1,18 @@
-\telecommand{PerformSailExperiment}
+\telecommand{Perform Sail Experiment}
 
 \tccategory{D}
 
 \subsection{General description}
-\texttt{PerformSailExperiment} starts sail experiment. \todo{Describe sail experiment}
+\texttt{Perform Sail Experiment} starts sail experiment. \todo{Describe sail experiment}
 
 \danger{\textbf{This command ends the mission.}}
 
 Although similar to \nameref{tc:Open Sail} this command schedules full SAIL experiment which gathers data and takes photos. SAIL opening procedure is the same as in \nameref{tc:Open Sail} (see \nameref{obc:proc:Sail Deployment Process}).
 
-\paragraph{Known issues} \mbox{} \\ \None
+\paragraph{Known issues} \mbox{} \\ 
+\begin{itemize}
+	\item Stopping the sail experiment does not stop sail deployment process.
+\end{itemize}
 
 \paragraph{Side effects}
 \begin{itemize}
@@ -33,7 +36,7 @@ Although similar to \nameref{tc:Open Sail} this command schedules full SAIL expe
 	\item Ensure proper power levels before performing experiment.
 	\item Prepare to receive a lot of frames during next 4 minutes.
 	\item Schedule data and photo download for next sessions (if possible)
-	\item When experiment is running, the \texttt{OBC_Experiments_Code} telemetry field should be set to 7 (SAIL experiment), \texttt{OBC_Experiments_LastIterationStatus} should be set to 2 (LoopImmediately) or 3 (WaitForNextCycle).
+	\item When experiment is running, the \texttt{OBC_Experiments_Code} telemetry field should be set to 7 (SAIL experiment), \texttt{OBC_Experiments_LastIterationStatus} should be set to 2 (LoopImmediately) or 3 (WaitForNextCycle). 
 \end{itemize}
 
 

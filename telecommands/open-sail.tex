@@ -3,7 +3,7 @@
 \tccategory{D}
 
 \subsection{General description}
-\warn{\textbf{This is the abort mission command}. For planned usage send \todo{Sail Experiment}.} 
+\warn{\textbf{This is the abort mission command}. For planned usage send \tcref{Perform Sail Experiment} telecommand.} 
 
 \danger{\textbf{This command ends the mission.}}
 
@@ -12,7 +12,7 @@
 Additional parameter allows to ignore overheat protection in EPS.
 Nominally temperature on all LCL is controlled and they are switched off in case temperature would be to high. In case of emergency sail opening this protection should be turned off to maximize chances of successful deployment.
 
-Deployment procedure can be stopped by \nameref{tc:StopSailDeployment} telecommand.
+Deployment procedure can be stopped by \tcref{Stop Sail Deployment} telecommand.
 
 \paragraph{Known issues}
 \begin{itemize}
@@ -20,12 +20,8 @@ Deployment procedure can be stopped by \nameref{tc:StopSailDeployment} telecomma
 \end{itemize}
 
 \paragraph{Side effects}
-\begin{itemize}
-	\item Almost certain communication loss after sail will be deployed.
-    \item Expected high angular velocity (${\sim}200$ deg/s) of satellite after deployment.
-    \item Negative energy balance caused by rotation with expected battery depletion in 1.5 days. 
-    \item \danger{\textbf{End of mission}}
-\end{itemize}
+
+See the \procref{Sail Deployment Process} for the details.
 
 \paragraph{Usage limitations}
 \begin{itemize}
