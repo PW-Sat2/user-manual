@@ -37,34 +37,16 @@ This command should not be used when battery level is low.
 \paragraph{Power budget} \mbox{} \\
 Idle state duration vs consumed energy chart is shown below. Think twice if you need to use this telecommand.
 
+\begin{center}
 \begin{pycode}
-from pylab import *
+import sys
+sys.path.append('../power-budget')
+import power_budget
 
-TX_PEAK_PWR_mW = 3000
-def set_idle_wh_consumption(duration):
-    return (duration / 3600) * TX_PEAK_PWR_mW
-
-clf()
-figure(figsize=(7, 3.5))
-rcParams['font.family'] = 'serif'
-duration_seconds = linspace(1, 255, 255)
-
-plot(duration_seconds, set_idle_wh_consumption(duration_seconds), 'r', label="dd")
-grid(True)
-title("Idle state duration vs consumed energy")
-xlabel("Idle state duration [seconds]")
-ylabel("Consumed energy [mWh]")
-ylim(0, 250)
-xlim(1, 255)
-fill_between(duration_seconds, 100, 250, facecolor='red', alpha=0.2)
-text(60, 175, "DANGER ZONE!", color='red')
-
-savefig("enteridlestate.pdf", bbox_inches="tight")
-
-print(r"\begin{center}")
-print(r"\includegraphics[width=0.9\textwidth]{enteridlestate.pdf}")
-print(r"\end{center}")
+power_budget.Charts.enter_idle_state(output_file='enteridlestate.pdf')
+print(r'\includegraphics[width=0.9\textwidth]{enteridlestate.pdf}')
 \end{pycode}
+\end{center}
 
 \subsection{Definition}
 \TelecommandApid{EnterIdleState}
