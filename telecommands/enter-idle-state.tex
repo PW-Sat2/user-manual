@@ -34,6 +34,20 @@ This command should not be used when battery level is low.
 	\item If possible use repeated \nameref{tc:Send Beacon} or \nameref{tc:Ping} telecommand instead.
 \end{itemize}
 
+\paragraph{Power budget} \mbox{} \\
+Idle state duration vs consumed energy chart is shown below. Think twice if you need to use this telecommand.
+
+\begin{center}
+\begin{pycode}
+import sys
+sys.path.append('../power-budget')
+import power_budget
+
+power_budget.Charts.enter_idle_state(output_file='enteridlestate.pdf')
+print(r'\includegraphics[width=0.9\textwidth]{enteridlestate.pdf}')
+\end{pycode}
+\end{center}
+
 \subsection{Definition}
 \TelecommandApid{EnterIdleState}
 \TelecommandDeclaration{EnterIdleState}
