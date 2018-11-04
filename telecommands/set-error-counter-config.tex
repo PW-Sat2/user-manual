@@ -1,0 +1,58 @@
+\telecommand{Set Error Counter Configuration}
+
+\tccategory{PD}
+
+\subsection{General description}
+Telecommand for setting Error Counters configuration. See \procref{Error Counters} for detailed discussion about error counters. 
+
+Current configuration can be retrieved using \tcref{Get Error Counter Configuration} telecommand.
+
+\danger Be careful when setting the values, as they can cause OBC to reboot often.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team} 
+\begin{itemize}
+	\item Setting the Error Limit lower than Increment will cause the OBC to reboot after each error! Make sure the Error Limit is sufficiently big.
+	\item Setting the Increment value to 0 disables the error counter, preventing it to reboot the OBC.
+	\item Decrement should not be bigger than Increment. The desired behavior is that lots of error with rare success should still cause OBC reboot. 
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{SetErrorCounterConfig}
+\TelecommandDeclaration{SetErrorCounterConfig}
+
+Parameters:
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\hline 
+	\multicolumn{3}{c}{Following 4 arguments can be repeated for each device id:} \\
+	\hline 
+	\tcarg{device id}{8}{ID of error counter (see table in \procref{Error Counters})}
+	\tcarg{limit}{8}{Error Limit}
+	\tcarg{increment}{8}{Value by which counter will be incremented on failure}
+    \tcarg{decrement}{8}{Value bSetErrorCounterConfigy which counter will be decremented on success} 
+\end{tcarglist}
+
+
+\subsection{Responses}
+\responseFrame{ErrorCounterConfigurationSuccessFrame}
+\ResponseApid{ErrorCounterConfigurationSuccessFrame}
+Correlated success response frame is of type \texttt{ErrorCounterConfigurationSuccessFrame}. The frame contains additional byte with error counter id for each error counter that has been successfully updated.
+
+\responseFrame{ErrorCounterConfigurationErrorFrame}
+\ResponseApid{ErrorCounterConfigurationErrorFrame}
+
+This frame is send only if the OBC failed to read sequence number. In all other cases, the \texttt{ErrorCounterConfigurationSuccessFrame}. Investigate returned device ids to see if they match requested changes.
+
+\subsection{Example usage}
+Using correlation id 0x21, for RTC error counter (ID=2), set Error limit to 137, increment to 7, decrement to 3:
+\exampleCall{SetErrorCounterConfig(0x21, [telecommand.ErrorCounterConfiguration(2, 137, 7, 3)])}
