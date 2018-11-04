@@ -1,10 +1,26 @@
 \obcproc{Mission Time}
-\todo{Describe mission time}
+
+Critical mission elements depend on tracking time:
+\begin{itemize}
+	\item \procref{LEOP} procedure must guarantee 30 minutes of silent period after launch
+	\item All experiments rely heavily on tracking time to perform their steps (i.e. trigger to start, delay between steps)
+	\item Last but not the least - \procref{Sail Deployment Process} will trigger it self after 40 days.
+\end{itemize}
+
+Sources of time:
+\begin{itemize}
+	\item FreeRTOS system tick:  used by FreeRTOS to handle task, including delays, switching etc.
+	\item Internal RC clock: robust, but low precision, used to track mission time with high granularity.
+	\item External RTC provided by payload, connected through I2C: high precision, but may break in high radiation environment. Used to correct internal RC mission track every 15 minutes.
+\end{itemize}
+
+The most important measured value is \textbf{Mission Time}. Mission Time indicates how much time has passed since beginning of mission and is driven primarily by Internal RC clock, but is also corrected by External RTC Clock. Mission Time is stored in \procref{Persistent State}. Since persistent state is updated every 15 minutes, this means that if OBC is rebooted, it will revert to last saved Mission Time.
+
+Operator can set current Mission Time using \tcref{Set Time} telecommand.
 
 \subsection{Time correction}\label{obc:proc:time-correction}
-\todo{Describe time correction}
 
-The time correction is calculated using weighted sum from two deltas (based on measuring time from two sources):
+Because there exists 2 sources of mission time, they have to be synchronized. This synchronization procedure is called "time correction". The time correction run every 15 minutes and is calculated using weighted sum from two deltas (based on measuring time from two sources):
 
 $\correctionValue = \frac{\wMcu \deltaMcu + \wRtc \deltaRtc}{\wMcu + \wRtc}$
 
@@ -20,3 +36,5 @@ where:
 \end{tabular}
 
 The maximum allowed value for $\correctionValue$ is 2 hours. If the $\correctionValue > 2 h$ then the correction is abandoned and current time is assumed to be time indicated by microcontroller clock.
+
+To amend the weights, use \tcref{Set Time Correction Config} telecommand.
