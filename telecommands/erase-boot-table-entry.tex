@@ -1,0 +1,84 @@
+\telecommand{Erase Boot Table Entry}
+
+\tccategory{D}
+
+\subsection{General description}
+This telecommand is part of \procref{Program upload} procedure and should be used with extreme caution. \texttt{EraseBootTableEntry} telecommand is used to remove selected boot slots. This is needed before they can be reprogrammed. After erasing, the boot loader WILL NOT use them for booting even in case of current boot slots failure.
+
+\paragraph{Known issues} \mbox{} \\
+\begin{itemize}
+    \item \danger Sending boot slots mask \texttt{0x3F / 0b00111111} will delete all boot slots!
+    \item Erase Entry Error response for flash status \texttt{ProgramError} (value 10) is has the same 2 first bytes as Erase Entry Malformed Telecommand response.
+\end{itemize}
+
+\paragraph{Side effects} \mbox{} \\
+\danger Removing all boot slots will brick the satellite after reboot!
+
+\paragraph{Usage limitations} \mbox{} \\
+Use only as part of \procref{Program upload} procedure.
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+\begin{itemize}
+    \item Be carefully what boot slots you are removing! 
+    \item Read \procref{Program upload} carefully. 
+    \item Remove at most 3 entries, make sure they are not current boot entries.
+    \item In case of failure, use \texttt{CopyBootSlots} experiment to copy valid boot slots over erased.
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{EraseBootTableEntry}
+\TelecommandDeclaration{EraseBootTableEntry}
+
+Parameters: 
+
+\begin{tcarglist}
+    \tcarg{entries}{8}{Bitmask encoding boot slot entries to remove }
+\end{tcarglist}
+
+\subsection{Responses}
+\responseFrame{EntryEraseSuccessFrame}
+\ResponseApid{EntryEraseSuccessFrame}
+The response frame has always correlation id = 0, indicates that all required boot slots were erased properly.
+
+\paragraph{Error}  \mbox{} \\
+
+There's no python class to represent error frames, their APID is the same:
+\ResponseApid{EntryEraseSuccessFrame}
+
+The response frame has always correlation id = 0. Following table describes the meaning of bytes following the correlation id:
+
+\begin{tabular}{r | l | l | l | l}
+    Meaning & 1st byte & 2nd byte & 3rd byte & bytes 4-7 \\
+    \hline
+    Erase Entry Malformed Telecommand & 1 & 10 & - & - \\
+    Erase Entry Error & 1 & flash status code & entry number & flash offset \\
+\end{tabular}
+
+The flash status code can be one of following values: 
+
+\begin{tabular}{r | l}
+    Name & code \\
+    \hline
+    StatusUnknown                                      & 0  \\
+    NotBusy                                            & 1  \\
+    Busy                                               & 2  \\
+    ExceededTimeLimits                                 & 3  \\
+    Suspend                                            & 4  \\
+    WriteBufferAbort                                   & 5  \\
+    StatusGetProblem                                   & 6  \\
+    VerifyError                                        & 7  \\
+    BytesPerOpWrong                                    & 8  \\
+    EraseError                                         & 9  \\
+    ProgramError                                       & 10 \\
+    SectorLock                                         & 11 \\
+    ProgramSuspend                                     & 12 \\
+    ProgramSuspendError                                & 13 \\
+    EraseSuspend                                       & 14 \\
+    EraseSuspendError                                  & 15 \\
+    BusyInOtherBank                                    & 16 \\
+\end{tabular}
+
+\subsection{Examples}
+Erase 3 boot table entries: 0, 1 and 2:
+\exampleCall{EraseBootTableEntry([0,1,2])}
+
