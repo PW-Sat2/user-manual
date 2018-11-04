@@ -1,0 +1,76 @@
+\telecommand{Get compile info}
+
+\tccategory{S}
+
+\subsection{General description}
+\texttt{GetCompileInfoTelecommand} telecommand can be used to obtain detailed build and version information of the software currently running on board.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+Always send this telecommand after uploading new software version or rebooting into different boot slots to verify that correct version of \obc software is in use.
+
+\subsection{Definition}
+\TelecommandApid{GetCompileInfoTelecommand}
+\TelecommandDeclaration{GetCompileInfoTelecommand}
+
+No parameters are required for this telecommand.
+
+\subsection{Responses}
+\responseFrame{CompileInfoFrame}
+\ResponseApid{CompileInfoFrame}
+
+This frame contains full or partial textual description of current \obc software version in the following format:\bigskip\\
+\begin{verbatim}
+<BUILD_TYPE> Build from '<GIT_COMMIT_HASH>' branch: <GIT_BRANCH>
+MCU: <TARGET_MCU_PLATFORM>
+Payload: <TARGET_PLD_PLATFORM>
+Machine: <HOST_NAME>
+Built in <BINARY_DIR>
+GCC: <GCC_VERSION>
+\end{verbatim}
+Where:
+\begin{itemize}
+	\item \texttt{<BUILD_TYPE>} is the name of the current build. It can be either \texttt{Release} or \texttt{Debug}.
+	\item \texttt{<GIT_BRANCH>} is the name of git branch from which currently running OBC software has been built.
+	\item \texttt{<GIT_COMMIT_HASH>} is the git commit hash from which currently running OBC software has been built.
+	\item \texttt{<TARGET_MCU_PLATFORM>} is the current microcontroller platform name. This can be one of the following: 
+	\begin{itemize}
+		\item \texttt{EngModel} - for microcontroller engineering model variant,
+		\item \texttt{FlightModel} - for microcontroller flight variant,
+		\item \texttt{DevBoard} - for evaluation board.
+	\end{itemize}
+	\item \texttt{<TARGET_PLD_PLATFORM>} is the current payload platform name. This can be one of the following: 
+	\begin{itemize}
+		\item \texttt{FlightModel} - for payload flight model variant,
+		\item \texttt{DM} - for payload mock.
+	\end{itemize}
+	\item \texttt{<HOST_NAME>} - name of the host machine that produced this \obc software build.
+	\item \texttt{<BINARY_DIR>} - path to the build directory on the current machine.
+	\item \texttt{<GCC_VERSION>} - GCC compiler version used to build the \obc software.
+\end{itemize}
+
+In case single \texttt{CompileInfoFrame} will not be able to hold entire version information there the \obc will split the version information into parts and will send them in separate \texttt{CompileInfoFrame}s each containing subsequent parts of the information string. 
+
+\subsection{Examples}
+Get version info of currently running \obc software
+
+\exampleCall{GetCompileInfoTelecommand()}
+
+For current version of flight software it should return:
+\begin{verbatim}
+Release Build from '07208653' branch: master
+MCU: FlightModel
+Payload: FlightModel
+Machine: FP-PC3266
+Built in C:/Jenkins/jobs/OBC/branches/master/workspace/build
+GCC:5.4.1 20160919 (release) [ARM/embedded-5-branch revision 240496] 
+\end{verbatim}
+
