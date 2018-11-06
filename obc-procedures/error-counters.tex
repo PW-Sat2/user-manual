@@ -1,2 +1,42 @@
 \obcproc{Error Counters}
-\todo{Describe error counters}
+
+Error Counters allow to detect problems in various sub-systems by tracking the amount of failures and successes reported by each sub-system. If error counter exceeds its Error limit it may cause the OBC to reboot (details in tables below).
+
+Each error counter has it's configuration with following parameters:
+
+\begin{longtable}{l|l|l}
+    \toprule
+    \textbf{Name} & \textbf{Description}                                                & \textbf{Default Value} \\
+    \midrule
+    Error limit & Threshold value of error counter after which OBC is rebooted.         & 128   \\ \hline
+    Increment   & The value by which counter is incremented when failure is reported.   & 5     \\ \hline
+    Decrement   & The value by which counter is decremented when success is reported.   & 3     \\
+    \bottomrule
+\end{longtable}
+
+Because the default Increment and Decrement values are not 1, it means that Error Counter value is not directly a count of failures. Such design is dictated by fact that many sub-systems (i.e. TMRs) may occasionally report failure and return to proper function immediately which should not trigger reboot. Current design allows to rebot OBC only when a large amount of errors is reported without any successes.
+
+Set the configuration parameters using \tcref{Set Error Counter Configuration} telecommand, read them using \tcref{Get Error Counter Configuration} telecommand.
+
+Following table presents all error counters and seen in \procref{Beacon}:
+
+\begin{longtable}{l|l|l|l|l|l}
+    \toprule
+    \textbf{Id} & \textbf{Name} & \textbf{Reboots?} & \textbf{Additional details} \\
+    \midrule
+    0  & COMM                  & No             &  \\ \hline
+    1  & \eps                  & No             &  \\ \hline
+    2  & RTC                   & Yes            &  \\ \hline
+    3  & \Imtq                 & Yes            &  \\ \hline
+    4  & N25Q Flash 1          & Yes            &  \\ \hline
+    5  & N25Q Flash 2          & Yes            &  \\ \hline
+    6  & N25Q Flash 3          & Yes            &  \\ \hline
+    7  & N25Q TMR Corrections  & Yes            & Difference between Flash 1 and Flash 2 detected when reading. \\ \hline
+    8  & FRAM TMR Corrections  & Yes            & Difference between FRAM1 and FRAM2 detected when reading. \\ \hline
+    9  & Payload               & Yes            &  \\ \hline
+    10 & Camera                & Yes            & Only communication time-outs, camera protocol errors are counted. \\ \hline
+    11 & Suns Exp              & Yes            &  \\ \hline
+    12 & Antenna primary       & Yes            &  \\ \hline
+    13 & Antenna secondary     & Yes            &  \\
+    \bottomrule
+\end{longtable}
