@@ -71,7 +71,8 @@ be in Idle state.
 \subsection{Idle Mode}
 
 This is default \Adcs subsystem mode. In this mode \Adcs subsystem is not 
-doing anything and waits for the commands. 
+doing anything and waits for the commands. It should be noted that in this mode \Adcs is 
+susceptible to being enabled by any of the \obc internal triggers. 
 
 \subsection{Disabled Mode}
 
@@ -90,7 +91,7 @@ unwanted and potentially harmful interference. This mode can be used to disable
     turned on from ground station.
     \item \sads experiment can only be performed if the rotation is not above 1-2°/s on any axis.    
     \item \Adcs subsystem consumes significant amount of power, don't leave turned on longer than necessary.
-    \item Use \texttt{Stopped} mode to turn off \Adcs. Don't use \texttt{Disabled} mode.
+    \item Use \texttt{Idle} mode to turn off \Adcs. Don't use \texttt{Disabled} mode.
     \item Changing detumbling state should be reflected in all \Imtq related telemetry sections.
 \end{itemize}
 
@@ -103,3 +104,17 @@ or unblocked. Once this mode is blocked it cannot be run or entered until it is 
 This blockade is persisted even over satellite restart therefore blocking this mode should be 
 considered and used only as last resort when it is certain that Builtin detumbling mode
 is suffering from serious issues.
+
+The information whether \texttt{Internal Detumbling Mode} is disabled is stored in the \procref{Persistent State} 
+and is encoded as follows:
+
+\begin{longtable}{l|l|L{6cm}|M{1cm}|M{1.5cm}}
+    \toprule
+    \textbf{Group} & \textbf{Variable} & \textbf{Description} & \textbf{Size [bits]} & \textbf{Default Value} \\
+    \midrule
+    \endhead
+    AdcsState & internalDetumblingDisabled & 
+        Flag indicating whether the internal detumbling is disabled. Non zero value indicates that internal detumbling is disabled. & 8 & 0 \\
+    \bottomrule
+\end{longtable}
+
