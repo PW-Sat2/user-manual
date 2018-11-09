@@ -1,0 +1,71 @@
+\telecommand{Perform SunS Experiment}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{Perform SunS Experiment} telecommand turns The SunS Experiment. Collected data are saved in on-board flash memory in two separate filenames. For more details refer to The SunS Experiment description.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\begin{itemize}
+    \item SENS_5V and SUNS_3V3 lines are switched on by the experiment.
+\end{itemize}
+
+
+\paragraph{Usage limitations} \mbox{} \\
+\begin{itemize}
+    \item Do not use in case of PLD board or reference Sun sensor (SENS_5V power line) malfunctions, or The SunS fault (SunS_3V3 power line).
+    \item Do not use when battery level is low.
+\end{itemize}
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+    \item Calculate power consumption by the experiment itself and data transmission before sending telecommand using Telecommands Analyzer.
+    \item Running the experiment take into account Guidelines for SunS Experiment.
+    \item Schedule the time of the experiment so it's finished before next communication session.
+    \item Download experiment's secondary file at least once (at least a part of it).
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{PerformSunSExperiment}
+\TelecommandDeclaration{PerformSunSExperiment}
+
+Parameters:
+
+\begin{tcargslist}   
+    \tcarg{correlation\_id}{8}{int}{Correlation ID}
+    \tcarg{gain}{8}{int}{Gain parameter of ALS sensors (BH1730FVC)}
+    \tcarg{itime}{8}{int}{ITime parameter of ALS sensors (BH1730FVC)}
+    \tcarg{samples_count}{8}{int}{Number of samples in one iteration of the experiment}
+    \tcarg{short_delay}{8}{datetime.timedelta}{Delay between consecutive samples (one-second resolution)}
+    \tcarg{session_count}{8}{int}{Number of iterations}
+    \tcarg{long_delay}{8}{datetime.timedelta}{Delay between consecutive iterations with decasecond resolution}
+    \tcarg{filename}{max. 160}{string}{Base \texttt{filename}. Experiment creates also the second file with name \texttt{filename_sec}}
+\end{tcargslist}
+
+
+\subsection{Responses}
+
+\paragraph{ExperimentSuccessFrame}
+\ResponseApid{ExperimentSuccessFrame}
+
+Correlated frame of type \texttt{ExperimentSuccessFrame} indicates that 
+
+\paragraph{ExperimentErrorFrame}
+\ResponseApid{ExperimentErrorFrame}
+
+Correlated frame of type \texttt{ExperimentErrorFrame} indicates error during telecommand processing. Error code value carries failure reason
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    \texttt{1} & Malformed (too short) telecommand \\   
+    \texttt{2} & Error while requesting experiment start \\ 
+\end{tabular}
+
+\subsection{Example usage}
+Perform SunS Experiment, with gain \texttt{1} (\texttt{gain=0x01}), itime \texttt{10} (\texttt{itime=0x10}) and use correlation ID \texttt{11} (\texttt{correlation\_id=11}). There are \texttt{10} sampling sessions (\texttt{session_counts=5}) with \texttt{5} samples (\texttt{samples_count=5}). Between each sampling session there is \texttt{500} s of delay (\texttt{long_delay=50}), whereas between consecutive samples there is \texttt{1} s of delay (\texttt{short_delay=1})  Created experiment files are: \texttt{"suns_1"} and \texttt{"suns_1_sec"}. 
+
+\exampleCall{PerformSunSExperiment(11, 0x01, 0x10, 5, 1, 10, 50, "suns_1")}
