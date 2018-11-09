@@ -34,16 +34,16 @@
 
 Parameters:
 
-\begin{tcargslist}   
-    \tcarg{correlation\_id}{8}{int}{Correlation ID}
-    \tcarg{gain}{8}{int}{Gain parameter of ALS sensors (BH1730FVC)}
-    \tcarg{itime}{8}{int}{ITime parameter of ALS sensors (BH1730FVC)}
-    \tcarg{samples_count}{8}{int}{Number of samples in one iteration of the experiment}
-    \tcarg{short_delay}{8}{datetime.timedelta}{Delay between consecutive samples (one-second resolution)}
-    \tcarg{session_count}{8}{int}{Number of iterations}
-    \tcarg{long_delay}{8}{datetime.timedelta}{Delay between consecutive iterations with decasecond resolution}
-    \tcarg{filename}{max. 160}{string}{Base \texttt{filename}. Experiment creates also the second file with name \texttt{filename_sec}}
-\end{tcargslist}
+\begin{tcarglist}   
+    \tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{gain}{8}{Gain parameter of ALS sensors (BH1730FVC)}
+    \tcarg{itime}{8}{ITime parameter of ALS sensors (BH1730FVC)}
+    \tcarg{samples_count}{8}{Number of samples in one iteration of the experiment}
+    \tcarg{short_delay}{8}{Delay between consecutive samples (one-second resolution)}
+    \tcarg{session_count}{8}{Number of iterations}
+    \tcarg{long_delay}{8}{Delay between consecutive iterations with decasecond resolution}
+    \tcarg{filename}{max. 160}{Base \texttt{filename}. Experiment creates also the second file with name \texttt{filename_sec}}
+\end{tcarglist}
 
 
 \subsection{Responses}
