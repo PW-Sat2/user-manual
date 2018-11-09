@@ -4,23 +4,39 @@
 
 \subsection{General description}
 \texttt{PerformRadFETExperiment} telecomand can be used to request performing an \radfet 
-experiment at first given opportunity.
+experiment at first given opportunity. The experiment demands longer period of bias prior to data aquisition. 
+This delay is controlled by a telecommand parameter. After the delay, aqusition of given samples amount is started 
+with maximum possible rate (about 25 s per sample). The rate cannot be adjusted.
+
+
 
 \paragraph{Known issues} \mbox{} \\
 \None
 
-\paragraph{Side effects} \mbox{} \\
-This command overrides previously requested experiments that has not been started yet. 
+\paragraph{Side effects} \mbox{}
+\begin{itemize}
+    \item This command overrides previously requested experiments that has not been started yet. 
+    \item The experiment turns on SENS_5V power line along with \radfet LCL located on PLD board.
+    \item Energy consumption is increased by 0.25 W from 5V_SENSE line (0.36 W from BP).
+\end{itemize}
+
 
 \paragraph{Usage limitations} \mbox{} \\
 This command does not ensure that \radfet experiment will be started by the time that 
 response is sent back to the operator. It only requests performing an experiment, which 
 will be done at earliest opportunity.
 
-\paragraph{Recommendations for operation team} \mbox{} \\
-The experiment will overwrite selected output file if it already exists therefore ensure 
-that selected file does not already exists or is no longer needed or some important data
-may be lost.
+\paragraph{Recommendations for operation team} \mbox{}
+\begin{itemize}
+    \item The experiment will overwrite selected output file if it already exists therefore ensure 
+          that selected file does not already exists or is no longer needed or some important data
+          may be lost.
+    \item Time of experiment execution can be very long - about 3 hours. Watch out energy usage!
+    \item Mandatory use Task Analyzer tool to determine energy and storage usage.
+    \item Run the experiment always in the same (or at least similar) conditions. The experiment is sensitive
+          to temperature variations!
+
+\end{itemize}
 
 \subsection{Definition}
 \TelecommandApid{PerformRadFETExperiment}
@@ -30,7 +46,7 @@ Parameters:
 
 \begin{tcarglist}
     \tcarg{correlation\_id}{8}{Correlation ID}
-    \tcarg{delay}{8}{Time delay in seconds between subsequent \radfet measurements}
+    \tcarg{delay}{8}{Time biasing delay in decaseconds (tens of seconds) prior to \radfet measurements}
     \tcarg{samples\_count}{8}{Number of measurements to take}
     \tcarg{output\_file\_name}{up to 30 * 8}{Path to file that should contain experiments results}
 \end{tcarglist}
@@ -55,11 +71,11 @@ Error code indicates failure reason:
 \end{tabular}
 
 \subsection{Examples}
-Request performing \radfet experiment with 4 samples taken once every second and save results
+Request performing \radfet experiment with 100 s biasing delay, 4 samples taken and save results
 to '/radfet' file with communication correlation id set to 12.
 
 \exampleCall{PerformRadFETExperiment(
     correlation_id=12,
-    delay=1,
+    delay=10,
     samples_count=4,
     output_file_name='/radfet')}
