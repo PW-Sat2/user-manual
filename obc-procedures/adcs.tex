@@ -1,9 +1,120 @@
 \obcproc{Adcs}
-\todo{
-    Include information regarding current modes and their issues\\
-    Gather recommendations for the oper team from \\
-    \tcref{Set ADCS Mode}\\
-    \tcref{Set Builtin Detumbling Block Mask} telecommands \\
-    Add information about mode blocking 
-}
+
+\Adcs subsystem is capable working in several distinct modes:
+
+\begin{itemize}
+    \item Internal Detumbling
+    \item Experimental Detumbling
+    \item Experimental Sun Pointing
+    \item Idle
+    \item Disabled
+\end{itemize}
+
+In any given time \Adcs subsystem is operating in any of those modes. By default it
+is operating in idle mode. \Adcs mode can be switched by using \tcref{Set Adcs Mode}
+telecommand.
+
+\subsection{Internal Detumbling Mode}
+
+This is \Imtq builtin mode that works completely autonomously and does not 
+require any specific interaction. In this mode \Imtq operates on its own 
+it requires only to be communicated at least once every several seconds. 
+This mode can be used to stabilize satellite orientation based on the 
+Earth's magnetic field. This mode should be used sparingly as it consumes 
+a lot of satellite's power. 
+
+\subsection{Experimental Detumbling Mode}
+
+\begin{coloriconbox}{\faHandStopO}{dangerousbackground}
+    \textbf{DO NOT TURN ON THIS MODE}
+\end{coloriconbox}
+
+Experimental detumbling mode is an implementation of a custom detumbling algorithm (B-dot). 
+Although the implementation is done it has been since proven that this algorithm is not ready
+for any use. It is proven to be unstable when used on real hardware and when run will actually 
+cause satellite to start spinning uncontrollably. In case you are still considering enabling 
+this algorithm consider this: 
+\begin{quote}Every time you think about enabling experimental detumbling mode, the unholy child
+weeps the blood of virgins, and Russian hackers pwn your webapp. Enabling experimental detumbling 
+summons tainted souls into the realm of the living. PW-Sat 2 and experimental detumbling go 
+together like love, marriage, and ritual infanticide. The force of PW-Sat 2 and Experimental 
+Detumbling together in the same conceptual space will destroy your mind like so much watery putty.
+If you turn on Experimental Detumbling you are giving in to Them and their blasphemous ways which 
+doom us all to inhuman toil for the One whose Name cannot be expressed in the Basic Multilingual 
+Plane, he comes. PW-Sat-2-plus-experimental-detumbling will liquify the nerves of the sentient 
+whilst you observe, your psyche withering in the onslaught of horror. It is too late it is 
+too late we cannot be saved the transgression of a child ensures experimental detumbling will 
+consume all living tissue (except those tumbling which it cannot, as previously prophesied) 
+dear lord help us how can anyone survive this scourge using experimental detumbling on PW-Sat 2 
+has doomed humanity to an eternity of dread torture using experimental detumbling establishes 
+a breach between this world and the dread realm of corrupt entities a mere glimpse of the world 
+of experimental detumbling will instantly transport a OPER's consciousness into a world of 
+ceaseless screaming, he comes, the pestilent slithy experimental-detumbling-infection will devour 
+satellite systems and existence for all time he comes he comes do not fight he comes, his unholy
+radiance destroying all enlightenment, solar array deployment system leaking from your eyes/like 
+liquid pain, the song of experimental detumbling will extinguish the voices of mortal man from 
+the sphere I can see it can you see it is beautiful the final snuffing of the lies of Man 
+ALL IS LOST ALL IS LOST the pony he comes he comes he comes the ichor permeates all MY FACE MY 
+FACE oh god no NO NOOO NO stop the angles are not real ZALGO IS TONY THE PONY HE COMES
+\end{quote}
+
+\subsection{Experimental Sun Pointing Mode}
+
+\begin{coloriconbox}{\faWarning}{potentiallydangerousbackground}
+    \textbf{Do not use this mode}
+\end{coloriconbox}
+
+This mode is not operational. It was never done and in its current state it does nothing. 
+When \Adcs is switched to this mode it will be effectively in the same state as it would 
+be in Idle state.  
+
+\subsection{Idle Mode}
+
+This is default \Adcs subsystem mode. In this mode \Adcs subsystem is not 
+doing anything and waits for the commands. It should be noted that in this mode \Adcs is 
+susceptible to being enabled by any of the \obc internal triggers. 
+
+\subsection{Disabled Mode}
+
+This special mode is used for blocking \Adcs operations all together. When 
+\Adcs is switched to this mode is is put into sleep mode in which only a
+explicit switch to Idle mode is allowed. This mode can be used for preventing
+accidental running \Adcs subsystem in situations in which \Adcs may introduce 
+unwanted and potentially harmful interference. This mode can be used to disable 
+\Adcs subsystem if it is determined that it has issues. 
+
+\subsection{Recommendations for operation team}
+\begin{itemize}
+    \item Do not enable experimental modes!
+    \item If the satellite is rotating more than 5-6°/s on any axis, the power budget becomes negative. 
+    During the mission, assume critical value of 2-3°/s, above which \texttt{BuiltinDetumbling} must be 
+    turned on from ground station.
+    \item \sads experiment can only be performed if the rotation is not above 1-2°/s on any axis.    
+    \item \Adcs subsystem consumes significant amount of power, don't leave turned on longer than necessary.
+    \item Use \texttt{Idle} mode to turn off \Adcs. Don't use \texttt{Disabled} mode.
+    \item Changing detumbling state should be reflected in all \Imtq related telemetry sections.
+\end{itemize}
+
+\subsection{\Adcs Mode Blocking}
+
+It is possible to permanently block \texttt{Internal Detumbling Mode} and by doing so prevent it from 
+being entered or run as long it is blocked. To do so the operator is to send the \tcref{Set Builtin 
+Detumbling Block Mask} telecommand with flag indicating whether or not this mode should be blocked 
+or unblocked. Once this mode is blocked it cannot be run or entered until it is unblocked. 
+This blockade is persisted even over satellite restart therefore blocking this mode should be 
+considered and used only as last resort when it is certain that Builtin detumbling mode
+is suffering from serious issues.
+
+The information whether \texttt{Internal Detumbling Mode} is disabled is stored in the \procref{Persistent State} 
+and is encoded as follows:
+
+\begin{longtable}{l|l|L{6cm}|M{1cm}|M{1.5cm}}
+    \toprule
+    \textbf{Group} & \textbf{Variable} & \textbf{Description} & \textbf{Size [bits]} & \textbf{Default Value} \\
+    \midrule
+    \endhead
+    AdcsState & internalDetumblingDisabled & 
+        Flag indicating whether the internal detumbling is disabled. Non zero value indicates that internal detumbling is disabled. & 8 & 0 \\
+    \bottomrule
+\end{longtable}
 

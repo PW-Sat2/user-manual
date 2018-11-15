@@ -100,14 +100,14 @@ W jednym terminalu iPythonowym wszystkie odebrane ramki się zbierają (jak to r
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
-tasks = [[tc.SetBitrate(1, 8), "Send", "Wait"],
-	[tc.SetBitrate(2, 8), "Send", "Wait"],
-	[tc.SendBeacon(), "Send", "Wait"],
-	[tc.ListFiles(3, '/'), "Send", "Wait"],
-	[tc.SendBeacon(), "Send", "Wait"],
-	[tc.SendBeacon(), "Send", "Wait"],
-	[tc.SendBeacon(), "Send", "Wait"],
-	[tc.SendBeacon(), "Send", "Wait"],]
+tasks = [[tc.SetBitrate(1, 8), Send, WaitMode.Wait],
+	[tc.SetBitrate(2, 8), Send, WaitMode.Wait],
+	[tc.SendBeacon(), Send, WaitMode.Wait],
+	[tc.ListFiles(3, '/'), Send, WaitMode.Wait],
+	[tc.SendBeacon(), Send, WaitMode.Wait],
+	[tc.SendBeacon(), Send, WaitMode.Wait],
+	[tc.SendBeacon(), Send, WaitMode.Wait],
+	[tc.SendBeacon(), Send, WaitMode.Wait],]
 }
 \end{lstlisting}
 

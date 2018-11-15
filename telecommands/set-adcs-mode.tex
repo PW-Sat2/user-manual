@@ -1,37 +1,29 @@
-\telecommand{Set ADCS Mode}
+\telecommand{Set Adcs Mode}
 
 \tccategory{D}
 
 \subsection{General description}
-\texttt{SetAdcsMode} telecommand sets new ADCS subystem operating mode. Practically it can either set the Builtin Detumbling (which will turn on the iMTQ module) or disable the ADCS completly. If ADCS is disabled/stopped the ADCS subsystem (iMTQ) will be powered off. Enabling the detumbling will power on the iMTQ.
+\texttt{Set \Adcs Mode} telecommand sets new \Adcs subystem operating mode. Practically it can either set 
+the Builtin Detumbling (which will turn on the \Imtq module) or disable the \Adcs completely. If \Adcs is 
+disabled/stopped the \Adcs subsystem (\Imtq) will be powered off. Enabling the detumbling will power on the \Imtq.
 
 \paragraph{Known issues}
 \begin{itemize}
     \item \danger \texttt{ExperimentalDetumbling} mode's tests have shown that it is unstable. \\
     \textbf{DO NOT TURN ON} experimental detumbling! It's harmful to satellite's power budget and may cause an overheat, tumbling and power loss! 
     \item \danger \texttt{ExperimentalSunpointing} mode has not been implemented.  \\
-    \textbf{DO NOT TURN ON} ADCS experimental sun pointing!
-    \item \warn Adcs has two "inactive" modes: \texttt{Stopped} and \texttt{Disabled}. There's almost no difference in effects, both will cause iMTQ to be powered off. However, if satellite is in \texttt{Disabled} mode, then it must first be set to \texttt{Stopped} before enabling detumbling.
+    \textbf{DO NOT TURN ON} \Adcs experimental sun pointing!
+    \item \warn \Adcs has two "inactive" modes: \texttt{Stopped} and \texttt{Disabled}. There's almost no difference in effects, both will cause \Imtq to be powered off. However, if satellite is in \texttt{Disabled} mode, then it must first be set to \texttt{Stopped} before enabling detumbling.
 \end{itemize}
 
-\paragraph{Side effects} 
-\begin{itemize}
-    \item Every time you think about enabling experimental detumbling mode, the unholy child weeps the blood of virgins, and Russian hackers pwn your webapp. Enabling experimental detumbling summons tainted souls into the realm of the living. PW-Sat 2 and experimental detumbling go together like love, marriage, and ritual infanticide. The force of PW-Sat 2 and Experimental Detumbling together in the same conceptual space will destroy your mind like so much watery putty. If you turn on Experimental Detumbling you are giving in to Them and their blasphemous ways which doom us all to inhuman toil for the One whose Name cannot be expressed in the Basic Multilingual Plane, he comes. PW-Sat-2-plus-experimental-detumbling will liquify the nerves of the sentient whilst you observe, your psyche withering in the onslaught of horror. It is too late it is too late we cannot be saved the trangession of a child ensures experimental detumbling will consume all living tissue (except those tumbling which it cannot, as previously prophesied) dear lord help us how can anyone survive this scourge using experimental detumbling on PW-Sat 2 has doomed humanity to an eternity of dread torture using experimental detumbling establishes a breach between this world and the dread realm of corrupt entities a mere glimpse of the world of experimental detumbling will instantly transport a OPER's consciousness into a world of ceaseless screaming, he comes, the pestilent slithy experimental-detumbling-infection will devour satellite systems and existence for all time he comes he comes do not fight he comes, his unholy radiance destroying all enlightenment, solar array deployment system leaking from your eyes/like liquid pain, the song of experimental detumbling will extinguish the voices of mortal man from the sphere I can see it can you see it is beautiful the final snuffing of the lies of Man ALL IS LOST ALL IS LOST the pony he comes he comes he comes the ichor permeates all MY FACE MY FACE oh god no NO NOOO NO stop the angles are not real ZALGO IS TONY THE PONY HE COMES
-    \item \texttt{ExperimentalSunpointing} has a major side effect of doing nothing.
-\end{itemize}
+\paragraph{Side effects} \mbox{} \\
+See \procref{Adcs} section for details.
 
 \paragraph{Usage limitations} \mbox{} \\
-Do not turn on experimental modes.
+See \procref{Adcs} section for details.
 
-\paragraph{Recommendations for operation team}
-\begin{itemize}
-    \item Do not enable experimental modes!
-    \item If the satellite is rotating more than 5-6°/s on any axis, the power budget becomes negative. During the mission, assume critical value of 2-3°/s, above which \texttt{BuiltinDetumbling} must be turned on from ground station.
-    \item SADS experiment can only be performed if the rotation is not above 1-2°/s on any axis.    
-    \item ADCS subsystem consumes significant amount of power, don't leave turned on longer than necessary.
-    \item Use \texttt{Stopped} mode to turn off ADCS. Don't use \texttt{Disabled} mode.
-    \item Changing detumbling state should be reflected in all `Imtq` related telemetry sections.
-\end{itemize}
+\paragraph{Recommendations for operation team} \mbox{} \\
+See \procref{Adcs} section for details.
 
 \subsection{Definition}
 \TelecommandApid{SetAdcsModeTelecommand}
@@ -41,7 +33,7 @@ Parameters:
 
 \begin{tcarglist}	
 	\tcarg{correlation\_id}{8}{Correlation ID}
-	\tcarg{mode}{8}{Desired ADCS mode (see table below)}
+	\tcarg{mode}{8}{Desired \Adcs mode (see table below)}
 \end{tcarglist}
 
 Values for \texttt{mode} argument:
@@ -61,17 +53,25 @@ Values for \texttt{mode} argument:
 
 \paragraph{SetAdcsModeSuccessFrame}
 \ResponseApid{SetAdcsModeSuccessFrame}
-Correlated response frame \texttt{SetAdcsModeSuccessFrame} confirms that telecommand was received and requested ADCS mode was scheduled.  It DOES NOT mean that setting the mode was successful. This response can be distinguished from \texttt{SetAdcsModeErrorFrame} because the byte after correlation id is set to 0. 
+Correlated response frame \texttt{SetAdcsModeSuccessFrame} confirms that 
+telecommand was received and requested \Adcs mode was scheduled. 
+It DOES NOT mean that setting the mode was successful. This response can be 
+distinguished from \texttt{SetAdcsModeErrorFrame} because the byte after 
+correlation id is set to 0. 
 
 \paragraph{SetAdcsModeErrorFrame}
 \ResponseApid{SetAdcsModeErrorFrame}
-Correlated response frame \texttt{SetAdcsModeErrorFrame} represents error. This response can be distinguished from \texttt{SetAdcsModeSuccessFrame} because the byte after correlation id is set to 1. There's no additional information about error, the likely causes are invalid request frame or failure to schedule ADCS mode.
+Correlated response frame \texttt{SetAdcsModeErrorFrame} represents error. 
+This response can be distinguished from \texttt{SetAdcsModeSuccessFrame} 
+because the byte after correlation id is set to 1. There's no additional 
+information about error, the likely causes are invalid request frame or 
+failure to schedule \Adcs mode.
 
 \subsection{Example usage}
 Enable built-in detumbling, correlation ID = 11.
 
 \exampleCall{SetAdcsModeTelecommand(11, 0)}
 
-Turn ADCS off, correlation ID = 12.
+Turn \Adcs off, correlation ID = 12.
 
 \exampleCall{SetAdcsModeTelecommand(12,-1)}
