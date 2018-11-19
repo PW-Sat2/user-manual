@@ -11,7 +11,7 @@ retrieved using \tcref{Get Persistent State} telecommand.
     \textbf{Group} & \textbf{Variable} & \textbf{Description} & \textbf{Size [bits]} \\
     \midrule
     \endhead
-    AntennaConfiguration        & isDeploymentDisabled          & See \procref{Antenna Deployment Process} for details. & 8 \\
+    AntennaConfiguration        & isDeploymentDisabled          & See \procref{Antenna Deployment Process} section for details. & 8 \\
     \hline
     \multirow{4}{*}{TimeState}  & lastMissionTime               & Current mission time in milliseconds as seen on internal clock during last time synchronization process. & 64 LE \\
                                 & lastExternalTime              & Current mission time in milliseconds as seen on external clock during last time synchronization process. & 32 LE \\
@@ -19,12 +19,12 @@ retrieved using \tcref{Get Persistent State} telecommand.
     \multirow{3}{*}{TimeCorrectionConfiguration} & missionTimeFactor             & Time correction weight for time change as seen on microcontroller clock & 16 LE \\
                                 & externalTimeFactor            & Time correction weight for time change as seen on external RTC & 16 LE \\
     \hline
-    SailState                   & currentState                  & See \procref{Sail Deployment Process} for details. & 8 \\
+    SailState                   & currentState                  & See \procref{Sail Deployment Process} section for details. & 8 \\
     \hline
     ErrorCountersConfigState    & 14 error counters             & Value of each \procref{Error Counters} & 14 * 32 LE \\
     \hline
-    AdcsState                   & internalDetumblingDisabled    & Flag indicating whether the internal detumbling is disabled & 8 \\
+    AdcsState                   & internalDetumblingDisabled    & See \procref{Adcs} section for details & 8 \\
     \hline
-    MessageState & \parbox[c]{5cm}{interval \\ repeatCount \\ message} & See the \procref{Periodic message} for the details regarding periodic message configuration & \parbox[c]{1cm}{8\\8\\1600} \\
+    MessageState & \parbox[c]{5cm}{interval \\ repeatCount \\ message} & See the \procref{Periodic message} section for the details regarding periodic message configuration & \parbox[c]{1cm}{8\\8\\1600} \\
     \bottomrule
 \end{longtable}

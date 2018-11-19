@@ -16,15 +16,15 @@ block mask.
 
 \paragraph{Usage limitations} \mbox{} \\
 Successful response for this command does not mean that builtin is no longer running. 
-This command merely prevents \obc from using it in future. This command will cause \obc
-to go out builtin detumbling is it was already active. To to that use \tcref{Set ADCS Mode}.
+This command merely prevents \obc from using it in future. This command will not cause \obc
+to go out builtin detumbling if it was already active. To to that use \tcref{Set Adcs Mode}.
 
 \paragraph{Recommendations for operation team} \mbox{} \\
 This command allows permanent blocking of \Imtq's builtin detumbling. It \textbf{should not} 
-be used unless the \Imtq's internal detubmling is known to be no longer working or is causing
+be used unless the \Imtq's internal detumbling is known to be no longer working or is causing
 problems of any kind. 
-Note that when \Imtq's builtin detubmling is blocked it will not be possible to switch 
-current \Adcs mode to the builtin detumbing even by using \tcref{Set ADCS Mode} telecommand.
+Note that when \Imtq's builtin detumbling is blocked it will not be possible to switch 
+current \Adcs mode to the builtin detumbling even by using \tcref{Set Adcs Mode} telecommand.
 
 \subsection{Definition}
 \TelecommandApid{SetBuiltinDetumblingBlockMaskTelecommand}
