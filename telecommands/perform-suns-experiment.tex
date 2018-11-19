@@ -66,6 +66,6 @@ Correlated frame of type \texttt{ExperimentErrorFrame} indicates error during te
 \end{tabular}
 
 \subsection{Example usage}
-Perform SunS Experiment, with gain \texttt{1} (\texttt{gain=0x01}), itime \texttt{10} (\texttt{itime=0x10}) and use correlation ID \texttt{11} (\texttt{correlation\_id=11}). There are \texttt{10} sampling sessions (\texttt{session_counts=5}) with \texttt{5} samples (\texttt{samples_count=5}). Between each sampling session there is \texttt{500} s of delay (\texttt{long_delay=50}), whereas between consecutive samples there is \texttt{1} s of delay (\texttt{short_delay=1})  Created experiment files are: \texttt{"suns_1"} and \texttt{"suns_1_sec"}. 
+Perform SunS Experiment, with gain \texttt{1} (\texttt{gain=0x01}), itime \texttt{10} (\texttt{itime=0x10}) and use correlation ID \texttt{11} (\texttt{correlation\_id=11}). There are \texttt{10} sampling sessions (\texttt{session_counts=5}) with \texttt{5} samples (\texttt{samples_count=5}). Between each sampling session there is \texttt{500} s of delay (\texttt{long_delay=datetime.timedelta(seconds=500)}), whereas between consecutive samples there is \texttt{1} s of delay (\texttt{short_delay=datetime.timedelta(seconds=1)})  Created experiment files are: \texttt{"suns_1"} and \texttt{"suns_1_sec"}. 
 
-\exampleCall{PerformSunSExperiment(11, 0x01, 0x10, 5, 1, 10, 50, "suns_1")}
+\exampleCall{PerformSunSExperiment(11, 0x01, 0x10, 5, datetime.timedelta(seconds=1), 10, datetime.timedelta(seconds=500), "suns_1")}
