@@ -1,0 +1,62 @@
+\telecommand{Perform Detumbling Experiment}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{PerformDetumblingExperiment} telecomand can be used to request performing a \detumbling 
+experiment at first given opportunity.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+This command overrides previously requested experiments that has not been started yet. 
+
+\paragraph{Usage limitations} \mbox{} \\
+This command does not ensure that \detumbling experiment will be started by the time that 
+response is sent back to the operator. It only requests performing an experiment, which 
+will be done at earliest opportunity.
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+The experiment will overwrite selected output file if it already exists therefore ensure 
+that selected file does not already exists or is no longer needed or some important data
+may be lost.
+
+\subsection{Definition}
+\TelecommandApid{PerformDetumblingExperiment}
+\TelecommandDeclaration{PerformDetumblingExperiment}
+
+Parameters:
+
+\begin{tcarglist}
+    \tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{duration}{8}{Experiment duration in seconds}
+    \tcarg{sampling\_interval}{8}{Time delay in seconds between subsequent \detumbling measurements}
+\end{tcarglist}
+
+\subsection{Responses}
+\ResponseApid{ExperimentSuccessFrame}
+\paragraph{ExperimentSuccessFrame}
+
+Correlated response frame \texttt{ExperimentSuccessFrame} confirming 
+that \detumbling experiment performance has been requested.
+
+\paragraph{ExperimentErrorFrame}
+Correlated response frame \texttt{ExperimentErrorFrame} representing an error. 
+Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    \texttt{0x00}   & Success \\
+    \texttt{0x01}   & Malformed (too short) telecommand \\
+    \texttt{0x02}   & Another experiment may already be running \\
+\end{tabular}
+
+\subsection{Examples}
+Request performing \detumbling experiment with 4 samples taken once every second with communication correlation id set to 12.
+
+\exampleCall{PerformRadFETExperiment(
+    correlation_id=12,
+    duration=4,
+    sampling_interval=1)}
