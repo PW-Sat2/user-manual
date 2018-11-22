@@ -1,0 +1,54 @@
+\telecommand{EraseFlash}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{EraseFlash} telecommand can be used to clear \OBC flash memory. 
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+Whole memory is immediately cleared.
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+\None
+
+\paragraph{Usage limitations} \mbox{} \\ 
+\None
+
+\subsection{Definition}
+\TelecommandApid{EraseFlash}
+\TelecommandDeclaration{EraseFlash}
+
+Parameters: 
+
+\begin{tcarglist}
+    \tcarg{correlation\_id}{8}{Correlation ID}
+\end{tcarglist}
+
+\subsection{Responses}
+\ResponseApid{FileRemoveSuccessFrame}
+\paragraph{FileRemoveSuccessFrame}
+Correlated response frame \texttt{FileRemoveSuccessFrame} confirming that requested file has been removed.
+
+\paragraph{FileRemoveErrorFrame}
+Correlated response frame \texttt{FileRemoveErrorFrame} representing an error. Error code indicates failure reason:
+
+\begin{tabular}{r | l}
+    Error code & Value \\
+    \hline
+    \texttt{0x00}   & Success \\
+    \texttt{0x16}   & Malformed (too short) telecommand \\
+                    & Invalid argument \\
+    any other & File removal error code \\
+\end{tabular}
+
+Both \texttt{FileRemoveSuccessFrame} and \texttt{FileRemoveErrorFrame} should contain path to file that 
+has been removed or failed to remove.
+
+
+\subsection{Example usage}
+Remove file "photo.jpg" with correlated Id set to 11.
+
+\exampleCall{RemoveFile(11, 'photo.jpg')}
