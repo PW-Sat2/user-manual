@@ -1,0 +1,86 @@
+\telecommand{FinalizeProgramEntry}
+
+\tccategory{D}
+
+\subsection{General description}
+\texttt{FinalizeProgramEntry} finalizes programming boot table entry.
+
+
+\paragraph{Known issues}\mbox{}\\ 
+\None
+
+\paragraph{Side effects}\mbox{}\\ 
+\None
+
+\paragraph{Usage limitations}
+\begin{itemize}
+	\item This telecommand must be used exactly as described in \nameref{obc:proc:Program upload} procedure.
+\end{itemize}
+
+\paragraph{Recommendations for operation team}1
+Refer to \nameref{obc:proc:Program upload} procedure for details on uploading new software version.
+
+
+\subsection{Definition}
+\TelecommandApid{FinalizeProgramEntry}
+\TelecommandDeclaration{FinalizeProgramEntry}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{entries}{8}{Bitmask indicating boot slots program entry will be finalized}
+	\tcarg{length}{32}{Program length}
+	\tcarg{expected\_crc}{16}{Expected CRC}
+	\tcarg{name}{(variable)}{Program entry description}
+\end{tcarglist}
+
+
+\subsection{Responses}
+
+\paragraph{EntryFinalizeSuccess}
+\ResponseApid{EntryFinalizeSuccess}
+Response frame \texttt{EntryFinalizeSuccess} indicates successful finalization of program parts. It carries additional values:
+
+\begin{tabular}{r | r | l}
+	Field & Size [bits] & Value \\
+	\hline
+	\texttt{entries} & 8 & Bitmask indicating boot slots program part was written to \\	
+	\texttt{crc} & 8 & CRC of finalized part (should match \texttt{expected\_crc} parameter) \\
+\end{tabular}
+
+\paragraph{FinalizeEntryMalformedError} \mbox{} \\
+%\ResponseApid{FinalizeEntryMalformedError}
+\todo{Add FinalizeEntryMalformedError to OBC response frames} \\
+Response frame \texttt{FinalizeEntryMalformedError} indicates failure of finalizing program part.
+Malformed telecommand (no further information available).
+
+\paragraph{FinalizeEntryWriteError} \mbox{} \\
+%\ResponseApid{FinalizeEntryWriteError}
+\todo{Add FinalizeEntryWriteError to OBC response frames} \\
+Response frame \texttt{FinalizeEntryWriteError} indicates failure of finalizing program part.
+Additional fields are contained within this response frame:
+
+\begin{tabular}{r | r | l}
+	Field & Size [bits] & Value \\
+	\hline
+	\texttt{errorCode} & 8 & FlashStatus error code \\
+	\texttt{entry} & 8 & Bitmask indicating boot slot in which error occured \\	
+\end{tabular}
+
+\paragraph{FinalizeEntryCRCError} \mbox{} \\
+%\ResponseApid{FinalizeEntryCRCError}
+\todo{Add FinalizeEntryCRCError to OBC response frames} \\
+Response frame \texttt{FinalizeEntryCRCError} indicates failure of finalizing program part because of CRC mismatch.
+Additional fields are contained within this response frame:
+
+\begin{tabular}{r | r | l}
+	Field & Size [bits] & Value \\
+	\hline
+	\texttt{entry} & 8 & Bitmask indicating boot slot in which error occured \\	
+	\texttt{actual\_crc} & 16 & Calculated actual CRC \\
+\end{tabular}
+
+
+\subsection{Example usage}
+Finalize program in boot slots 3,4,5, with length 100 bytes, expected CRC 0xB00B, and description "New stuff".
+\exampleCall{FinalizeProgramEntry([3,4,5], 0x100, 0xB00B, "New stuff")}
