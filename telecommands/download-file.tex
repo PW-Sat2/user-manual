@@ -1,20 +1,29 @@
 \telecommand{DownloadFile}
 
-\tccategory{S}
+\tccategory{PD}
 
 \subsection{General description}
-\texttt{DownloadFileTelecommand} can be used to download fragments of a file.
+\texttt{DownloadFileTelecommand} can be used to download single or multiple chunks of a file.
 
 \paragraph{Known issues} \mbox{} \\
 \None
 
 \paragraph{Side effects} \mbox{} \\
-\None
+\begin{itemize}
+    \item Beacon frames might be delayed because of large amonunt od response frames with the chunks. 
+\end{itemize}
 
 \paragraph{Usage limitations} \mbox{} \\
-\None
+\begin{itemize}
+    \item Do not use when battery level is low. Check it always before sending the 
+    \item Do not request more than 30 chunks at once or you can power-cycle the satellite.
+\end{itemize}
 
 \paragraph{Recommendations for operation team} \mbox{} \\
+\begin{itemize}
+    \item Analyze energy consumption by the telecommand, do not ruin power budget!
+    \item Check power amplifier temperatures before, during (if possible) and after the telecommand usage. Do not overheat COMM module.
+\end{itemize}
 This telecommand can be used to download images done with camera or to download a raw telemetry.
 
 \subsection{Definition}
@@ -26,7 +35,7 @@ Parameters:
 \begin{tcarglist}
 	\tcarg{correlation\_id}{8}{Correlation ID}
 	\tcarg{path}{variable}{Path to the file on the satellite's filesystem}
-	\tcarg{seqs}{variable}{32-bit LE sequence numbers of parts that will be send}
+	\tcarg{seqs}{variable}{32-bit LE sequence numbers of chunks that will be send}
 \end{tcarglist}
 
 \subsection{Responses}
@@ -47,15 +56,15 @@ The first byte indicates success or error code.
 	4 		& Sequence is too big
 \end{tabular}
 
-For \texttt{Success} the response follows with \texttt{requested\_fragments} amount of the corresponding file segment bytes.
+For \texttt{Success} the response follows with \texttt{requested\_chunks} amount of the corresponding file segment bytes.
 
 For \texttt{File not found} and \texttt{Sequence is too big} error codes the response follows with received file path without the terminating zero.
 
 For \texttt{Malformed request} and \texttt{Path is invalid} error codes the response doesn't contain any additional data.
 
 \subsection{Example usage}
-Download 1, 10, 65536 fragments (\texttt{seqs=1,10,65536}) from picture.jpg file (\texttt{path=/picture.jpg}) \texttt{correlation\_id=11}.
+Download 1, 10 and 65536 chunks (\texttt{seqs=1, 10, 65536}) from picture.jpg file (\texttt{path=/picture.jpg}) \texttt{correlation\_id=11}.
 
-\exampleCall{DownloadFileTelecommand(11, "/picture.jpg", [1,10,65536])}
+\exampleCall{DownloadFileTelecommand(11, "/picture.jpg", [1, 10, 65536])}
 
-When \texttt{CorrelatedDownlinkFrame} is received it should contain 3 bytes from the picture.jpg file.
+A response should consist of three \texttt{CorrelatedDownlinkFrame} that contain three chunks from the picture.jpg file.
