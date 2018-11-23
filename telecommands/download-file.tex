@@ -23,6 +23,9 @@
 \begin{itemize}
     \item Analyze energy consumption by the telecommand, do not ruin power budget!
     \item Check power amplifier temperatures before, during (if possible) and after the telecommand usage. Do not overheat COMM module.
+    \item Be patient - send the telecommand once and wait for response frames at least a few seconds (up to 10 - 15 s TBD) before repeating the telecommand.
+    \item It's recommended to request not more than 10 - 15 chunks in one telecommand. Uplink has some non-zero PER, moreover some lag between telecommand reception by
+    the PW-Sat2 and sending reponse frames with files chunks is present. The lag may cause a situation when an operator will send the telecommand again (as one would think that the telecommand was lost/not received by the spacecraft), even if the first telecommand was actually accepted. It may lead to unintentional power-cycle if more than 30 chunks will be queued by the OBC.
 \end{itemize}
 This telecommand can be used to download images done with camera or to download a raw telemetry.
 
