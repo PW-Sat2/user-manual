@@ -30,7 +30,7 @@ Parameters:
 
 \begin{tcarglist}
     \tcarg{correlation\_id}{8}{Correlation ID}
-    \tcarg{duration}{8}{Experiment duration in seconds}
+    \tcarg{duration}{32}{Experiment duration in seconds}
     \tcarg{sampling\_interval}{8}{Time delay in seconds between subsequent \detumbling measurements}
 \end{tcarglist}
 
@@ -54,9 +54,9 @@ Error code indicates failure reason:
 \end{tabular}
 
 \subsection{Examples}
-Request performing \detumbling experiment with 4 samples taken once every second with communication correlation id set to 12.
+Request performing \detumbling experiment for 60 minutes and 40 seconds, with measurements taken once every second and communication correlation id set to 12.
 
 \exampleCall{PerformDetumblingExperiment(
     correlation_id=12,
-    duration=4,
-    sampling_interval=1)}
+    duration=datetime.timedelta(seconds=40, minutes=60),
+    sampling_interval=datetime.timedelta(seconds=1)}
