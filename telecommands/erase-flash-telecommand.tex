@@ -3,7 +3,7 @@
 \tccategory{PD}
 
 \subsection{General description}
-\texttt{EraseFlash} telecommand can be used to clear \OBC flash memory located on PLD board. The procedure is implemented using an experiment loop scheme. After correct reception of the telecommand, correlating \texttt{EraseFlashFrame} is sent and flash erasing is started immediately. Once finished, another correlated response frame is sent - \texttt{OperationSuccessFrame} or \texttt{OperationErrorFrame}.
+\texttt{EraseFlash} telecommand can be used to clear \obc flash memory located on PLD board. The procedure is implemented using an experiment loop scheme. After correct reception of the telecommand, correlating \texttt{EraseFlashFrame} is sent and flash erasing is started immediately. Once finished, another correlated response frame is sent - \texttt{OperationSuccessFrame} or \texttt{OperationErrorFrame}.
 
 \paragraph{Known issues} \mbox{} \\
 It's necessary to perform a power cycle to get correct file list after Erase Flash telecommand.
@@ -30,7 +30,7 @@ Parameters:
 \subsection{Responses}
 \ResponseApid{EraseFlashFrame}
 \paragraph{EraseFlashFrame}
-Correlated response frame \texttt{EraseFlashFrame} confirming that \OBC accepted telecommand.
+Correlated response frame \texttt{EraseFlashFrame} confirming that \obc accepted telecommand.
 
 \ResponseApid{OperationSuccessFrame}
 \paragraph{OperationSuccessFrame}
