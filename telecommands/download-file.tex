@@ -31,7 +31,7 @@ This telecommand can be used to download images done with camera or to download 
 
 \subsection{Definition}
 \TelecommandApid{DownloadFile}
-\TelecommandDeclaration{DownloadFileTelecommand}
+\TelecommandDeclaration{DownloadFile}
 
 Parameters: 
 
@@ -43,10 +43,10 @@ Parameters:
 
 \subsection{Responses}
 
-\paragraph{CorrelatedDownlinkFrame}
-\ResponseApid{CorrelatedDownlinkFrame}
+\paragraph{FileSendSuccessFrame}
+\ResponseApid{FileSendSuccessFrame}
 
-This telecommand always responds with \texttt{CorrelatedDownlinkFrame}.
+This telecommand always responds with \texttt{FileSendSuccessFrame}.
 
 The first byte indicates success or error code.
 
@@ -68,6 +68,6 @@ For \texttt{Malformed request} and \texttt{Path is invalid} error codes the resp
 \subsection{Example usage}
 Download 1, 10 and 65536 chunks (\texttt{seqs=1, 10, 65536}) from picture.jpg file (\texttt{path=/picture.jpg}) \texttt{correlation\_id=11}.
 
-\exampleCall{DownloadFileTelecommand(11, "/picture.jpg", [1, 10, 65536])}
+\exampleCall{DownloadFile(11, "/picture.jpg", [1, 10, 65536])}
 
 A response should consist of three \texttt{CorrelatedDownlinkFrame} that contain three chunks from the picture.jpg file.
