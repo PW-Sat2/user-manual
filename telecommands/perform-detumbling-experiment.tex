@@ -3,7 +3,7 @@
 \tccategory{D}
 
 \subsection{General description}
-\texttt{PerformDetumblingExperiment} telecomand can be used to request performing a \detumbling 
+\texttt{PerformDetumblingExperiment} telecomand can be used to request performing a detumbling 
 experiment at first given opportunity.
 
 \paragraph{Known issues} \mbox{} \\
@@ -13,7 +13,7 @@ experiment at first given opportunity.
 This command overrides previously requested experiments that has not been started yet. 
 
 \paragraph{Usage limitations} \mbox{} \\
-This command does not ensure that \detumbling experiment will be started by the time that 
+This command does not ensure that detumbling experiment will be started by the time that 
 response is sent back to the operator. It only requests performing an experiment, which 
 will be done at earliest opportunity.
 
@@ -31,7 +31,7 @@ Parameters:
 \begin{tcarglist}
     \tcarg{correlation\_id}{8}{Correlation ID}
     \tcarg{duration}{32}{Experiment duration in seconds}
-    \tcarg{sampling\_interval}{8}{Time delay in seconds between subsequent \detumbling measurements}
+    \tcarg{sampling\_interval}{8}{Time delay in seconds between subsequent detumbling measurements}
 \end{tcarglist}
 
 \subsection{Responses}
@@ -39,7 +39,7 @@ Parameters:
 \paragraph{ExperimentSuccessFrame}
 
 Correlated response frame \texttt{ExperimentSuccessFrame} confirming 
-that \detumbling experiment performance has been requested.
+that detumbling experiment performance has been requested.
 
 \paragraph{ExperimentErrorFrame}
 Correlated response frame \texttt{ExperimentErrorFrame} representing an error. 
@@ -54,9 +54,9 @@ Error code indicates failure reason:
 \end{tabular}
 
 \subsection{Examples}
-Request performing \detumbling experiment for 60 minutes and 40 seconds, with measurements taken once every second and communication correlation id set to 12.
+Request performing detumbling experiment for 60 minutes and 40 seconds, with measurements taken once every second and communication correlation id set to 12.
 
 \exampleCall{PerformDetumblingExperiment(
     correlation_id=12,
     duration=datetime.timedelta(seconds=40, minutes=60),
-    sampling_interval=datetime.timedelta(seconds=1)}
+    sampling_interval=datetime.timedelta(seconds=1))}
