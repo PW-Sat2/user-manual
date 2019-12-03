@@ -3,20 +3,21 @@
 \tccategory{PD}
 
 \subsection{General description}
-\texttt{Perform SunS Experiment} telecommand turns The SunS Experiment. Collected data are saved in on-board flash memory in two separate filenames. For more details refer to The SunS Experiment description.
+\texttt{Perform SunS Experiment} telecommand turns on the SunS Experiment. Collected data are saved in on-board flash memory in two separate file - one for primary experiment results and the other one for secondary results. For more details refer to The SunS Experiment description.
 
 \paragraph{Known issues} \mbox{} \\
 \None
 
 \paragraph{Side effects} \mbox{} \\
 \begin{itemize}
-    \item SENS_5V and SUNS_3V3 lines are switched on by the experiment.
+    \item SENS_5V and SUNS_3V3 power lines are switched on by the experiment.
+    \item The experiment can postpone daily power cycle of the satellite.
 \end{itemize}
 
 
 \paragraph{Usage limitations} \mbox{} \\
 \begin{itemize}
-    \item Do not use in case of PLD board or reference Sun sensor (SENS_5V power line) malfunctions, or The SunS fault (SunS_3V3 power line).
+    \item Do not use in case of PLD board or reference Sun sensor (SENS_5V power line) malfunctions, or The SunS fault (SUNS_3V3 power line).
     \item Do not use when battery level is low.
 \end{itemize}
 
@@ -25,7 +26,7 @@
     \item Calculate power consumption by the experiment itself and data transmission before sending telecommand using Telecommands Analyzer.
     \item Planning and running the experiment take into account Guidelines for SunS Experiment.
     \item Schedule the time of the experiment so it's finished before next communication session.
-    \item Download experiment's secondary file at least once (at least a part of it).
+    \item Download experiment's secondary file at least once.
 \end{itemize}
 
 \subsection{Definition}
@@ -51,7 +52,7 @@ Parameters:
 \paragraph{ExperimentSuccessFrame}
 \ResponseApid{ExperimentSuccessFrame}
 
-Correlated frame of type \texttt{ExperimentSuccessFrame} indicates that 
+Correlated frame of type \texttt{ExperimentSuccessFrame} indicates that experiment request was accepted by the OBC.
 
 \paragraph{ExperimentErrorFrame}
 \ResponseApid{ExperimentErrorFrame}
