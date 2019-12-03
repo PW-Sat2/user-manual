@@ -1,0 +1,34 @@
+\section {Operations}
+
+PW-Sat 2 has access to \textbf{2} ground stations:
+
+\begin{itemize}
+\item "Elka" in Warsaw, PL
+\item "FP-GS" in Gliwice, PL    
+\end{itemize}
+
+Communication sessions are grouped in 2 blocks: "morning" and "afternoon".
+There's always one "primary" GS which is responsible for transmitting:
+\begin{itemize}
+\item Morning sessions: elka
+\item Afternoon sessions: fp-gs
+\end{itemize}
+
+Receiving is done by ground stations above + unknown number of radio amateur stations (SatNOGS + others). There's an application on radio.pw-sat.pl that decodes data from SDR and sends it to our servers, which used by radio amateurs to send us received frames. After each pass the primary GS will retrieve all data uploaded to servers (including from our own GS) and deduplicate it. Currently theres usually one radio amateur active (SP5ULN).
+
+There's always \textbf{1} operator assigned to entire block. There're currently \textbf{9} operators in team, so every one get about 6 communication blocks per month.
+There are 3 types of sessions:
+\begin{itemize}    
+    \item Deep-sleep monitoring (aka "auto")
+    \item Deep-sleep refresh
+    \item Full-mode sessions
+\end{itemize}
+
+\subsection{Deep-sleep monitoring (aka "auto")}        
+Most type common of session: almost every day, with except of weekends in full-mode.  It's fully automatic - ground station transmits only "SendBeacon" telecommand. Operator role is monitor if ground station and satellite is performing nominally. 
+
+\subsection{Deep-sleep refresh}
+Occurs every other day. It's manual: the task list is constant, but operator controls transmission manually using uplink console.
+
+\subsection{Full-mode sessions}
+Occurs every 2 weeks. It's manual and requires most work. They're planned at lease couple days in advance, plan for experiments and photos is prepared (there're OPER members responsible for that). All task lists are prepared and executed by operators.

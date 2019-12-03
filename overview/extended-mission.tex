@@ -1,0 +1,30 @@
+\section{Extended mission}
+
+OBC is kept in "deep-sleep" mode. Deep-sleep is reduced functionality in which only basic house keeping is performed (flash erasing, boot loader and memory scrubbing). Automatic beacon is transmitted every 4 minutes. It contains only basic information: battery voltages, time and number of reboots.
+
+OBC in deep-sleep performs power-cycle every 2 hours to minimize latchup effects. 
+    
+Radio receiver is checked every 40 seconds for incoming frames. If "SendBeacon" telecommand is received, then it sends the current beacon back. If any other valid telecommand is received, then it reboots to normal mode. Be aware that after reboot to normal mode radio transmitter is set to transmit 1200bps which consumes much more energy that 9600bps. 
+
+If nothing is done, deep-sleep will automatically switch to normal mode after 70 hours (35 reboots). To prevent unsupervised reboot, operators reboot it manually every 48 hours (this operation is called "deep sleep refresh").
+ 
+Every two weeks OBC is switched to full mode to perform experiments:
+\begin{itemize}
+    \item RadFET measurements.
+    \item Sun sensor measurements.
+    \item Evaluate sail condition by taking photos using 2 on board cameras.
+    \item Download detailed telemetry (generated only in full mode).
+    \item When everything is downloaded (experiment results + telemetry) switch back to deep-sleep mode.
+\end{itemize}
+
+
+\subsection{Extended mission by numbers}
+
+\begin{itemize}
+    \item \textbf{4 minutes} - Automatic deep-sleep beacon transmission.
+    \item \textbf{2 hours} - Automatic deep-sleep power-cycle to minimize latchup effects.
+    \item \textbf{40 seconds} - Radio receiver pooling interval.
+    \item \textbf{70 hours} - Time after which deep-sleep will automatically switch back to full mode.
+    \item \textbf{48 hours} - Supervised deep-sleep refresh operation (switch to full-mode, switch back to deep-sleep).
+    \item \textbf{2 weeks} - Period of switching to full mode for performing experiments.
+\end{itemize}
