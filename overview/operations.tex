@@ -1,6 +1,6 @@
 \section {Operations}
 
-PW-Sat 2 has access to \textbf{2} ground stations:
+PW-Sat2 team has access to \textbf{2} ground stations:
 
 \begin{itemize}
 \item "Elka" in Warsaw, PL
@@ -14,21 +14,37 @@ There's always one "primary" GS which is responsible for transmitting:
 \item Afternoon sessions: fp-gs
 \end{itemize}
 
-Receiving is done by ground stations above + unknown number of radio amateur stations (SatNOGS + others). There's an application on radio.pw-sat.pl that decodes data from SDR and sends it to our servers, which used by radio amateurs to send us received frames. After each pass the primary GS will retrieve all data uploaded to servers (including from our own GS) and deduplicate it. Currently theres usually one radio amateur active (SP5ULN).
+Receiving is done by ground stations above + unknown number of radio amateur stations (SatNOGS + others). There's an application available on https://radio.pw-sat.pl/ that decodes data from SDR and sends it to our servers. Application is being used by radio amateurs to send us received frames. After each pass the primary GS will retrieve all data uploaded to servers (including from our own GS) and deduplicate it. Currently there's usually at least one radio amateur active.
 
 There's always \textbf{1} operator assigned to entire block. There're currently \textbf{9} operators in team, so every one get about 6 communication blocks per month.
+
 There are 3 types of sessions:
 \begin{itemize}    
-    \item Deep-sleep monitoring (aka "auto")
+    \item Monitoring session (aka "auto session")
     \item Deep-sleep refresh
     \item Full-mode sessions
 \end{itemize}
 
-\subsection{Deep-sleep monitoring (aka "auto")}        
-Most type common of session: almost every day, with except of weekends in full-mode.  It's fully automatic - ground station transmits only "SendBeacon" telecommand. Operator role is monitor if ground station and satellite is performing nominally. 
+\subsection{Session type: Monitoring (aka "auto")}        
+Most common type of session: almost every day, with except of weekends in full-mode.  It's fully automatic - ground station transmits only \tcref{Send Beacon} telecommand. Operator role is monitor if ground stations and satellite are performing nominally. 
 
-\subsection{Deep-sleep refresh}
-Occurs every other day. It's manual: the task list is constant, but operator controls transmission manually using uplink console.
+\subsection{Session type: Deep-sleep refresh}
+Occurs every other day. It's manual: the task list is constant, but operator controls transmission manually using \toolref{Uplink Console}.
 
-\subsection{Full-mode sessions}
-Occurs every 2 weeks. It's manual and requires most work. They're planned at lease couple days in advance, plan for experiments and photos is prepared (there're OPER members responsible for that). All task lists are prepared and executed by operators.
+\subsection{Session type: Full-mode sessions}
+Occurs every 2 weeks. It's manual and requires most work. They're planned at least couple days in advance. Plans for experiments and photos are prepared by OPER members responsible for each experiments. All task lists are prepared (with help of \toolref{Tasklist Generator}) and executed (using \toolref{Uplink Console}) by operators manually.
+
+\subsection{Steps for each session}
+
+\begin{enumerate}
+    \item Operator prepares pull request in \toolref{Mission Repository} with data.json, tasklist.py and summary.py. In case of Deep-sleep refresh session, only data.json change is needed.
+    \item Other team members review and approve the pull request.
+    \item Operator merges the pull request at least 10 minutes before session.
+    \item \toolref{Autosession} monitors the repository every minute to check for update. It should automatically pull the changes (and output "New session" in console).
+    \item \toolref{GnuRadio} is launched by \toolref{Autosession} automatically 2 minutes before session start (taken from data.json).
+    \item At ths point is possible to launch \toolref{Uplink Console}.
+    \item After session ends, \toolref{Autosession} closes \toolref{GnuRadio}.
+    \item Instance of \toolref{Autosession} that's running on primary GS will now summarize the session: download all frames from radio.pw-sat.pl, extract beacons, file lists, and run summary.py if available (which is used to decode experiment data and photos automatically). After that all artifacts are pushed to \toolref{Mission Repository} and telemetry is uploaded to \toolref{Grafana}.
+\end{enumerate}
+
+
