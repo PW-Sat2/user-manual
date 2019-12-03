@@ -1,0 +1,73 @@
+\telecommand{DownloadFile}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{DownloadFileTelecommand} can be used to download single or multiple chunks of a file.
+
+\paragraph{Known issues} \mbox{} \\
+\None
+
+\paragraph{Side effects} \mbox{} \\
+\begin{itemize}
+    \item Beacon frames might be delayed because of large amonunt od response frames with the chunks. 
+\end{itemize}
+
+\paragraph{Usage limitations} \mbox{} \\
+\begin{itemize}
+    \item Do not use when battery level is low. Check it always before sending the 
+    \item Do not request more than 30 chunks at once or you can power-cycle the satellite.
+\end{itemize}
+
+\paragraph{Recommendations for operation team} \mbox{} \\
+\begin{itemize}
+    \item Analyze energy consumption by the telecommand, do not ruin power budget!
+    \item Check power amplifier temperatures before, during (if possible) and after the telecommand usage. Do not overheat COMM module.
+    \item Be patient - send the telecommand once and wait for response frames at least a few seconds (up to 10 - 15 s TBD) before repeating the telecommand.
+    \item It's recommended to request not more than 10 - 15 chunks in one telecommand. Uplink has some non-zero PER, moreover some lag between telecommand reception by
+    the PW-Sat2 and sending reponse frames with files chunks is present. The lag may cause a situation when an operator will send the telecommand again (as one would think that the telecommand was lost/not received by the spacecraft), even if the first telecommand was actually accepted. It may lead to unintentional power-cycle if more than 30 chunks will be queued by the OBC.
+\end{itemize}
+This telecommand can be used to download images done with camera or to download a raw telemetry.
+
+\subsection{Definition}
+\TelecommandApid{DownloadFile}
+\TelecommandDeclaration{DownloadFile}
+
+Parameters: 
+
+\begin{tcarglist}
+	\tcarg{correlation\_id}{8}{Correlation ID}
+	\tcarg{path}{variable}{Path to the file on the satellite's filesystem}
+	\tcarg{seqs}{variable}{32-bit LE sequence numbers of chunks that will be send}
+\end{tcarglist}
+
+\subsection{Responses}
+
+\paragraph{FileSendSuccessFrame}
+\ResponseApid{FileSendSuccessFrame}
+
+This telecommand always responds with \texttt{FileSendSuccessFrame}.
+
+The first byte indicates success or error code.
+
+\begin{tabular}{r | l}
+	Code & Description \\ \hline
+	0 		& Success \\
+	1 		& File not found \\
+	2 		& Malformed request \\
+	3 		& Path is invalid \\
+	4 		& Sequence is too big
+\end{tabular}
+
+For \texttt{Success} the response follows with \texttt{requested\_chunks} amount of the corresponding file segment bytes.
+
+For \texttt{File not found} and \texttt{Sequence is too big} error codes the response follows with received file path without the terminating zero.
+
+For \texttt{Malformed request} and \texttt{Path is invalid} error codes the response doesn't contain any additional data.
+
+\subsection{Example usage}
+Download 1, 10 and 65536 chunks (\texttt{seqs=1, 10, 65536}) from picture.jpg file (\texttt{path=/picture.jpg}) \texttt{correlation\_id=11}.
+
+\exampleCall{DownloadFile(11, "/picture.jpg", [1, 10, 65536])}
+
+A response should consist of three \texttt{CorrelatedDownlinkFrame} that contain three chunks from the picture.jpg file.
