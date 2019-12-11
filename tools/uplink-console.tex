@@ -1,1 +1,26 @@
 \tool{Uplink Console}
+Uplink Console is a tool supporting carrying out manual sessions based on previously generated tasklist which determines which telecommands, with all their parameters, will be sent in occuring session. Tasklist consists of tasks, which might be a single telecommand or a loop of telecommands.
+
+Uplink tool can be started as soon as new tasklist has been pulled from master branch of GitHub repository.
+
+To start the tool, in ground station terminal, type:\\
+\begin{center}
+    \fbox{console_uplink.sh}
+\end{center}
+
+As soon as the tool is started the first task is executed, usally it is simply SendBeacon loop to catch the moment of first contact, but it depends on tasklist.
+
+After each task have been executed and popped up in the terminal, the tool freezes (if the task is a loop of telecommands then Uplink tool continues to execute the loop in the background) waiting for user input. It might be:
+\begin{itemize}
+\item 'n' - steps to next task in the tasklist and executes it
+\item 'r' - repeats execution of lately executed task
+\item 'p' - repeats exectution of previously executed task
+\item 'x' - where x is a number of task, steps to task with that index in tasklist and executes it
+\item 'b' - transmits SendBeacon telecommand once
+\item 'm' - transmits request for missing chunks of lately executed task
+\item 't' - adds missing chunks of all executed tasks to the end of current tasklist
+\item 'q' - quits tool
+\end{itemize}
+Also 'ctrl + c' quits task with loop which is currently being executed, proceeding to next task in the tasklist and executing it or unless it is not a loop, simply quits tool.
+
+Uplink Console tool has to be closed and run again before each session.
