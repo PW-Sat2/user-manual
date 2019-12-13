@@ -1,0 +1,16 @@
+Ground stations expose uplink and downlink functionality through API based on ZeroMQ messages (https://zeromq.org/) through TCP transport. The TCP endpoints are not exposed to public network, so in order to work with them, the Client must be connected to the same network.
+
+All data exchanged between ground and PW-Sat2 are AX.25 KISS-encoded frames.  Consult AX.25 (http://www.ax25.net/AX25.2.2-Jul\%2098-2.pdf) and APRS (http://www.aprs.org/doc/APRS101.PDF) documentation.
+
+Summary of available endpoints:
+\begin{longtable}{l|l}
+    \toprule
+    \textbf{Function} & \textbf{Endpoint} \\
+    \midrule
+    \endhead
+    Receive downlink frames & \texttt{tcp://<host>:7001} \\
+    Transmit uplink frame & \texttt{tcp://<host>:7000} \\
+    \bottomrule
+\end{longtable}
+
+PW-Sat2 maintains an open-source repository, containing among others, a Python code used to decode and encode PW-Sat2 data. The relevant parts are located in GitHub repository: https://github.com/PW-Sat2/PWSat2OBC/tree/master/integration_tests.

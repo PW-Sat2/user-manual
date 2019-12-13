@@ -32,7 +32,7 @@ Most common type of session: almost every day, with except of weekends in full-m
 Occurs every other day. It's manual: the task list is constant, but operator controls transmission manually using \toolref{Uplink Console}.
 
 \subsection{Session type: Full-mode sessions}
-Occurs every 2 weeks. It's manual and requires most work. They're planned at least couple days in advance. Plans for experiments and photos are prepared by OPER members responsible for each experiments. All task lists are prepared (with help of \toolref{Tasklist Generator}) and executed (using \toolref{Uplink Console}) by operators manually.
+Occurs every 2 weeks. It's manual and requires most work. They're planned at least couple days in advance. Plans for experiments and photos are prepared by OPER members responsible for each experiments. All task lists are prepared (with help of Tasklist Generator) and executed (using \toolref{Uplink Console}) by operators manually.
 
 \subsection{Steps for each session}
 
@@ -40,11 +40,11 @@ Occurs every 2 weeks. It's manual and requires most work. They're planned at lea
     \item Operator prepares pull request in \toolref{Mission Repository} with data.json, tasklist.py and summary.py. In case of Deep-sleep refresh session, only data.json change is needed.
     \item Other team members review and approve the pull request.
     \item Operator merges the pull request at least 10 minutes before session.
-    \item \toolref{Autosession} monitors the repository every minute to check for update. It should automatically pull the changes (and output "New session" in console).
-    \item \toolref{GnuRadio} is launched by \toolref{Autosession} automatically 2 minutes before session start (taken from data.json).
+    \item Autosession monitors the repository every minute to check for update. It should automatically pull the changes (and output "New session" in console).
+    \item \toolref{GnuRadio} is launched by Autosession automatically 2 minutes before session start (taken from data.json).
     \item At ths point is possible to launch \toolref{Uplink Console}.
-    \item After session ends, \toolref{Autosession} closes \toolref{GnuRadio}.
-    \item Instance of \toolref{Autosession} that's running on primary GS will now summarize the session: download all frames from radio.pw-sat.pl, extract beacons, file lists, and run summary.py if available (which is used to decode experiment data and photos automatically). After that all artifacts are pushed to \toolref{Mission Repository} and telemetry is uploaded to \toolref{Grafana}.
+    \item After session ends, Autosession closes \toolref{GnuRadio}.
+    \item Instance of Autosession that's running on primary GS will now summarize the session: download all frames from radio.pw-sat.pl, extract beacons, file lists, and run summary.py if available (which is used to decode experiment data and photos automatically). After that all artifacts are pushed to \toolref{Mission Repository} and telemetry is uploaded to \toolref{Grafana}.
 \end{enumerate}
 
 
