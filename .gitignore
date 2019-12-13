@@ -12,5 +12,4 @@ aux-files/
 *.pytxcode
 *.td
 *.toc
-
-
+main.synctex.gz
