@@ -3,7 +3,7 @@
 \tccategory{PD}
 
 \subsection{General description}
-\texttt{DownloadFileTelecommand} can be used to download single or multiple chunks of a file.
+\texttt{DownloadFileTelecommand} can be used to download single or multiple chunks of a file.  To list available files, use \tcref{List Files}. File will be divided into COMM frames and transmitted in parts. Each file part has maximum size of 230 bytes.
 
 \paragraph{Known issues} \mbox{} \\
 \None
@@ -16,7 +16,7 @@
 \paragraph{Usage limitations} \mbox{} \\
 \begin{itemize}
     \item Do not use when battery level is low. Check it always before sending the 
-    \item Do not request more than 30 chunks at once or you can power-cycle the satellite.
+    \item Do not request more than 30 chunks at once or you can power-cycle the satellite (COMM transmitter has a queue with limit of 40 frames).
 \end{itemize}
 
 \paragraph{Recommendations for operation team} \mbox{} \\
