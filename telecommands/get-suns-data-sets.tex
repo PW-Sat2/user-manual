@@ -1,0 +1,44 @@
+\telecommand{Get SunS Data Sets}
+
+\tccategory{PD}
+
+\subsection{General description}
+\texttt{Get SunS Data Sets} telecommand allows measuring and immediate transmitting a single data set of data collected as defined in The SunS Experiment. The telecommand turns on the SunS and Payload board, reads values, turn them off and sends values in response frame. For more details see The SunS Experiment description.  
+
+\paragraph{Known issues}
+\begin{itemize}
+    \item Response frame with data is sent at least 3 s after the telecommand is accepted by the spacecraft.
+\end{itemize}
+
+\paragraph{Side effects} 
+None
+
+\paragraph{Usage limitations} \mbox{} \\
+\None
+
+\paragraph{Recommendations for operation team}
+\begin{itemize}
+    \item Use to determine current light conditions and get immediate results
+\end{itemize}
+
+\subsection{Definition}
+\TelecommandApid{GetSunSDataSets}
+\TelecommandDeclaration{GetSunSDataSets}
+
+Parameters: 
+
+\begin{tcarglist}   
+    \tcarg{correlation\_id}{8}{Correlation ID}
+    \tcarg{gain}{8}{Gain parameter of the SunS}
+    \tcarg{itime}{8}{ITime parameter of the SunS}
+\end{tcarglist}
+
+
+\subsection{Responses}
+
+TODO
+
+\subsection{Example usage}
+Get SunS Data Sets, with gain \texttt{1} (\texttt{gain=0x01}), itime \texttt{10} (\texttt{itime=0x10}) and use correlation ID \texttt{11} (\texttt{correlation\_id=11}).
+
+\exampleCall{GetSunSDataSets(11, 0x01, 0x10)}
