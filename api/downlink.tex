@@ -1,0 +1,38 @@
+\section{Receiving data}
+
+All frames received and decoded by ground station are pushed as ZeroMQ message. In order to to receive it, client must subscribe to endpoint \texttt{tcp://<host>:7001}. 
+
+The incoming frames are AX.25 frames, without synchronization sequence and end flags.
+
+\begin{longtable}{l|l}
+    \toprule
+    \textbf{Bytes} & \textbf{Meaning} \\
+    \midrule
+    \endhead
+    7 bytes & Destination call sign \\
+    7 bytes & Source call sign \\
+    1 byte & Frame type (constant 0x03) \\ 
+    1 byte & Protocol Id (constant 0xF0) \\
+    6 bits & Frame APID \\
+    18 bits & Sequence number \\
+    227 bytes & Frame Payload \\
+    last 2 bytes & FCS \\
+    \bottomrule
+\end{longtable}
+
+The payload data depends on the frame APID. The PW-Sat2 OBC repository contains code to parse it.
+Below is an example (simplified) python code to connect, receive and decode frame. 
+
+\begin{verbatim}
+import response_frames      # from PWSat2OBC/integration_tests
+import zmq
+
+sock = context.socket(zmq.SUB)
+sock.connect("tcp://%s:%d" % (target, port))
+sock.setsockopt(zmq.SUBSCRIBE, "")
+
+frame =  sock.recv()
+payload = frame[16:-2]      # extract ax.25 payload
+frame_decoder = response_frames.FrameDecoder(response_frames.frame_factories)
+print(frame_decoder.decode(frame))
+\end{verbatim}

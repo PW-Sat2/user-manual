@@ -1,0 +1,58 @@
+\section{Transmitting data}
+
+Similarly to downlink, the uplink uses AX.25 frames (APRS) encoded as ZeroMQ messages, sent to ground station's endpoint (\texttt{tcp://<host>:7000}).
+
+The message follows AX.25 format:
+
+
+\begin{longtable}{l|l}
+    \toprule
+    \textbf{Bytes} & \textbf{Meaning} \\
+    \midrule
+    \endhead
+    7 bytes & Destination call sign \\
+    7 bytes & Source call sign \\
+    1 byte & Frame type (constant 0x03) \\ 
+    1 byte & Protocol Id (constant 0xF0) \\
+    4 bytes & Security Code (verified na OBC) \\ 
+    1 byte & Frame APID \\
+    195 bytes & Frame Payload \\    
+    \bottomrule
+\end{longtable}
+
+PW-Sat2 OBC repository contains Python code for all available Telecommands to generate payload for AX.25 frames. Below is an example (simplified) python code to connect to ground station, encode telecommand and transmit it. 
+
+\begin{verbatim}
+
+import aprs
+import zmq
+
+class Wrap:
+    def __init__(self, byte_str):
+        self.byte_str = byte_str
+
+    def encode(self, *args):
+        return self.byte_str
+
+def send():
+    sock = self.context.socket(zmq.PUB)
+    sock.connect("tcp://%s:%d" % (target, port))
+
+    aprs_frame = aprs.Frame()
+    aprs_frame.source = aprs.Callsign(self.source_callsign)
+    aprs_frame.destination = aprs.Callsign(self.destination_callsign)
+
+    payload = frame.build()
+    aprs_frame.text = Wrap(convert_bytes_to_string(payload))
+    buff = array.array('B', self.aprs_frame.encode_kiss())
+    msg = convert_bytes_to_string(buff)
+    sock.send(msg)
+
+\end{verbatim}
+
+Example: requesting beacon frame using PW-Sat2 OBC repository code:
+
+\begin{verbatim}
+import telecommand
+send(telecommand.SendBeacon())
+\end{verbatim}
